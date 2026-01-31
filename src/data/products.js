@@ -1,0 +1,21 @@
+export const productsData = [
+  // Fishing Products
+  { id: 1, name: "Canne à lancer léger Pro", category: "fishing", subcategory: "Cannes et moulinets", price: 149.99, originalPrice: 189.99, image: "🎣", rating: 4.8, reviews: 124, description: "Canne professionnelle en fibre de carbone.", inStock: true, featured: true },
+  { id: 2, name: "Moulinet Baitcaster Titanium", category: "fishing", subcategory: "Cannes et moulinets", price: 229.99, originalPrice: null, image: "🎣", rating: 4.9, reviews: 89, description: "Système à 10 roulements avec frein magnétique.", inStock: true, featured: true },
+  { id: 3, name: "Coffre à pêche Bass Pro", category: "fishing", subcategory: "Équipement", price: 49.99, originalPrice: 64.99, image: "🧰", rating: 4.6, reviews: 256, description: "Coffre à 3 plateaux avec 50+ compartiments.", inStock: true, featured: false },
+  { id: 4, name: "Ensemble de leurres (25 pcs)", category: "fishing", subcategory: "Équipement", price: 34.99, originalPrice: null, image: "🪱", rating: 4.7, reviews: 178, description: "Leurres souples réalistes pour toutes conditions.", inStock: true, featured: false },
+  { id: 5, name: "Cuissardes Néoprène", category: "fishing", subcategory: "Vêtements", price: 179.99, originalPrice: 219.99, image: "BOOTS", rating: 4.5, reviews: 67, description: "Cuissardes isolées avec genoux renforcés.", inStock: true, featured: true },
+  { id: 6, name: "Lunettes polarisées pêche", category: "fishing", subcategory: "Accessoires", price: 89.99, originalPrice: null, image: "🕶️", rating: 4.8, reviews: 203, description: "Réduisez les reflets et repérez les poissons.", inStock: true, featured: false },
+  { id: 7, name: "Kit débutant mouche", category: "fishing", subcategory: "Cannes et moulinets", price: 299.99, originalPrice: 379.99, image: "🎣", rating: 4.7, reviews: 45, description: "Kit complet avec canne, moulinet et mouches.", inStock: true, featured: true },
+  { id: 8, name: "Siège kayak de pêche", category: "fishing", subcategory: "Accessoires", price: 124.99, originalPrice: null, image: "🪑", rating: 4.4, reviews: 92, description: "Siège ajustable pour longues journées.", inStock: false, featured: false },
+
+  // Hunting Products
+  { id: 9, name: "Arc à poulies Pro Series", category: "hunting", subcategory: "Arcs et arbalètes", price: 599.99, originalPrice: 749.99, image: "🏹", rating: 4.9, reviews: 156, description: "330 FPS with tension réglable 50-70 lbs.", inStock: true, featured: true },
+  { id: 10, name: "Arbalète Elite Package", category: "hunting", subcategory: "Arcs et arbalètes", price: 849.99, originalPrice: null, image: "🏹", rating: 4.8, reviews: 78, description: "Arbalète 400 FPS avec lunette et carquois.", inStock: true, featured: true },
+  { id: 11, name: "Manteau de chasse camo", category: "hunting", subcategory: "Vêtements", price: 189.99, originalPrice: 229.99, image: "🧥", rating: 4.7, reviews: 312, description: "Imperméable avec contrôle des odeurs.", inStock: true, featured: true },
+  { id: 12, name: "Bottes de chasse isolées", category: "hunting", subcategory: "Vêtements", price: 219.99, originalPrice: null, image: "BOOTS", rating: 4.6, reviews: 189, description: "Thinsulate 1000g, imperméable jusqu'à -40°C.", inStock: true, featured: false },
+  { id: 13, name: "Mirador Deluxe", category: "hunting", subcategory: "Affûts et caches", price: 274.99, originalPrice: 324.99, image: "🌲", rating: 4.5, reviews: 134, description: "Siège rembourré et plateforme complète.", inStock: true, featured: false },
+  { id: 14, name: "Cache au sol Camo", category: "hunting", subcategory: "Affûts et caches", price: 199.99, originalPrice: null, image: "⛺", rating: 4.6, reviews: 87, description: "Cache style hub avec mailles de tir.", inStock: true, featured: false },
+  { id: 15, name: "Jumelles chasse 10x42", category: "hunting", subcategory: "Optiques", price: 349.99, originalPrice: 429.99, image: "🔭", rating: 4.8, reviews: 223, description: "Verre ED avec prismes corrigés.", inStock: true, featured: true },
+  { id: 16, name: "Lunette de visée 3-9x40", category: "hunting", subcategory: "Optiques", price: 279.99, originalPrice: null, image: "🎯", rating: 4.7, reviews: 167, description: "Traitement multicouche avec réticule BDC.", inStock: true, featured: false },
+];
