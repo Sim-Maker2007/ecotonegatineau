@@ -33,7 +33,7 @@ function App() {
                <p className="text-[10px] text-white/40 mt-4 leading-relaxed uppercase font-bold tracking-widest">
                   79 Boul. de la Gappe #4<br/>
                   Gatineau, QC J8T 0B5<br/>
-                  819-243-1555
+                  819-243-6665
                </p>
             </div>
             <div className="flex gap-12 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
