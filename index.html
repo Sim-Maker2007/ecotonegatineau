@@ -83,13 +83,9 @@
                     isScrolled ? 'bg-black/95 backdrop-blur-xl border-b border-white/10 py-3' : 'bg-transparent py-5'
                 }`}>
                 <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-                    <div className="flex items-center gap-2 cursor-pointer group" onClick={() => onNavigate('home')}>
-                        <div className="w-10 h-10 bg-[#8BC34A] rounded-lg flex items-center justify-center rotate-3 group-hover:rotate-12 transition-transform duration-300">
-                            <Icon name="sparkles" className="w-6 h-6" />
-                        </div>
-                        <div className="flex flex-col">
-                            <span className="text-xl font-bold font-oswald tracking-tighter text-white uppercase italic leading-none">ECOTONE</span>
-                            <span className="text-[10px] font-bold text-[#8BC34A] tracking-[0.2em] uppercase leading-none">Gatineau</span>
+                    <div className="flex items-center gap-4 cursor-pointer group" onClick={() => onNavigate('home')}>
+                        <div className="h-10 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3">
+                            <img src="/assets/ecotone-gatineau-logo.png" alt="Ecotone Gatineau" className="h-full w-auto object-contain filter invert brightness-200" />
                         </div>
                     </div>
                     <div className="hidden md:flex items-center gap-10">
@@ -113,7 +109,7 @@
             <section className="relative min-h-screen flex items-center overflow-hidden bg-[#050804]">
                 <div className="absolute inset-0 z-0">
                     <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-40">
-                        <source src="public/assets/ecotone-hero-upscaled.mp4" type="video/mp4" />
+                        <source src="/ecotone-hero-upscaled.mp4" type="video/mp4" />
                     </video>
                     <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_50%,rgba(74,127,36,0.3),transparent_50%)]" />
                     <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_50%,rgba(139,195,74,0.2),transparent_50%)]" />
@@ -404,11 +400,11 @@
                     </main>
 
                     <footer className="bg-black py-40 text-center border-t border-white/5 overflow-hidden">
-                        <div className="flex justify-center gap-12 mb-20 opacity-10 filter grayscale invert">
+                        <div className="flex justify-center gap-12 mb-20 opacity-10 filter grayscale brightness-0 invert">
                            {['shield', 'target', 'map', 'compass'].map(icon => <Icon key={icon} name={icon} className="w-12 h-12" />)}
                         </div>
-                        <div className="w-20 h-20 bg-[#8BC34A]/5 rounded-3xl mx-auto flex items-center justify-center mb-12 border border-[#8BC34A]/10 shadow-3xl shadow-[#8BC34A]/5 group animate-pulse">
-                            <Icon name="mountain" className="w-10 h-10 text-[#8BC34A]" />
+                        <div className="h-32 mx-auto flex items-center justify-center mb-12 group">
+                            <img src="/assets/ecotone-gatineau-logo.png" alt="Logo" className="h-full w-auto object-contain filter invert opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
                         </div>
                         <p className="text-[14px] font-black uppercase tracking-[1em] text-white/30 italic font-oswald">ECOTONE GATINEAU // 2026</p>
                         <div className="mt-12 flex justify-center gap-16 text-[10px] font-black uppercase tracking-[0.4em] text-white/10">
