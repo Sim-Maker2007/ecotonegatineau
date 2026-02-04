@@ -3,6 +3,6 @@
   "public": true,
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/(.*)", "destination": "/pro-viewer.html" }
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
