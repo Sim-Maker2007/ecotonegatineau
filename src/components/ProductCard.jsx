@@ -1,58 +1,67 @@
 import React from 'react';
+import { ShoppingCart, Plus, Tag } from 'lucide-react';
 
 export const ProductCard = ({ product, onAddToCart }) => {
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-zinc-100 dark:border-zinc-800 group">
-      {/* Product Image / Icon */}
-      <div className="h-48 bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center text-6xl group-hover:scale-110 transition-transform duration-300">
-        {product.image}
+    <div className="bg-[#0d0f0c] border border-white/5 overflow-hidden group hover:border-[#8BC34A]/50 transition-all duration-500">
+      {/* Product Image / Icon Area */}
+      <div className="relative h-64 bg-zinc-900/50 flex items-center justify-center text-7xl overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
+        <div className="transition-transform duration-700 group-hover:scale-125 group-hover:rotate-6 z-0">
+          {product.image}
+        </div>
+        
+        {/* Deal Tag */}
+        {product.originalPrice && (
+          <div className="absolute top-4 left-4 z-20 bg-[#8BC34A] text-black text-[8px] font-black uppercase tracking-widest px-2 py-1 italic">
+            Mission Deal
+          </div>
+        )}
       </div>
       
       {/* Product Details */}
-      <div className="p-4">
+      <div className="p-6 relative">
         <div className="flex justify-between items-start mb-2">
-          <span className="text-xs font-semibold uppercase tracking-wider text-green-600 dark:text-green-400">
-            {product.subcategory}
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8BC34A]">
+            {product.subcategory || 'Asset Tactical'}
           </span>
-          <div className="flex items-center">
-            <span className="text-yellow-400">★</span>
-            <span className="text-xs ml-1 text-zinc-500 dark:text-zinc-400">{product.rating}</span>
+          <div className="flex items-center gap-1 opacity-50">
+            <span className="text-[10px] font-bold text-white uppercase italic">Condition: Pro</span>
           </div>
         </div>
         
-        <h3 className="font-bold text-lg mb-1 text-zinc-900 dark:text-zinc-100 truncate">
+        <h3 className="font-black text-xl mb-2 text-white italic uppercase tracking-tighter truncate font-oswald">
           {product.name}
         </h3>
         
-        <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-4 line-clamp-2 h-10">
-          {product.description}
+        <p className="text-xs text-white/40 mb-6 line-clamp-2 h-8 leading-relaxed font-medium uppercase tracking-tight">
+          {product.description || 'Équipement de précision pour opérations en environnement hostile.'}
         </p>
         
-        <div className="flex items-center justify-between mt-auto">
+        <div className="flex items-end justify-between">
           <div className="flex flex-col">
-            <span className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
-              {product.price.toFixed(2)}$
-            </span>
             {product.originalPrice && (
-              <span className="text-xs text-zinc-400 line-through">
+              <span className="text-[10px] text-white/20 line-through italic font-bold">
                 {product.originalPrice.toFixed(2)}$
               </span>
             )}
+            <span className="text-2xl font-black text-white italic tabular-nums">
+              {product.price.toFixed(2)}$
+            </span>
           </div>
           
           <button 
             onClick={() => onAddToCart(product)}
-            className="bg-green-600 hover:bg-green-700 active:scale-95 text-white p-2 rounded-lg transition-all shadow-sm flex items-center justify-center"
-            aria-label="Ajouter au panier"
+            className="bg-white/5 hover:bg-[#8BC34A] border border-white/10 hover:border-[#8BC34A] text-white hover:text-black p-4 transition-all duration-300 group/btn active:scale-95"
+            aria-label="Engage Transaction"
           >
-            {/* Simple Plus Icon */}
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
+            <Plus className="w-5 h-5 group-hover/btn:rotate-90 transition-transform duration-300" />
           </button>
         </div>
       </div>
+      
+      {/* Tactical Decal */}
+      <div className="h-[2px] w-0 bg-[#8BC34A] group-hover:w-full transition-all duration-700" />
     </div>
   );
 };

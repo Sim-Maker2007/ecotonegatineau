@@ -1194,7 +1194,7 @@ const Footer = () => (
         {[
           { title: 'MAGASINER', links: ['Pêche', 'Chasse', 'Vêtements', 'Accessoires', 'Soldes'] },
           { title: 'SUPPORT', links: ['Nous contacter', 'FAQ', 'Livraison', 'Retours', 'Magasins'] },
-          { title: 'CONTACT', links: ['819-555-HUNT', 'info@ecotone.ca', 'Gatineau, QC'] }
+          { title: 'CONTACT', links: ['819-243-1555', 'info@ecotonegatineau.ca', '79 Boul. de la Gappe #4, Gatineau, QC J8T 0B5'] }
         ].map((col, i) => (
           <div key={i}>
             <h4 style={{ color: '#8BC34A', fontSize: '12px', letterSpacing: '2px', marginBottom: '20px' }}>{col.title}</h4>
