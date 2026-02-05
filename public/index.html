@@ -76,8 +76,8 @@
         const CATEGORIES = [
             { id: 'winter', key: 'winter', img: 'https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?auto=format&fit=crop&q=80&w=800' },
             { id: 'men', key: 'men', img: 'https://images.unsplash.com/photo-1504215680048-b13c774b3240?auto=format&fit=crop&q=80&w=800' },
-            { id: 'women', key: 'women', img: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=800' },
-            { id: 'kids', key: 'kids', img: 'https://images.unsplash.com/photo-1519340241574-299f0f353163?auto=format&fit=crop&q=80&w=800' },
+            { id: 'women', key: 'women', img: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=800' },
+            { id: 'kids', key: 'kids', img: 'https://images.unsplash.com/photo-1542013853-eb452f360877?auto=format&fit=crop&q=80&w=800' },
             { id: 'hunting', key: 'hunting', img: 'https://images.unsplash.com/photo-1511990107079-f031ffb9be57?auto=format&fit=crop&q=80&w=800' },
             { id: 'fishing', key: 'fishing', img: 'https://images.unsplash.com/photo-1500427776995-103328841443?auto=format&fit=crop&q=80&w=800' }
         ];
@@ -120,20 +120,20 @@
             }, []);
 
             return (
-                <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-6'}`}>
+                <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-white/90 backdrop-blur-md py-4'}`}>
                     <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
                         <div className="flex items-center gap-12">
-                            <img src="assets/ecotone-gatineau-logo-clean.png" className={`h-10 transition-all ${!isScrolled ? 'brightness-0' : ''}`} alt="Ecotone" />
+                            <img src="assets/ecotone-gatineau-logo-clean.png" className="h-10 transition-all" alt="Ecotone" />
                             <div className="hidden lg:flex items-center gap-8">
                                 {['home', 'shop', 'blog'].map(item => (
-                                    <a key={item} href="#" className={`text-sm font-semibold hover:text-ecotone-green uppercase tracking-wide ${!isScrolled ? 'text-black' : 'text-gray-600'}`}>{t[item]}</a>
+                                    <a key={item} href="#" className="text-sm font-semibold hover:text-ecotone-green uppercase tracking-wide text-gray-800">{t[item]}</a>
                                 ))}
                             </div>
                         </div>
                         <div className="flex items-center gap-6">
-                            <button onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')} className="text-xs font-bold border border-gray-300 rounded px-2 py-1 opacity-70 hover:opacity-100 uppercase">{lang === 'fr' ? 'EN' : 'FR'}</button>
-                            <Icon name="search" className="w-5 h-5 cursor-pointer" />
-                            <div className="relative group cursor-pointer" onClick={toggleCart}>
+                            <button onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')} className="text-xs font-bold border border-gray-300 rounded px-2 py-1 opacity-70 hover:opacity-100 uppercase text-black">{lang === 'fr' ? 'EN' : 'FR'}</button>
+                            <Icon name="search" className="w-5 h-5 cursor-pointer text-black" />
+                            <div className="relative group cursor-pointer text-black" onClick={toggleCart}>
                                 <Icon name="shopping-bag" className="w-5 h-5" />
                                 {cartCount > 0 && <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">{cartCount}</span>}
                             </div>
@@ -143,7 +143,7 @@
             );
         };
 
-        const Hero = ({ lang }) => {
+        const Hero = ({ lang, onShopNow }) => {
             const t = translations[lang].hero;
             return (
                 <section className="relative hero-video-container overflow-hidden">
@@ -155,9 +155,60 @@
                         <h1 className="text-white text-6xl md:text-[6rem] font-extrabold font-oswald leading-none mb-6">
                             {t.title} <span className="text-ecotone-green">{t.subtitle}</span>
                         </h1>
-                        <button className="bg-white text-black px-10 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-ecotone-green hover:text-white transition-all shadow-xl">{t.cta}</button>
+                        <button onClick={onShopNow} className="bg-white text-black px-10 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-ecotone-green hover:text-white transition-all shadow-xl">{t.cta}</button>
                     </div>
                 </section>
+            );
+        };
+
+        const CartDrawer = ({ isOpen, onClose, cart, lang, updateQty, remove }) => {
+            const t = translations[lang].cart;
+            const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+
+            return (
+                <AnimatePresence>
+                    {isOpen && (
+                        <>
+                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} className="fixed inset-0 bg-black/60 z-[100] backdrop-blur-sm" />
+                            <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} className="fixed top-0 right-0 h-full w-full max-w-md bg-white z-[101] shadow-2xl p-8 flex flex-col">
+                                <div className="flex justify-between items-center mb-8 pb-4 border-b">
+                                    <h2 className="text-2xl font-black font-oswald">{t.title}</h2>
+                                    <button onClick={onClose}><Icon name="x" className="w-6 h-6" /></button>
+                                </div>
+                                <div className="flex-1 overflow-y-auto space-y-6 hide-scrollbar">
+                                    {cart.length === 0 ? (
+                                        <p className="text-gray-400 font-bold uppercase tracking-widest text-center mt-20">{t.empty}</p>
+                                    ) : (
+                                        cart.map(item => (
+                                            <div key={item.id} className="flex gap-4 items-center">
+                                                <img src={item.image} className="w-20 h-20 rounded-xl object-cover bg-gray-100" />
+                                                <div className="flex-1">
+                                                    <h4 className="font-bold text-sm">{lang === 'fr' ? item.name : item.nameEn}</h4>
+                                                    <p className="text-ecotone-green font-bold text-xs">${item.price.toFixed(2)}</p>
+                                                    <div className="flex items-center gap-3 mt-2">
+                                                        <button onClick={() => updateQty(item.id, -1)} className="w-6 h-6 flex items-center justify-center border rounded hover:bg-gray-100">-</button>
+                                                        <span className="text-xs font-bold">{item.qty}</span>
+                                                        <button onClick={() => updateQty(item.id, 1)} className="w-6 h-6 flex items-center justify-center border rounded hover:bg-gray-100">+</button>
+                                                    </div>
+                                                </div>
+                                                <button onClick={() => remove(item.id)} className="opacity-30 hover:opacity-100"><Icon name="trash-2" className="w-4 h-4" /></button>
+                                            </div>
+                                        ))
+                                    )}
+                                </div>
+                                {cart.length > 0 && (
+                                    <div className="mt-8 pt-8 border-t space-y-4">
+                                        <div className="flex justify-between items-center text-xl font-black font-oswald uppercase">
+                                            <span>Total</span>
+                                            <span>${total.toFixed(2)}</span>
+                                        </div>
+                                        <button className="w-full bg-black text-white py-5 font-black uppercase tracking-[0.2em] hover:bg-ecotone-green transition-all">{t.checkout}</button>
+                                    </div>
+                                )}
+                            </motion.div>
+                        </>
+                    )}
+                </AnimatePresence>
             );
         };
 
@@ -176,6 +227,23 @@
                 localStorage.setItem('ecotone_lang', l);
             };
 
+            const addToCart = (product) => {
+                setCart(prev => {
+                    const existing = prev.find(item => item.id === product.id);
+                    if (existing) return prev.map(item => item.id === product.id ? { ...item, qty: item.qty + 1 } : item);
+                    return [...prev, { ...product, qty: 1 }];
+                });
+                setIsCartOpen(true);
+            };
+
+            const updateQty = (id, delta) => {
+                setCart(prev => prev.map(i => i.id === id ? { ...i, qty: Math.max(1, i.qty + delta) } : i));
+            };
+
+            const removeFromCart = (id) => {
+                setCart(prev => prev.filter(i => i.id !== id));
+            };
+
             const t = lang ? translations[lang] : translations.fr;
 
             return (
@@ -187,9 +255,20 @@
                     {lang && (
                         <>
                             <Header lang={lang} setLang={setLang} cartCount={cart.reduce((s, i) => s + i.qty, 0)} toggleCart={() => setIsCartOpen(true)} />
+                            <CartDrawer 
+                                isOpen={isCartOpen} 
+                                onClose={() => setIsCartOpen(false)} 
+                                cart={cart} 
+                                lang={lang} 
+                                updateQty={updateQty} 
+                                remove={removeFromCart} 
+                            />
                             
                             <main className="pt-0">
-                                <Hero lang={lang} />
+                                <Hero lang={lang} onShopNow={() => {
+                                    const section = document.getElementById('categories');
+                                    if (section) section.scrollIntoView({ behavior: 'smooth' });
+                                }} />
 
                                 {/* BEST SELLERS - Section Just Under Video like SAIL */}
                                 <section className="py-20 bg-white">
@@ -200,10 +279,13 @@
                                         </div>
                                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
                                             {ALL_PRODUCTS.map(p => (
-                                                <div key={p.id} className="group cursor-pointer">
+                                                <div key={p.id} className="group cursor-pointer" onClick={() => addToCart(p)}>
                                                     <div className="aspect-square bg-gray-100 rounded-2xl mb-4 overflow-hidden relative">
                                                         <img src={p.image} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                                                         {p.originalPrice && <span className="absolute top-4 left-4 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded">DEAL</span>}
+                                                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all">
+                                                            <div className="bg-white text-black px-6 py-2 rounded-full font-bold uppercase text-xs">Acheter</div>
+                                                        </div>
                                                     </div>
                                                     <h3 className="font-bold text-gray-900 group-hover:text-ecotone-green transition-colors">{lang === 'fr' ? p.name : p.nameEn}</h3>
                                                     <p className="text-ecotone-green font-bold text-lg">${p.price.toFixed(2)}</p>
@@ -214,7 +296,7 @@
                                 </section>
 
                                 {/* 6-GRID CATEGORIES like SAIL */}
-                                <section className="py-20 bg-[#f1f3f5]">
+                                <section id="categories" className="py-20 bg-[#f1f3f5]">
                                     <div className="max-w-7xl mx-auto px-6 text-center mb-12">
                                         <h2 className="text-3xl font-bold font-oswald uppercase tracking-tight">{t.sections.categories}</h2>
                                     </div>
