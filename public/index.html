@@ -1,43 +1,40 @@
 <!DOCTYPE html>
-<html lang="fr" class="dark">
+<html lang="fr" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecotone Gatineau PRO | Preview</title>
+    <title>Ecotone Gatineau | Destination de Plein Air Moderne</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
     <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Oswald:wght@700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    colors: {
+                        'ecotone-green': '#4A7F24',
+                        'ecotone-light': '#F8F9FA',
+                        'ecotone-dark': '#1A1C19',
+                    },
                     fontFamily: {
+                        'sans': ['"Plus Jakarta Sans"', 'sans-serif'],
                         'oswald': ['Oswald', 'sans-serif'],
-                        'inter': ['Inter', 'sans-serif'],
-                    },
-                    animation: {
-                        'shimmer': 'shimmer 3s linear infinite',
-                    },
-                    keyframes: {
-                        shimmer: {
-                            '0%': { backgroundPosition: '-200% center' },
-                            '100%': { backgroundPosition: '200% center' },
-                        }
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #050804; color: #e5e5e5; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .shadow-glow { filter: drop-shadow(0 0 8px #8BC34A); }
+        body { background-color: #F8F9FA; color: #1A1C19; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .hero-video-container { height: 70vh; min-height: 500px; }
+        .category-card:hover img { transform: scale(1.05); }
+        .language-modal-blur { backdrop-filter: blur(8px); }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .skel-shimmer { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); background-size: 200% 100%; animation: skeleton 1.5s infinite; }
-        @keyframes skeleton { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        .footer-link:hover { color: #4A7F24; text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -48,371 +45,263 @@
         const { useState, useEffect, useMemo } = React;
         const Lucide = window.lucide;
 
-        // Mock Icon Component
+        // --- TRANSLATIONS ---
+        const translations = {
+            fr: {
+                nav: { home: 'Accueil', shop: 'Boutique', blog: 'Outdoor Intel' },
+                hero: { title: "L'AVENTURE", subtitle: "REVIE ICI", cta: "Découvrir la collection" },
+                sections: { sellers: 'Meilleures Ventes', categories: 'Magasiner par catégorie', brands: 'Nos Marques', blog: 'Outdoor Intel' },
+                categories: { winter: 'Hiver', men: 'Hommes', women: 'Femmes', kids: 'Enfants', hunting: 'Chasse', fishing: 'Pêche' },
+                cart: { title: 'MON PANIER', empty: 'Votre panier est vide', checkout: 'DÉPLOYER LA COMMANDE' },
+                modal: { welcome: 'Bienvenue chez Ecotone Gatineau', choose: 'Veuillez choisir votre langue' }
+            },
+            en: {
+                nav: { home: 'Home', shop: 'Shop', blog: 'Outdoor Intel' },
+                hero: { title: "ADVENTURE", subtitle: "REVIVED HERE", cta: "Explore Collection" },
+                sections: { sellers: 'Best Sellers', categories: 'Shop by Category', brands: 'Our Brands', blog: 'Outdoor Intel' },
+                categories: { winter: 'Winter', men: 'Men', women: 'Women', kids: 'Kids', hunting: 'Hunting', fishing: 'Fishing' },
+                cart: { title: 'MY CART', empty: 'Your cart is empty', checkout: 'CHECKOUT NOW' },
+                modal: { welcome: 'Welcome to Ecotone Gatineau', choose: 'Please choose your language' }
+            }
+        };
+
+        // --- DATA ---
+        const ALL_PRODUCTS = [
+          { id: 1, name: "Télémètre Laser Bushnell", nameEn: "Bushnell Laser Rangefinder", category: "hunting", price: 299.99, originalPrice: 349.99, image: "assets/products/rangefinder.jpg" },
+          { id: 2, name: "Canne à Pêche Performance", nameEn: "Performance Fishing Rod", category: "fishing", price: 189.99, image: "assets/products/rod.avif" },
+          { id: 5, name: "Manteau Chasse JTM", nameEn: "JTM Hunting Jacket", category: "hunting", price: 279.99, originalPrice: 329.99, image: "assets/products/hunting-jacket.webp" },
+          { id: 7, name: "Chandail Ecotone Team", nameEn: "Ecotone Team Sweater", category: "fishing", price: 64.99, image: "assets/products/sweater.webp" },
+        ];
+
+        const CATEGORIES = [
+            { id: 'winter', key: 'winter', img: 'https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?auto=format&fit=crop&q=80&w=800' },
+            { id: 'men', key: 'men', img: 'https://images.unsplash.com/photo-1504215680048-b13c774b3240?auto=format&fit=crop&q=80&w=800' },
+            { id: 'women', key: 'women', img: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=800' },
+            { id: 'kids', key: 'kids', img: 'https://images.unsplash.com/photo-1519340241574-299f0f353163?auto=format&fit=crop&q=80&w=800' },
+            { id: 'hunting', key: 'hunting', img: 'https://images.unsplash.com/photo-1511990107079-f031ffb9be57?auto=format&fit=crop&q=80&w=800' },
+            { id: 'fishing', key: 'fishing', img: 'https://images.unsplash.com/photo-1500427776995-103328841443?auto=format&fit=crop&q=80&w=800' }
+        ];
+
+        const BRANDS = ["Minn Kota", "Browning", "Shimano", "Humminbird", "Connec", "Sportchief", "Bushnell"];
+
+        const BLOG_POSTS = [
+            { id: 1, title: 'Guide: Choisir son premier arc', titleEn: 'Guide: Choosing your first bow', date: '2026-02-04', img: 'https://images.unsplash.com/photo-1511990107079-f031ffb9be57?auto=format&fit=crop&q=80&w=400' },
+            { id: 2, title: 'Top 5 Spots de pêche en Outaouais', titleEn: 'Top 5 Fishing Spots in Outaouais', date: '2026-01-28', img: 'https://images.unsplash.com/photo-1500427776995-103328841443?auto=format&fit=crop&q=80&w=400' }
+        ];
+
+        // --- COMPONENTS ---
+
         const Icon = ({ name, className }) => {
             useEffect(() => { Lucide.createIcons(); }, []);
             return <i data-lucide={name} className={className}></i>;
         };
 
-        // --- DATA ---
-        const ALL_PRODUCTS = [
-          { id: 1, name: "Télémètre Laser Bushnell", category: "hunting", subcategory: "Optiques", price: 299.99, originalPrice: 349.99, image: "/assets/products/rangefinder.jpg", rating: 4.8, reviews: 124, featured: true },
-          { id: 2, name: "Canne à Pêche Performance", category: "fishing", subcategory: "Cannes", price: 189.99, originalPrice: null, image: "/assets/products/rod.avif", rating: 4.9, reviews: 89, featured: true },
-          { id: 3, name: "Bottes de Marche Pro", category: "hunting", subcategory: "Vêtements", price: 149.99, originalPrice: 179.99, image: "/assets/products/boots.webp", rating: 4.6, reviews: 256, featured: false },
-          { id: 4, name: "Bottes Chasse Isolées", category: "hunting", subcategory: "Vêtements", price: 229.99, originalPrice: null, image: "/assets/products/hunting-boots.webp", rating: 4.7, reviews: 178, featured: false },
-          { id: 5, name: "Manteau Chasse JTM", category: "hunting", subcategory: "Vêtements", price: 279.99, originalPrice: 329.99, image: "/assets/products/hunting-jacket.webp", rating: 4.5, reviews: 67, featured: true },
-          { id: 6, name: "Pantalon Camo Orignal", category: "hunting", subcategory: "Vêtements", price: 159.99, originalPrice: null, image: "/assets/products/hunting-pants.webp", rating: 4.8, reviews: 203, featured: true },
-          { id: 7, name: "Chandail Ecotone Team", category: "fishing", subcategory: "Vêtements", price: 64.99, originalPrice: 79.99, image: "/assets/products/sweater.webp", rating: 4.7, reviews: 45, featured: true },
-          { id: 8, name: "Couteau Razor Pro Saw", category: "hunting", subcategory: "Couteaux", price: 89.99, originalPrice: null, image: "/assets/products/knife.webp", rating: 4.4, reviews: 92, featured: false },
-          { id: 9, name: "Veste de Flottaison", category: "fishing", subcategory: "Sécurité", price: 119.99, originalPrice: 139.99, image: "/assets/products/vest.webp", rating: 4.9, reviews: 156, featured: true },
-          { id: 10, name: "Ceinture Tactique", category: "hunting", subcategory: "Accessoires", price: 44.99, originalPrice: null, image: "/assets/products/belt.webp", rating: 4.8, reviews: 78, featured: true },
-        ];
+        const LanguageModal = ({ onSelect }) => (
+            <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/40 language-modal-blur px-4">
+                <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-white p-12 rounded-3xl shadow-2xl max-w-lg w-full text-center">
+                    <img src="assets/ecotone-gatineau-logo-clean.png" className="h-20 mx-auto mb-8" alt="Logo" />
+                    <h2 className="text-2xl font-bold mb-2">Bienvenue / Welcome</h2>
+                    <p className="text-gray-500 mb-10">Veuillez choisir votre langue / Please choose your language</p>
+                    <div className="grid grid-cols-2 gap-4">
+                        <button onClick={() => onSelect('fr')} className="bg-ecotone-green text-white py-4 rounded-xl font-bold hover:bg-black transition-all">FRANÇAIS</button>
+                        <button onClick={() => onSelect('en')} className="bg-gray-100 text-black py-4 rounded-xl font-bold hover:bg-ecotone-green hover:text-white transition-all">ENGLISH</button>
+                    </div>
+                </motion.div>
+            </div>
+        );
 
-        // --- COMPONENTS ---
-
-        const Header = ({ cartCount, toggleCart, onNavigate, currentPage }) => {
+        const Header = ({ lang, setLang, cartCount, toggleCart }) => {
+            const t = translations[lang].nav;
             const [isScrolled, setIsScrolled] = useState(false);
             useEffect(() => {
-                const handleScroll = () => setIsScrolled(window.scrollY > 50);
+                const handleScroll = () => setIsScrolled(window.scrollY > 20);
                 window.addEventListener('scroll', handleScroll);
                 return () => window.removeEventListener('scroll', handleScroll);
             }, []);
 
             return (
-                <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-                    isScrolled ? 'bg-black/95 backdrop-blur-xl border-b border-white/10 py-3' : 'bg-transparent py-5'
-                }`}>
-                <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-                    <div className="flex items-center gap-4 cursor-pointer group" onClick={() => onNavigate('home')}>
-                        <div className="h-10 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3">
-                            <img src="/assets/ecotone-gatineau-logo.png" alt="Ecotone Gatineau" className="h-full w-auto object-contain filter invert brightness-200" />
+                <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-6'}`}>
+                    <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+                        <div className="flex items-center gap-12">
+                            <img src="assets/ecotone-gatineau-logo-clean.png" className={`h-10 transition-all ${!isScrolled ? 'brightness-0' : ''}`} alt="Ecotone" />
+                            <div className="hidden lg:flex items-center gap-8">
+                                {['home', 'shop', 'blog'].map(item => (
+                                    <a key={item} href="#" className={`text-sm font-semibold hover:text-ecotone-green uppercase tracking-wide ${!isScrolled ? 'text-black' : 'text-gray-600'}`}>{t[item]}</a>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-6">
+                            <button onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')} className="text-xs font-bold border border-gray-300 rounded px-2 py-1 opacity-70 hover:opacity-100 uppercase">{lang === 'fr' ? 'EN' : 'FR'}</button>
+                            <Icon name="search" className="w-5 h-5 cursor-pointer" />
+                            <div className="relative group cursor-pointer" onClick={toggleCart}>
+                                <Icon name="shopping-bag" className="w-5 h-5" />
+                                {cartCount > 0 && <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">{cartCount}</span>}
+                            </div>
                         </div>
                     </div>
-                    <div className="hidden md:flex items-center gap-10">
-                        {[{id: 'home', l: 'Accueil'}, {id: 'shop', l: 'Boutique'}].map((link) => (
-                            <button key={link.id} onClick={() => onNavigate(link.id)} className={`text-[10px] font-black uppercase tracking-widest transition-colors ${currentPage === link.id ? 'text-[#8BC34A]' : 'text-white/50 hover:text-white'}`}>{link.l}</button>
-                        ))}
-                    </div>
-                    <div className="flex items-center gap-6">
-                        <Icon name="search" className="w-4 h-4 text-white/80 cursor-pointer hover:text-[#8BC34A]" />
-                        <div className="relative cursor-pointer group" onClick={toggleCart}>
-                            <Icon name="shopping-bag" className="w-4 h-4 text-white shadow-glow" />
-                            <span className="absolute -top-2 -right-2 bg-[#8BC34A] text-black text-[8px] font-black w-4 h-4 rounded-full flex items-center justify-center transition-transform group-hover:scale-110 shadow-lg">{cartCount}</span>
-                        </div>
-                    </div>
-                </div>
                 </nav>
             );
         };
 
-        const Hero = ({ onAddToCart }) => (
-            <section className="relative min-h-screen flex items-center overflow-hidden bg-[#050804]">
-                <div className="absolute inset-0 z-0">
-                    <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-40">
-                        <source src="/ecotone-hero-upscaled.mp4" type="video/mp4" />
+        const Hero = ({ lang }) => {
+            const t = translations[lang].hero;
+            return (
+                <section className="relative hero-video-container overflow-hidden">
+                    <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
+                        <source src="assets/ecotone-hero-upscaled.mp4" type="video/mp4" />
                     </video>
-                    <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_50%,rgba(74,127,36,0.3),transparent_50%)]" />
-                    <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_50%,rgba(139,195,74,0.2),transparent_50%)]" />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/80" />
-                </div>
-                <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
-                        <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-                            <div className="inline-flex items-center gap-2 bg-[#8BC34A]/10 border-l-2 border-[#8BC34A] py-1 px-4 mb-8 text-[#8BC34A]">
-                                <Icon name="mountain" className="w-3 h-3" />
-                                <span className="text-[9px] font-black uppercase tracking-[0.3em]">Département Tactique Gatineau</span>
-                            </div>
-                            <h1 className="text-6xl md:text-[5.5rem] font-black text-white leading-[0.9] uppercase italic tracking-tighter mb-8 font-oswald">
-                                L'AVENTURE <br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#8BC34A] to-white bg-[length:200%_auto] animate-[shimmer_3s_linear_infinite]">REVIE</span> ICI
-                            </h1>
-                            <p className="text-lg text-white/50 leading-relaxed max-w-lg mb-12 font-medium">
-                                Équipement Pro haut de gamme. Plus de <span className="text-white font-bold italic">15 ans</span> d'expertise au service des passionnés de l'Outaouais.
-                            </p>
-                            <div className="flex gap-4">
-                                <button className="bg-[#8BC34A] text-black font-black text-xs uppercase tracking-widest px-10 py-5 transition-all hover:bg-white hover:-translate-y-1 hover:shadow-[0_15px_30px_rgba(139,195,74,0.3)]">
-                                    Déployer la Boutique
-                                </button>
-                                <button className="border border-white/20 text-white font-black text-xs uppercase tracking-widest px-8 py-5 transition-all hover:bg-white/10 hover:border-[#8BC34A]">
-                                    Watch Demo
-                                </button>
-                            </div>
-                        </motion.div>
-                        <motion.div 
-                          initial={{ opacity: 0, scale: 0.8 }} 
-                          animate={{ opacity: 1, scale: 1 }} 
-                          transition={{ duration: 1, delay: 0.2 }} 
-                          className="hidden lg:block relative group p-1"
-                        >
-                            <div className="absolute inset-0 bg-[#8BC34A] blur-[120px] opacity-10 group-hover:opacity-20 transition-opacity duration-700" />
-                            <div className="relative bg-gradient-to-br from-white/10 to-transparent backdrop-blur-2xl border border-white/10 p-16 rounded-[3rem] text-center hover:border-[#8BC34A]/50 transition-all duration-500 shadow-2xl overflow-hidden">
-                                <div className="text-9xl mb-8 filter drop-shadow-[0_20px_50px_rgba(139,195,74,0.4)] group-hover:rotate-12 group-hover:scale-110 transition-all duration-700">🏹</div>
-                                <h3 className="text-2xl font-bold text-white italic mb-2 font-oswald tracking-tighter uppercase">PREDATOR COMPOUND</h3>
-                                <div className="text-4xl font-black text-[#8BC34A] italic tracking-tighter leading-none">$599.99</div>
-                                <button 
-                                  onClick={() => onAddToCart(ALL_PRODUCTS.find(p => p.id === 9))}
-                                  className="mt-8 bg-[#8BC34A] text-black font-black text-[10px] py-3 px-8 uppercase tracking-[0.2em] shadow-lg shadow-[#8BC34A]/20 active:scale-95 transition-all"
-                                >
-                                  Acquérir l'unité
-                                </button>
-                            </div>
-                        </motion.div>
-                    </div>
-                </div>
-            </section>
-        );
-
-        const ProductCard = ({ p, onAdd }) => (
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                className="bg-[#0d0f0c] border border-white/10 group relative transition-all duration-500 hover:bg-white/[0.03] p-6 hover:border-[#8BC34A]/50">
-                <div className="h-48 flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110">
-                    {p.image.startsWith('/') ? (
-                        <img src={p.image} alt={p.name} className="max-w-full max-h-full object-contain" />
-                    ) : (
-                        <span className="text-8xl">{p.image}</span>
-                    )}
-                </div>
-                <div className="flex justify-between items-start mb-2">
-                    <p className="text-[10px] font-black text-[#8BC34A] uppercase tracking-widest">{p.subcategory}</p>
-                    {p.originalPrice && <span className="bg-red-500/10 text-red-500 text-[8px] font-bold px-2 py-0.5 border border-red-500/20">SOLDE</span>}
-                </div>
-                <h4 className="text-white font-black italic uppercase font-oswald leading-tight mb-4">{p.name}</h4>
-                <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
-                    <span className="text-lg font-black text-[#8BC34A] italic">${p.price.toFixed(2)}</span>
-                    <button onClick={() => onAdd(p)} className="w-10 h-10 bg-white/5 flex items-center justify-center rounded-lg hover:bg-[#8BC34A] hover:text-black transition-all">
-                       <Icon name="plus" className="w-4 h-4" />
-                    </button>
-                </div>
-            </motion.div>
-        );
-
-        const ShopPage = ({ items, onAdd }) => {
-            const [filter, setFilter] = useState('all');
-            const filtered = filter === 'all' ? items : items.filter(u => u.category === filter);
-            return (
-              <section className="bg-[#050804] min-h-screen pt-32 pb-20 px-6">
-                <div className="max-w-7xl mx-auto">
-                    <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-                       <h2 className="text-5xl font-black text-white italic uppercase font-oswald tracking-tighter">Inventaire <span className="text-[#8BC34A]">Tactique</span></h2>
-                       <div className="flex bg-white/5 p-1 rounded-xl border border-white/10">
-                          {['all', 'hunting', 'fishing'].map(c => (
-                            <button key={c} onClick={() => setFilter(c)} className={`px-6 py-2 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all ${filter === c ? 'bg-[#8BC34A] text-black shadow-lg shadow-[#8BC34A]/20' : 'text-white/40 hover:text-white'}`}>{c === 'all' ? 'Tous' : c === 'hunting' ? 'Chasse' : 'Pêche'}</button>
-                          ))}
-                       </div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {filtered.map(p => <ProductCard key={p.id} p={p} onAdd={onAdd} />)}
-                    </div>
-                </div>
-              </section>
-            )
-        }
-
-        const CategorySection = ({ onNavigate }) => {
-            const categories = [
-                { title: 'BRIGADE PÊCHE PRO', image: '🎣', color: 'border-cyan-500/30' },
-                { title: 'ÉLITE CHASSE TACTIQUE', image: '🏹', color: 'border-[#8BC34A]/30' }
-            ];
-            return (
-                <section className="bg-[#050804] py-32 px-6 border-y border-white/5">
-                    <div className="max-w-7xl mx-auto">
-                        <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8 text-center md:text-left">
-                            <div>
-                                <h2 className="text-5xl md:text-7xl font-black text-white italic uppercase font-oswald tracking-tighter leading-none mb-4">Nos <span className="text-[#8BC34A]">Unités</span></h2>
-                                <p className="text-[#8BC34A] font-black uppercase tracking-[0.4em] text-[10px]">Département Tactical Gear // QC</p>
-                            </div>
-                            <div className="text-[10px] font-black uppercase tracking-widest border border-white/10 px-6 py-3 rounded-full opacity-40 italic">Inauguration 2007 // Gatineau</div>
-                        </div>
-                        <div className="grid md:grid-cols-2 gap-12">
-                            {categories.map((cat, i) => (
-                                <motion.div key={i} whileHover={{ y: -10 }} onClick={() => onNavigate('shop')} className={`bg-[#0d0f0c] p-20 border ${cat.color} group relative overflow-hidden transition-all duration-700 cursor-pointer shadow-2xl`}>
-                                    <div className="text-8xl mb-12 transition-all duration-700 group-hover:scale-125 filter drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]">{cat.image}</div>
-                                    <h3 className="text-4xl font-black italic font-oswald tracking-tighter text-white uppercase">{cat.title}</h3>
-                                    <div className="mt-8 font-black text-[10px] tracking-[0.25em] text-[#8BC34A] uppercase">Ouvrir le dossier →</div>
-                                    <div className="absolute top-0 left-0 w-2 h-full bg-[#8BC34A] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
-                                </motion.div>
-                            ))}
-                        </div>
+                    <div className="absolute inset-0 bg-black/20" />
+                    <div className="relative h-full flex flex-col items-center justify-center text-center px-6">
+                        <h1 className="text-white text-6xl md:text-[6rem] font-extrabold font-oswald leading-none mb-6">
+                            {t.title} <span className="text-ecotone-green">{t.subtitle}</span>
+                        </h1>
+                        <button className="bg-white text-black px-10 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-ecotone-green hover:text-white transition-all shadow-xl">{t.cta}</button>
                     </div>
                 </section>
             );
-        }
-
-        const CartSidebar = ({ items, isOpen, onClose, onUpdateQty, onRemove, onCheckout }) => {
-            const subtotal = items.reduce((sum, i) => sum + (i.price * i.qty), 0);
-            const shipping = subtotal > 99 ? 0 : 15;
-            const tax = subtotal * 0.14975;
-            const total = subtotal + shipping + tax;
-
-            return (
-              <AnimatePresence>
-                {isOpen && (
-                  <>
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]" />
-                    <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 25 }}
-                      className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-[#0a0f08] border-l border-white/10 z-[110] flex flex-col shadow-2xl text-white">
-                      <div className="p-8 border-b border-white/10 flex items-center justify-between bg-black/40">
-                        <div className="flex items-center gap-4 text-[#8BC34A]">
-                          <Icon name="shopping-bag" className="w-6 h-6" />
-                          <h2 className="text-2xl font-black italic uppercase font-oswald tracking-tighter">VOTRE UNITÉ</h2>
-                        </div>
-                        <button onClick={onClose} className="text-white/40 hover:text-white transition-colors">
-                           <Icon name="x" className="w-6 h-6" />
-                        </button>
-                      </div>
-                      <div className="flex-1 overflow-y-auto p-8 space-y-8 hide-scrollbar">
-                        {items.length === 0 ? (
-                           <div className="h-full flex flex-col items-center justify-center opacity-10 italic">
-                             <Icon name="package" className="w-20 h-20 mb-4" />
-                             <p className="font-bold uppercase tracking-widest">Le hangar est vide</p>
-                           </div>
-                        ) : items.map(item => (
-                           <div key={item.id} className="flex gap-6 animate-fadeIn">
-                             <div className="w-24 h-24 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-5xl italic">{item.image}</div>
-                             <div className="flex-1 space-y-2">
-                               <div className="flex justify-between items-start">
-                                 <h4 className="text-sm font-black uppercase italic text-white leading-tight">{item.name}</h4>
-                                 <span className="text-[#8BC34A] font-black font-oswald text-lg italic shadow-glow">${item.price.toFixed(2)}</span>
-                               </div>
-                               <div className="flex items-center justify-between pt-4">
-                                 <div className="flex items-center bg-white/5 border border-white/10 rounded-xl overflow-hidden shrink-0">
-                                   <button onClick={() => onUpdateQty(item.id, item.qty - 1)} className="px-3 py-2 hover:bg-white/10 text-white/50 transition-colors">-</button>
-                                   <span className="px-2 text-xs font-black text-white">{item.qty}</span>
-                                   <button onClick={() => onUpdateQty(item.id, item.qty + 1)} className="px-3 py-2 hover:bg-white/10 text-white/50 transition-colors">+</button>
-                                 </div>
-                                 <button onClick={() => onRemove(item.id)} className="text-white/10 hover:text-red-500 transition-colors active:scale-90"><Icon name="trash-2" className="w-4 h-4" /></button>
-                               </div>
-                             </div>
-                           </div>
-                        ))}
-                      </div>
-                      {items.length > 0 && (
-                        <div className="p-8 bg-black border-t border-white/10 space-y-8">
-                           <div className="space-y-4">
-                             <div className="flex justify-between text-[10px] font-black uppercase text-white/30 tracking-[0.2em]"><span>Logistique Standard</span><span>{shipping === 0 ? 'GRATUITE' : `$${shipping.toFixed(2)}`}</span></div>
-                             <div className="flex justify-between text-[10px] font-black uppercase text-white/30 tracking-[0.2em]"><span>Taxes d'Unité (QC)</span><span>${tax.toFixed(2)}</span></div>
-                             <div className="flex justify-between pt-6 border-t border-white/10 items-baseline">
-                               <span className="text-sm font-black italic text-white uppercase tracking-widest text-[#8BC34A]">MISSION TOTAL</span>
-                               <span className="text-4xl font-black text-white font-oswald italic tracking-tighter">${total.toFixed(2)}</span>
-                             </div>
-                           </div>
-                           <button onClick={onCheckout} className="w-full bg-[#8BC34A] text-black font-black uppercase tracking-[0.3em] py-6 shadow-2xl shadow-[#8BC34A]/20 transition-all hover:bg-white active:scale-95">DÉPLOYER LA COMMANDE</button>
-                        </div>
-                      )}
-                    </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
-            );
         };
 
-        const CheckoutView = ({ items, onBack, onComplete }) => {
-            const total = items.reduce((sum, i) => sum + (i.price * i.qty), 0) * 1.14975 + (items.reduce((sum, i) => sum + (i.price * i.qty), 0) > 99 ? 0 : 15);
-            return (
-              <section className="bg-[#050804] min-h-screen pt-32 pb-20 px-6">
-                <div className="max-w-4xl mx-auto space-y-12">
-                   <button onClick={onBack} className="text-[#8BC34A] font-black uppercase text-[10px] tracking-widest flex items-center gap-2 hover:translate-x-[-10px] transition-transform"><Icon name="arrow-left" className="w-4 h-4" /> RETOUR AU DÉBARQUEMENT</button>
-                   <div className="grid md:grid-cols-2 gap-12">
-                      <div className="space-y-8">
-                         <h2 className="text-4xl font-black text-white italic font-oswald tracking-tighter">COORDONNÉES <span className="text-[#8BC34A]">OPÉRATIONNELLES</span></h2>
-                         <div className="space-y-4">
-                            <input placeholder="NOM DE L'UNITÉ (PRÉNOM)" className="w-full bg-white/5 border border-white/10 p-5 rounded-xl text-white outline-none focus:border-[#8BC34A] font-black text-[10px] uppercase tracking-widest" />
-                            <input placeholder="EMAIL DE LIAISON" className="w-full bg-white/5 border border-white/10 p-5 rounded-xl text-white outline-none focus:border-[#8BC34A] font-black text-[10px] uppercase tracking-widest" />
-                            <input placeholder="ADRESSE DE DÉPLOIEMENT" className="w-full bg-white/5 border border-white/10 p-5 rounded-xl text-white outline-none focus:border-[#8BC34A] font-black text-[10px] uppercase tracking-widest" />
-                         </div>
-                         <div className="bg-[#8BC34A]/5 border border-[#8BC34A]/20 p-8 rounded-3xl">
-                            <h4 className="text-xs font-black text-[#8BC34A] uppercase tracking-widest mb-4">SÉCURISATION DU PAIEMENT</h4>
-                            <div className="flex gap-4 p-4 border border-white/10 rounded-xl bg-black/40">
-                               <Icon name="credit-card" className="w-6 h-6 text-white/40" />
-                               <input placeholder="XXXX XXXX XXXX XXXX" className="bg-transparent border-none outline-none font-mono text-white flex-1" />
-                            </div>
-                         </div>
-                      </div>
-                      <div className="bg-[#0d0f0c] p-10 border border-white/10 rounded-[3rem] sticky top-40 h-fit">
-                         <h3 className="text-xl font-black italic text-white font-oswald tracking-widest mb-8">RÉSUMÉ DE LA MISSION</h3>
-                         <div className="space-y-4 mb-8">
-                           {items.map(i => <div key={i.id} className="flex justify-between text-[10px] font-black uppercase text-white/40 italic"><span>{i.qty}x {i.name}</span><span>${(i.price * i.qty).toFixed(2)}</span></div>)}
-                         </div>
-                         <div className="pt-8 border-t border-white/5">
-                           <div className="flex justify-between items-baseline mb-8">
-                             <span className="text-xs font-black text-[#8BC34A] uppercase italic transition-all">FINANCEMENT TOTAL</span>
-                             <span className="text-4xl font-black text-white font-oswald italic tracking-tighter">${total.toFixed(2)}</span>
-                           </div>
-                           <button onClick={onComplete} className="w-full bg-[#8BC34A] text-black font-black uppercase tracking-[0.3em] py-6 shadow-2xl shadow-[#8BC34A]/20 hover:bg-white transition-all active:scale-95">CONFIRMER LE DÉPLOIEMENT</button>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-              </section>
-            )
-        }
-
         function App() {
-            const [currentPage, setCurrentPage] = useState('home');
+            const [lang, setLang] = useState(null);
             const [cart, setCart] = useState([]);
             const [isCartOpen, setIsCartOpen] = useState(false);
 
-            const handleAddToCart = (product) => {
-               setCart(prev => {
-                 const exists = prev.find(i => i.id === product.id);
-                 if (exists) return prev.map(i => i.id === product.id ? {...i, qty: i.qty + 1} : i);
-                 return [...prev, {...product, qty: 1}];
-               });
-               setIsCartOpen(true);
+            useEffect(() => {
+                const savedLang = localStorage.getItem('ecotone_lang');
+                if (savedLang) setLang(savedLang);
+            }, []);
+
+            const handleSelectLang = (l) => {
+                setLang(l);
+                localStorage.setItem('ecotone_lang', l);
             };
 
-            const updateQty = (id, newQty) => {
-               if (newQty < 1) { handleRemove(id); return; }
-               setCart(prev => prev.map(i => i.id === id ? {...i, qty: newQty} : i));
-            };
-
-            const handleRemove = (id) => setCart(prev => prev.filter(i => i.id !== id));
-
-            const navigate = (page) => { 
-                setCurrentPage(page);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            };
+            const t = lang ? translations[lang] : translations.fr;
 
             return (
-                <div className="selection:bg-[#8BC34A] selection:text-black">
-                    <Header cartCount={cart.reduce((sum, i) => sum + i.qty, 0)} toggleCart={() => setIsCartOpen(!isCartOpen)} onNavigate={navigate} currentPage={currentPage} />
-                    <CartSidebar items={cart} isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} onUpdateQty={updateQty} onRemove={handleRemove} onCheckout={() => {setIsCartOpen(false); navigate('checkout');}} />
-                    
-                    <main className="transition-all duration-500">
-                      {currentPage === 'home' && (
-                        <div className="animate-fadeIn">
-                          <Hero onAddToCart={handleAddToCart} />
-                          <CategorySection onNavigate={navigate} />
-                          <section className="bg-black py-32 px-6">
-                             <div className="max-w-7xl mx-auto">
-                                <h2 className="text-3xl font-black italic text-white uppercase font-oswald tracking-widest mb-16 underline decoration-[#8BC34A] decoration-4 underline-offset-8">Unités de combat populaires</h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                                   {ALL_PRODUCTS.filter(p => [1,2,11,15].includes(p.id)).map(p => <ProductCard key={p.id} p={p} onAdd={handleAddToCart} />)}
-                                </div>
-                             </div>
-                          </section>
-                        </div>
-                      )}
-                      
-                      {currentPage === 'shop' && <ShopPage items={ALL_PRODUCTS} onAdd={handleAddToCart} />}
-                      
-                      {currentPage === 'checkout' && <CheckoutView items={cart} onBack={() => navigate('shop')} onComplete={() => { alert("MISSION RÉUSSIE! COMMANDE EN DÉPLOIEMENT."); setCart([]); navigate('home'); }} />}
-                    </main>
+                <div className="min-h-screen">
+                    <AnimatePresence>
+                        {!lang && <LanguageModal onSelect={handleSelectLang} />}
+                    </AnimatePresence>
 
-                    <footer className="bg-black py-40 text-center border-t border-white/5 overflow-hidden">
-                        <div className="flex justify-center gap-12 mb-20 opacity-10 filter grayscale brightness-0 invert">
-                           {['shield', 'target', 'map', 'compass'].map(icon => <Icon key={icon} name={icon} className="w-12 h-12" />)}
-                        </div>
-                        <div className="h-32 mx-auto flex items-center justify-center mb-12 group">
-                            <img src="/assets/ecotone-gatineau-logo.png" alt="Logo" className="h-full w-auto object-contain filter invert opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
-                        </div>
-                        <p className="text-[14px] font-black uppercase tracking-[1em] text-white/30 italic font-oswald">ECOTONE GATINEAU // 2026</p>
-                        <div className="mt-12 flex justify-center gap-16 text-[10px] font-black uppercase tracking-[0.4em] text-white/10">
-                           <a href="#" className="hover:text-[#8BC34A] transition-all">Plein Air</a>
-                           <a href="#" className="hover:text-[#8BC34A] transition-all">Héritage</a>
-                           <a href="#" className="hover:text-[#8BC34A] transition-all">Outaouais</a>
-                        </div>
-                    </footer>
+                    {lang && (
+                        <>
+                            <Header lang={lang} setLang={setLang} cartCount={cart.reduce((s, i) => s + i.qty, 0)} toggleCart={() => setIsCartOpen(true)} />
+                            
+                            <main className="pt-0">
+                                <Hero lang={lang} />
+
+                                {/* BEST SELLERS - Section Just Under Video like SAIL */}
+                                <section className="py-20 bg-white">
+                                    <div className="max-w-7xl mx-auto px-6">
+                                        <div className="flex justify-between items-end mb-12">
+                                            <h2 className="text-3xl font-bold font-oswald uppercase tracking-tight">{t.sections.sellers}</h2>
+                                            <a href="#" className="text-ecotone-green font-bold border-b-2 border-ecotone-green italic">Voir tout</a>
+                                        </div>
+                                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                                            {ALL_PRODUCTS.map(p => (
+                                                <div key={p.id} className="group cursor-pointer">
+                                                    <div className="aspect-square bg-gray-100 rounded-2xl mb-4 overflow-hidden relative">
+                                                        <img src={p.image} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                                                        {p.originalPrice && <span className="absolute top-4 left-4 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded">DEAL</span>}
+                                                    </div>
+                                                    <h3 className="font-bold text-gray-900 group-hover:text-ecotone-green transition-colors">{lang === 'fr' ? p.name : p.nameEn}</h3>
+                                                    <p className="text-ecotone-green font-bold text-lg">${p.price.toFixed(2)}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </section>
+
+                                {/* 6-GRID CATEGORIES like SAIL */}
+                                <section className="py-20 bg-[#f1f3f5]">
+                                    <div className="max-w-7xl mx-auto px-6 text-center mb-12">
+                                        <h2 className="text-3xl font-bold font-oswald uppercase tracking-tight">{t.sections.categories}</h2>
+                                    </div>
+                                    <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 lg:grid-cols-3 gap-6">
+                                        {CATEGORIES.map(cat => (
+                                            <div key={cat.id} className="relative aspect-[4/3] rounded-3xl overflow-hidden group category-card cursor-pointer shadow-lg">
+                                                <img src={cat.img} className="absolute inset-0 w-full h-full object-cover transition-all duration-700 brightness-75 group-hover:brightness-50" />
+                                                <div className="absolute inset-0 flex items-center justify-center">
+                                                    <h3 className="text-white text-3xl font-black italic uppercase font-oswald tracking-tighter transition-all group-hover:scale-110">{t.categories[cat.key]}</h3>
+                                                </div>
+                                                <div className="absolute bottom-6 right-6 w-10 h-10 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0">
+                                                    <Icon name="arrow-right" className="w-5 h-5 text-ecotone-green" />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+
+                                {/* BRANDS SHOWCASE */}
+                                <section className="bg-white py-16 border-y border-gray-100">
+                                    <div className="max-w-7xl mx-auto px-6 overflow-hidden relative">
+                                        <div className="flex animate-marquee whitespace-nowrap gap-20 items-center opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all">
+                                            {[...BRANDS, ...BRANDS].map((brand, i) => (
+                                                <span key={i} className="text-2xl font-black uppercase italic tracking-tighter font-oswald">{brand}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </section>
+
+                                {/* INTEL HUB (BLOG) SECTION */}
+                                <section className="py-24 bg-white">
+                                    <div className="max-w-7xl mx-auto px-6">
+                                        <h2 className="text-3xl font-bold font-oswald uppercase tracking-tight mb-12 text-center uppercase tracking-widest">{t.sections.blog}</h2>
+                                        <div className="grid md:grid-cols-2 gap-12">
+                                            {BLOG_POSTS.map(post => (
+                                                <div key={post.id} className="flex gap-8 group cursor-pointer items-center">
+                                                    <div className="w-1/3 aspect-[4/3] rounded-2xl overflow-hidden">
+                                                        <img src={post.img} className="w-full h-full object-cover group-hover:scale-110 transition-all" />
+                                                    </div>
+                                                    <div className="flex-1">
+                                                        <p className="text-xs text-ecotone-green font-bold mb-2 uppercase">{post.date}</p>
+                                                        <h3 className="text-xl font-bold group-hover:text-ecotone-green mb-4">{lang === 'fr' ? post.title : post.titleEn}</h3>
+                                                        <span className="text-sm font-bold uppercase tracking-widest border-b border-black">Read More</span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </section>
+                            </main>
+
+                            {/* MODERN FOOTER */}
+                            <footer className="bg-ecotone-dark text-white py-24 px-6">
+                                <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-12">
+                                    <div className="col-span-2 lg:col-span-1">
+                                        <img src="assets/ecotone-gatineau-logo-clean.png" className="h-12 mb-8 filter invert" />
+                                        <p className="text-gray-400 max-w-xs text-sm leading-relaxed">79 Boul. de la Gappe #4, Gatineau, QC J8T 0B5<br/>(819) 243-6665</p>
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold uppercase mb-6 text-ecotone-green">Magasiner</h4>
+                                        <ul className="space-y-4 text-sm text-gray-400 font-semibold">
+                                            <li><a href="#" className="footer-link">Pêche</a></li>
+                                            <li><a href="#" className="footer-link">Chasse</a></li>
+                                            <li><a href="#" className="footer-link">Plein Air</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold uppercase mb-6 text-ecotone-green">Support</h4>
+                                        <ul className="space-y-4 text-sm text-gray-400 font-semibold">
+                                            <li><a href="#" className="footer-link">Livraison</a></li>
+                                            <li><a href="#" className="footer-link">Retours</a></li>
+                                            <li><a href="#" className="footer-link">Contact</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold uppercase mb-6 text-ecotone-green">REJOIGNEZ-NOUS</h4>
+                                        <div className="flex gap-4">
+                                            {['facebook', 'instagram', 'twitter'].map(icon => <Icon key={icon} name={icon} className="w-6 h-6 hover:text-ecotone-green cursor-pointer" />)}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 text-center text-xs text-gray-500 font-bold uppercase tracking-widest">
+                                    © 2026 Ecotone Gatineau // Built By Amara ✨
+                                </div>
+                            </footer>
+                        </>
+                    )}
                 </div>
             );
         }
