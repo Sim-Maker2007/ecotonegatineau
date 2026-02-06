@@ -29,13 +29,86 @@
         }
     </script>
     <style>
-        body { background-color: #F8F9FA; color: #1A1C19; font-family: 'Plus Jakarta Sans', sans-serif; }
-        .hero-video-container { height: 70vh; min-height: 500px; }
-        .category-card:hover img { transform: scale(1.05); }
-        .language-modal-blur { backdrop-filter: blur(8px); }
+        body { background-color: #F8F9FA; color: #1A1C19; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; margin: 0; padding: 0; }
+        #root { position: relative; z-index: 10; padding-top: 64px; }
+        
+        .header-anchor {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            height: 64px !important;
+            background-color: white !important;
+            box-shadow: 0 1px 10px rgba(0,0,0,0.05) !important;
+            z-index: 9999999 !important;
+            display: flex !important;
+            align-items: center !important;
+            border-bottom: 1px solid #f1f1f1 !important;
+            pointer-events: auto !important;
+        }
+
+        .hero-video-container { 
+            position: relative;
+            z-index: 1;
+            height: 70vh; 
+            min-height: 500px; 
+            overflow: hidden;
+            background-color: #000;
+        }
+        .hero-video-container video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: cover;
+        }
+        .category-card:hover img { transform: scale(1.1); }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .footer-link:hover { color: #4A7F24; text-decoration: underline; }
+        .animate-marquee { display: flex; animation: marquee 30s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HuntingEquipmentStore",
+      "name": "Ecotone Gatineau",
+      "image": "https://ecotone-gatineau.vercel.app/assets/ecotone-gatineau-logo-clean.png",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "79 Boul. de la Gappe #4",
+        "addressLocality": "Gatineau",
+        "addressRegion": "QC",
+        "postalCode": "J8T 0B5",
+        "addressCountry": "CA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 45.4851,
+        "longitude": -75.6924
+      },
+      "url": "https://ecotone-gatineau.vercel.app",
+      "telephone": "+18192436665",
+      "priceRange": "$$",
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "09:00",
+          "closes": "17:00"
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <div id="root"></div>
@@ -45,267 +118,269 @@
         const { useState, useEffect, useMemo } = React;
         const Lucide = window.lucide;
 
-        // --- TRANSLATIONS ---
-        const translations = {
-            fr: {
-                nav: { home: 'Accueil', shop: 'Boutique', blog: 'Outdoor Intel' },
-                hero: { title: "L'AVENTURE", subtitle: "REVIE ICI", cta: "Découvrir la collection" },
-                sections: { sellers: 'Meilleures Ventes', categories: 'Magasiner par catégorie', brands: 'Nos Marques', blog: 'Outdoor Intel' },
-                categories: { winter: 'Hiver', men: 'Hommes', women: 'Femmes', kids: 'Enfants', hunting: 'Chasse', fishing: 'Pêche' },
-                cart: { title: 'MON PANIER', empty: 'Votre panier est vide', checkout: 'DÉPLOYER LA COMMANDE' },
-                modal: { welcome: 'Bienvenue chez Ecotone Gatineau', choose: 'Veuillez choisir votre langue' }
-            },
-            en: {
-                nav: { home: 'Home', shop: 'Shop', blog: 'Outdoor Intel' },
-                hero: { title: "ADVENTURE", subtitle: "REVIVED HERE", cta: "Explore Collection" },
-                sections: { sellers: 'Best Sellers', categories: 'Shop by Category', brands: 'Our Brands', blog: 'Outdoor Intel' },
-                categories: { winter: 'Winter', men: 'Men', women: 'Women', kids: 'Kids', hunting: 'Hunting', fishing: 'Fishing' },
-                cart: { title: 'MY CART', empty: 'Your cart is empty', checkout: 'CHECKOUT NOW' },
-                modal: { welcome: 'Welcome to Ecotone Gatineau', choose: 'Please choose your language' }
-            }
-        };
-
-        // --- DATA ---
-        const ALL_PRODUCTS = [
-          { id: 1, name: "Télémètre Laser Bushnell", nameEn: "Bushnell Laser Rangefinder", category: "hunting", price: 299.99, originalPrice: 349.99, image: "assets/products/rangefinder.jpg" },
-          { id: 2, name: "Canne à Pêche Performance", nameEn: "Performance Fishing Rod", category: "fishing", price: 189.99, image: "assets/products/rod.avif" },
-          { id: 5, name: "Manteau Chasse JTM", nameEn: "JTM Hunting Jacket", category: "hunting", price: 279.99, originalPrice: 329.99, image: "assets/products/hunting-jacket.webp" },
-          { id: 7, name: "Chandail Ecotone Team", nameEn: "Ecotone Team Sweater", category: "fishing", price: 64.99, image: "assets/products/sweater.webp" },
-        ];
-
-        const CATEGORIES = [
-            { id: 'winter', key: 'winter', img: 'https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?auto=format&fit=crop&q=80&w=800' },
-            { id: 'men', key: 'men', img: 'https://images.unsplash.com/photo-1504215680048-b13c774b3240?auto=format&fit=crop&q=80&w=800' },
-            { id: 'women', key: 'women', img: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=800' },
-            { id: 'kids', key: 'kids', img: 'https://images.unsplash.com/photo-1519340241574-299f0f353163?auto=format&fit=crop&q=80&w=800' },
-            { id: 'hunting', key: 'hunting', img: 'https://images.unsplash.com/photo-1511990107079-f031ffb9be57?auto=format&fit=crop&q=80&w=800' },
-            { id: 'fishing', key: 'fishing', img: 'https://images.unsplash.com/photo-1500427776995-103328841443?auto=format&fit=crop&q=80&w=800' }
-        ];
-
-        const BRANDS = ["Minn Kota", "Browning", "Shimano", "Humminbird", "Connec", "Sportchief", "Bushnell"];
-
-        const BLOG_POSTS = [
-            { id: 1, title: 'Guide: Choisir son premier arc', titleEn: 'Guide: Choosing your first bow', date: '2026-02-04', img: 'https://images.unsplash.com/photo-1511990107079-f031ffb9be57?auto=format&fit=crop&q=80&w=400' },
-            { id: 2, title: 'Top 5 Spots de pêche en Outaouais', titleEn: 'Top 5 Fishing Spots in Outaouais', date: '2026-01-28', img: 'https://images.unsplash.com/photo-1500427776995-103328841443?auto=format&fit=crop&q=80&w=400' }
-        ];
-
-        // --- COMPONENTS ---
-
-        const Icon = ({ name, className }) => {
-            useEffect(() => { Lucide.createIcons(); }, []);
-            return <i data-lucide={name} className={className}></i>;
-        };
-
-        const LanguageModal = ({ onSelect }) => (
-            <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/40 language-modal-blur px-4">
-                <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-white p-12 rounded-3xl shadow-2xl max-w-lg w-full text-center">
-                    <img src="assets/ecotone-gatineau-logo-clean.png" className="h-20 mx-auto mb-8" alt="Logo" />
-                    <h2 className="text-2xl font-bold mb-2">Bienvenue / Welcome</h2>
-                    <p className="text-gray-500 mb-10">Veuillez choisir votre langue / Please choose your language</p>
-                    <div className="grid grid-cols-2 gap-4">
-                        <button onClick={() => onSelect('fr')} className="bg-ecotone-green text-white py-4 rounded-xl font-bold hover:bg-black transition-all">FRANÇAIS</button>
-                        <button onClick={() => onSelect('en')} className="bg-gray-100 text-black py-4 rounded-xl font-bold hover:bg-ecotone-green hover:text-white transition-all">ENGLISH</button>
-                    </div>
-                </motion.div>
-            </div>
-        );
-
-        const Header = ({ lang, setLang, cartCount, toggleCart }) => {
-            const t = translations[lang].nav;
-            const [isScrolled, setIsScrolled] = useState(false);
-            useEffect(() => {
-                const handleScroll = () => setIsScrolled(window.scrollY > 20);
-                window.addEventListener('scroll', handleScroll);
-                return () => window.removeEventListener('scroll', handleScroll);
-            }, []);
-
-            return (
-                <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-6'}`}>
-                    <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-                        <div className="flex items-center gap-12">
-                            <img src="assets/ecotone-gatineau-logo-clean.png" className={`h-10 transition-all ${!isScrolled ? 'brightness-0' : ''}`} alt="Ecotone" />
-                            <div className="hidden lg:flex items-center gap-8">
-                                {['home', 'shop', 'blog'].map(item => (
-                                    <a key={item} href="#" className={`text-sm font-semibold hover:text-ecotone-green uppercase tracking-wide ${!isScrolled ? 'text-black' : 'text-gray-600'}`}>{t[item]}</a>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="flex items-center gap-6">
-                            <button onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')} className="text-xs font-bold border border-gray-300 rounded px-2 py-1 opacity-70 hover:opacity-100 uppercase">{lang === 'fr' ? 'EN' : 'FR'}</button>
-                            <Icon name="search" className="w-5 h-5 cursor-pointer" />
-                            <div className="relative group cursor-pointer" onClick={toggleCart}>
-                                <Icon name="shopping-bag" className="w-5 h-5" />
-                                {cartCount > 0 && <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">{cartCount}</span>}
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-            );
-        };
-
-        const Hero = ({ lang }) => {
-            const t = translations[lang].hero;
-            return (
-                <section className="relative hero-video-container overflow-hidden">
-                    <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
-                        <source src="assets/ecotone-hero-upscaled.mp4" type="video/mp4" />
-                    </video>
-                    <div className="absolute inset-0 bg-black/20" />
-                    <div className="relative h-full flex flex-col items-center justify-center text-center px-6">
-                        <h1 className="text-white text-6xl md:text-[6rem] font-extrabold font-oswald leading-none mb-6">
-                            {t.title} <span className="text-ecotone-green">{t.subtitle}</span>
-                        </h1>
-                        <button className="bg-white text-black px-10 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-ecotone-green hover:text-white transition-all shadow-xl">{t.cta}</button>
-                    </div>
-                </section>
-            );
-        };
-
         function App() {
-            const [lang, setLang] = useState(null);
+            const [lang, setLang] = useState('fr');
             const [cart, setCart] = useState([]);
             const [isCartOpen, setIsCartOpen] = useState(false);
+            const [view, setView] = useState({ type: 'home', filter: 'all', productId: null });
 
-            useEffect(() => {
-                const savedLang = localStorage.getItem('ecotone_lang');
-                if (savedLang) setLang(savedLang);
-            }, []);
-
-            const handleSelectLang = (l) => {
-                setLang(l);
-                localStorage.setItem('ecotone_lang', l);
+            const translations = {
+                fr: {
+                    nav: { home: 'Accueil', shop: 'Boutique', blog: 'Intel' },
+                    hero: { title: "L'AVENTURE", subtitle: "REVIE ICI", cta: "Explorer" },
+                    sections: { sellers: 'Meilleures Ventes', categories: 'Rayons', blog: 'Outdoor Intel' },
+                    categories: { winter: 'Hiver', men: 'Hommes', women: 'Femmes', kids: 'Enfants', hunting: 'Chasse', fishing: 'Pêche' },
+                    cart: { title: 'PANIER', empty: 'Vide', checkout: 'COMMANDER', add: 'Ajouter' },
+                    product: { specs: 'Spécifications', availability: 'Disponibilité', inStock: 'En stock à Gatineau', shipping: 'Livraison gratuite sur 100$+' }
+                },
+                en: {
+                    nav: { home: 'Home', shop: 'Shop', blog: 'Intel' },
+                    hero: { title: "ADVENTURE", subtitle: "REVIVED", cta: "Explore" },
+                    sections: { sellers: 'Best Sellers', categories: 'Categories', blog: 'Outdoor Intel' },
+                    categories: { winter: 'Winter', men: 'Men', women: 'Women', kids: 'Kids', hunting: 'Hunting', fishing: 'Fishing' },
+                    cart: { title: 'CART', empty: 'Empty', checkout: 'CHECKOUT', add: 'Add to cart' },
+                    product: { specs: 'Specifications', availability: 'Availability', inStock: 'In stock at Gatineau', shipping: 'Free shipping on $100+' }
+                }
             };
 
-            const t = lang ? translations[lang] : translations.fr;
+            const ALL_PRODUCTS = [
+                { id: 1, name: "Télémètre Laser Bushnell", nameEn: "Bushnell Laser Rangefinder", category: "hunting", price: 299.99, originalPrice: 349.99, image: "assets/products/rangefinder.jpg", desc: "Précision chirurgicale pour vos sessions de chasse. Portée étendue.", specs: ["Grossissement 6x", "Portée 800m"] },
+                { id: 2, name: "Canne à Pêche Performance", nameEn: "Performance Fishing Rod", category: "fishing", price: 189.99, originalPrice: 229.99, image: "assets/products/rod.avif", desc: "Sensibilité extrême pour détecter la moindre touche.", specs: ["Longueur 7'", "Action Fast"] },
+                { id: 5, name: "Manteau Chasse JTM Pro", nameEn: "JTM Hunting Jacket Pro", category: "men", price: 279.99, originalPrice: 329.99, image: "assets/products/hunting-jacket.webp", desc: "Tissu silencieux et isolation thermique avancée.", specs: ["Camo Mirage", "Respirant"] },
+                { id: 7, name: "Chandail Ecotone Team", nameEn: "Ecotone Team Sweater", category: "men", price: 64.99, image: "assets/products/sweater.webp", desc: "Le confort officiel de l'équipe Ecotone.", specs: ["Coton 100%", "Logo Brodé"] },
+                { id: 11, name: "Bottes de Chasse Pro", nameEn: "Pro Hunting Boots", category: "women", price: 249.99, originalPrice: 289.99, image: "assets/products/hunting-boots.webp", desc: "Protection totale en terrain difficile.", specs: ["Gore-Tex", "Isolation 400g"] },
+                { id: 12, name: "Pantalon de Chasse", nameEn: "Hunting Pants", category: "kids", price: 159.99, image: "assets/products/hunting-pants.webp", desc: "Liberté de mouvement maximale.", specs: ["Tissu Ripstop", "Poches Cargo"] },
+                { id: 15, name: "Ensemble Hiver Expedition", nameEn: "Winter Expedition Set", category: "winter", price: 449.99, originalPrice: 549.99, image: "assets/categories/winter.jpg", desc: "Le summum de la protection contre le froid.", specs: ["-40°C Rating", "Imperméable"] }
+            ];
+
+            const CATEGORIES = [
+                { id: 'winter', key: 'winter', img: 'assets/categories/winter.jpg' },
+                { id: 'men', key: 'men', img: 'assets/categories/men.jpg' },
+                { id: 'women', key: 'women', img: 'assets/categories/women.jpg' },
+                { id: 'kids', key: 'kids', img: 'assets/categories/kids.jpg' },
+                { id: 'hunting', key: 'hunting', img: 'assets/categories/hunting.jpg' },
+                { id: 'fishing', key: 'fishing', img: 'assets/categories/fishing.jpg' }
+            ];
+
+            const BLOG_POSTS = [
+                { id: 1, title: 'TOP SECRET : Cet endroit de pêche près de la Marina de Hull est incroyable!', titleEn: 'TOP SECRET: This fishing spot near Hull Marina is insane!', date: '06 FÉB 2026', img: 'assets/categories/fishing.jpg' },
+                { id: 2, title: 'VOUS NE CROIREZ PAS ce que ce chasseur a trouvé dans le Parc de la Gatineau...', titleEn: 'YOU WON\'T BELIEVE what this hunter found in Gatineau Park...', date: '05 FÉB 2026', img: 'assets/categories/hunting.jpg' },
+                { id: 3, title: 'ARRÊTEZ TOUT! Le leurre ultime pour l\'Outaouais est enfin arrivé.', titleEn: 'STOP EVERYTHING! The ultimate lure for Outaouais is finally here.', date: '04 FÉB 2026', img: 'assets/products/rod.avif' },
+                { id: 4, title: 'Bottes de chasse : 3 erreurs mortelles que vous faites probablement.', titleEn: 'Hunting Boots: 3 deadly mistakes you are probably making.', date: '03 FÉB 2026', img: 'assets/products/hunting-boots.webp' },
+                { id: 5, title: 'Camping d\'hiver au Lac Philippe : Guide de survie extrême.', titleEn: 'Winter Camping at Lac Philippe: Extreme survival guide.', date: '02 FÉB 2026', img: 'assets/categories/winter.jpg' },
+                { id: 6, title: 'Comment ce gars a pêché un monstre de 40lbs à 5min du centre-ville?', titleEn: 'How this guy caught a 40lb monster 5min from downtown?', date: '01 FÉB 2026', img: 'assets/categories/fishing.jpg' },
+                { id: 7, title: 'Arc vs Arbalète : Le débat sanglant enfin tranché!', titleEn: 'Bow vs Crossbow: The bloody debate finally settled!', date: '30 JAN 2026', img: 'assets/categories/hunting.jpg' },
+                { id: 8, title: 'Vêtements thermiques : Ce que les pros ne vous disent pas.', titleEn: 'Thermal Gear: What the pros dont tell you.', date: '28 JAN 2026', img: 'assets/products/hunting-jacket.webp' },
+                { id: 9, title: 'Rivières des Outaouais : La carte cachée des meilleurs spots.', titleEn: 'Outaouais Rivers: The hidden map of best spots.', date: '25 JAN 2026', img: 'assets/products/rangefinder.jpg' },
+                { id: 10, title: 'STUPEUR! Ecotone Gatineau brise les prix sur la collection 2026.', titleEn: 'SHOCK! Ecotone Gatineau smashes prices on 2026 collection.', date: '20 JAN 2026', img: 'assets/categories/men.jpg' }
+            ];
+
+            const BRANDS = ["Shimano", "Browning", "Minn Kota", "Bushnell", "Connec", "Sportchief"];
+
+            useEffect(() => { Lucide.createIcons(); }, [view, isCartOpen]);
+
+            const t = translations[lang];
+            const filtered = useMemo(() => (view.filter === 'all' ? ALL_PRODUCTS : ALL_PRODUCTS.filter(p => p.category === view.filter)), [view.filter]);
+            const selected = useMemo(() => ALL_PRODUCTS.find(p => p.id === view.productId), [view.productId]);
+
+            const addToCart = (p) => {
+                setCart(prev => {
+                    const ex = prev.find(i => i.id === p.id);
+                    if (ex) return prev.map(i => i.id === p.id ? {...i, qty: i.qty+1} : i);
+                    return [...prev, {...p, qty: 1}];
+                });
+                setIsCartOpen(true);
+            };
 
             return (
-                <div className="min-h-screen">
+                <div className="flex flex-col min-h-screen">
+                    <div className="header-anchor px-4 sm:px-6">
+                        <div className="max-w-7xl mx-auto flex items-center justify-between w-full">
+                            <div className="flex items-center gap-8">
+                                <img src="assets/ecotone-gatineau-logo-clean.png" onClick={() => setView({type:'home',filter:'all', productId: null})} className="h-8 cursor-pointer" alt="Logo" />
+                                <div className="hidden md:flex items-center gap-6">
+                                    {['home', 'shop'].map(item => (
+                                        <a key={item} href="#" onClick={(e) => { e.preventDefault(); setView({type: item==='shop'?'all':'home', filter:'all', productId: null}); }} className="text-xs font-black uppercase tracking-widest text-[#1A1C19] hover:text-ecotone-green transition-colors">{t.nav[item]}</a>
+                                    ))}
+                                </div>
+                            </div>
+                            
+                            <div className="flex items-center gap-5">
+                                <button onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')} className="text-[10px] font-black px-2 py-0.5 border border-gray-100 rounded bg-gray-50">{lang.toUpperCase()}</button>
+                                <div onClick={() => setIsCartOpen(true)} className="relative cursor-pointer text-[#1A1C19]">
+                                    <i data-lucide="shopping-bag" className="w-5 h-5"></i>
+                                    {cart.length > 0 && <span className="absolute -top-2 -right-2 bg-ecotone-green text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">{cart.reduce((a,b)=>a+b.qty,0)}</span>}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <AnimatePresence>
-                        {!lang && <LanguageModal onSelect={handleSelectLang} />}
+                        {isCartOpen && (
+                            <><motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={()=>setIsCartOpen(false)} className="fixed inset-0 bg-black/60 z-[10000000] backdrop-blur-sm" />
+                            <motion.div initial={{x:'100%'}} animate={{x:0}} exit={{x:'100%'}} className="fixed top-0 right-0 h-full w-full max-w-sm bg-white z-[10000001] shadow-2xl p-6 flex flex-col">
+                                <div className="flex justify-between items-center mb-6 border-b pb-4"><h2 className="text-xl font-black font-oswald tracking-tight">{t.cart.title}</h2><button onClick={()=>setIsCartOpen(false)}><i data-lucide="x" className="w-6 h-6"></i></button></div>
+                                <div className="flex-1 overflow-y-auto space-y-5">{cart.length === 0 ? <p className="text-center text-gray-400 mt-20 text-xs font-bold uppercase tracking-widest">{t.cart.empty}</p> : cart.map(i => (
+                                    <div key={i.id} className="flex gap-4 items-center"><img src={i.image} className="w-14 h-14 rounded-xl object-cover border" /><div className="flex-1"><h4 className="font-bold text-xs">{i.name}</h4><p className="text-ecotone-green font-black text-[11px] mt-1">${i.price.toFixed(2)} x {i.qty}</p></div></div>
+                                ))}</div>
+                                {cart.length > 0 && <button className="w-full bg-[#1A1C19] text-white py-5 mt-8 font-black uppercase tracking-widest text-xs rounded-xl shadow-lg">{t.cart.checkout}</button>}
+                            </motion.div></>
+                        )}
                     </AnimatePresence>
 
-                    {lang && (
-                        <>
-                            <Header lang={lang} setLang={setLang} cartCount={cart.reduce((s, i) => s + i.qty, 0)} toggleCart={() => setIsCartOpen(true)} />
-                            
-                            <main className="pt-0">
-                                <Hero lang={lang} />
-
-                                {/* BEST SELLERS - Section Just Under Video like SAIL */}
-                                <section className="py-20 bg-white">
-                                    <div className="max-w-7xl mx-auto px-6">
-                                        <div className="flex justify-between items-end mb-12">
-                                            <h2 className="text-3xl font-bold font-oswald uppercase tracking-tight">{t.sections.sellers}</h2>
-                                            <a href="#" className="text-ecotone-green font-bold border-b-2 border-ecotone-green italic">Voir tout</a>
-                                        </div>
-                                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-                                            {ALL_PRODUCTS.map(p => (
-                                                <div key={p.id} className="group cursor-pointer">
-                                                    <div className="aspect-square bg-gray-100 rounded-2xl mb-4 overflow-hidden relative">
-                                                        <img src={p.image} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                                                        {p.originalPrice && <span className="absolute top-4 left-4 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded">DEAL</span>}
-                                                    </div>
-                                                    <h3 className="font-bold text-gray-900 group-hover:text-ecotone-green transition-colors">{lang === 'fr' ? p.name : p.nameEn}</h3>
-                                                    <p className="text-ecotone-green font-bold text-lg">${p.price.toFixed(2)}</p>
-                                                </div>
-                                            ))}
-                                        </div>
+                    <main>
+                        {view.type === 'home' && (
+                            <>
+                                <section className="hero-video-container">
+                                    <video autoPlay loop muted playsInline><source src="assets/ecotone-hero-upscaled.mp4" type="video/mp4" /></video>
+                                    <div className="absolute inset-0 bg-black/20" />
+                                    <div className="relative h-full flex flex-col items-center justify-center text-center px-6">
+                                        <h1 className="text-white text-5xl md:text-8xl font-extrabold font-oswald leading-none mb-6 italic tracking-tighter">{t.hero.title} <span className="text-ecotone-green">{t.hero.subtitle}</span></h1>
+                                        <button onClick={() => document.getElementById('categories').scrollIntoView({behavior:'smooth'})} className="bg-white text-black px-8 py-3 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-transform text-sm">{t.hero.cta}</button>
                                     </div>
                                 </section>
 
-                                {/* 6-GRID CATEGORIES like SAIL */}
-                                <section className="py-20 bg-[#f1f3f5]">
-                                    <div className="max-w-7xl mx-auto px-6 text-center mb-12">
-                                        <h2 className="text-3xl font-bold font-oswald uppercase tracking-tight">{t.sections.categories}</h2>
+                                <section id="categories" className="py-16 bg-white">
+                                    <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-6 gap-3">
+                                        {CATEGORIES.map(c => (
+                                            <div key={c.id} onClick={()=>setView({type:'all', filter:c.id, productId: null})} className="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer border border-gray-100">
+                                                <img src={c.img} className="absolute inset-0 w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                                                <div className="absolute inset-0 flex items-end justify-center pb-4"><h3 className="text-white text-[11px] font-black uppercase font-oswald tracking-widest">{t.categories[c.key]}</h3></div>
+                                            </div>
+                                        ))}
                                     </div>
-                                    <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 lg:grid-cols-3 gap-6">
-                                        {CATEGORIES.map(cat => (
-                                            <div key={cat.id} className="relative aspect-[4/3] rounded-3xl overflow-hidden group category-card cursor-pointer shadow-lg">
-                                                <img src={cat.img} className="absolute inset-0 w-full h-full object-cover transition-all duration-700 brightness-75 group-hover:brightness-50" />
-                                                <div className="absolute inset-0 flex items-center justify-center">
-                                                    <h3 className="text-white text-3xl font-black italic uppercase font-oswald tracking-tighter transition-all group-hover:scale-110">{t.categories[cat.key]}</h3>
+                                </section>
+
+                                <section className="py-16 bg-gray-50 border-y border-gray-100">
+                                    <div className="max-w-7xl mx-auto px-4 flex justify-between items-end mb-10">
+                                        <h2 className="text-2xl font-black font-oswald uppercase tracking-tight">{t.sections.sellers}</h2>
+                                        <a onClick={()=>setView({type:'all',filter:'all', productId: null})} className="text-ecotone-green font-black text-xs border-b-2 border-ecotone-green cursor-pointer">VOIR TOUT</a>
+                                    </div>
+                                    <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 lg:grid-cols-4 gap-4">
+                                        {ALL_PRODUCTS.slice(0, 4).map(p=>(
+                                            <div key={p.id} onClick={() => setView({ type: 'product', productId: p.id })} className="bg-white p-3 rounded-2xl border border-gray-100 shadow-sm cursor-pointer group">
+                                                <div className="relative aspect-square rounded-xl overflow-hidden mb-3">
+                                                    <img src={p.image} className="w-full h-full object-cover group-hover:scale-105 transition-all" />
+                                                    {p.originalPrice && <div className="absolute top-2 left-2 bg-ecotone-green text-white text-[8px] font-black px-2 py-1 rounded-full shadow-lg">PROMOTION</div>}
                                                 </div>
-                                                <div className="absolute bottom-6 right-6 w-10 h-10 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0">
-                                                    <Icon name="arrow-right" className="w-5 h-5 text-ecotone-green" />
+                                                <h3 className="font-bold text-sm text-[#1A1C19] line-clamp-1">{lang === 'fr' ? p.name : p.nameEn}</h3>
+                                                <div className="flex gap-2 items-center mt-1">
+                                                    <p className="text-ecotone-green font-black text-lg font-oswald">${p.price.toFixed(2)}</p>
+                                                    {p.originalPrice && <p className="text-gray-300 text-xs line-through font-bold">${p.originalPrice.toFixed(2)}</p>}
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
                                 </section>
 
-                                {/* BRANDS SHOWCASE */}
-                                <section className="bg-white py-16 border-y border-gray-100">
-                                    <div className="max-w-7xl mx-auto px-6 overflow-hidden relative">
-                                        <div className="flex animate-marquee whitespace-nowrap gap-20 items-center opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all">
-                                            {[...BRANDS, ...BRANDS].map((brand, i) => (
-                                                <span key={i} className="text-2xl font-black uppercase italic tracking-tighter font-oswald">{brand}</span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </section>
-
-                                {/* INTEL HUB (BLOG) SECTION */}
-                                <section className="py-24 bg-white">
+                                <section id="intel" className="py-24 bg-white">
                                     <div className="max-w-7xl mx-auto px-6">
-                                        <h2 className="text-3xl font-bold font-oswald uppercase tracking-tight mb-12 text-center uppercase tracking-widest">{t.sections.blog}</h2>
+                                        <h2 className="text-4xl font-black font-oswald text-center mb-16 uppercase tracking-tighter">{t.sections.blog}</h2>
                                         <div className="grid md:grid-cols-2 gap-12">
                                             {BLOG_POSTS.map(post => (
-                                                <div key={post.id} className="flex gap-8 group cursor-pointer items-center">
-                                                    <div className="w-1/3 aspect-[4/3] rounded-2xl overflow-hidden">
-                                                        <img src={post.img} className="w-full h-full object-cover group-hover:scale-110 transition-all" />
+                                                <div key={post.id} className="flex flex-col sm:flex-row gap-8 group cursor-pointer">
+                                                    <div className="sm:w-1/3 aspect-[4/3] rounded-3xl overflow-hidden border border-gray-100">
+                                                        <img src={post.img} className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" />
                                                     </div>
-                                                    <div className="flex-1">
-                                                        <p className="text-xs text-ecotone-green font-bold mb-2 uppercase">{post.date}</p>
-                                                        <h3 className="text-xl font-bold group-hover:text-ecotone-green mb-4">{lang === 'fr' ? post.title : post.titleEn}</h3>
-                                                        <span className="text-sm font-bold uppercase tracking-widest border-b border-black">Read More</span>
+                                                    <div className="flex-1 flex flex-col justify-center">
+                                                        <span className="text-[10px] font-black text-ecotone-green tracking-widest uppercase mb-2">{post.date}</span>
+                                                        <h3 className="text-2xl font-black font-oswald uppercase text-[#1A1C19] group-hover:text-ecotone-green transition-colors mb-4">{lang === 'fr' ? post.title : post.titleEn}</h3>
+                                                        <div className="w-10 h-0.5 bg-gray-100 group-hover:w-20 group-hover:bg-ecotone-green transition-all" />
                                                     </div>
                                                 </div>
                                             ))}
                                         </div>
                                     </div>
                                 </section>
-                            </main>
+                            </>
+                        )}
+                        
+                        {view.type === 'all' && (
+                            <section className="py-16 px-4 max-w-7xl mx-auto min-h-screen">
+                                <button onClick={()=>setView({type:'home', filter: 'all', productId: null})} className="text-[10px] font-black uppercase mb-10 flex items-center gap-2 text-gray-400 hover:text-ecotone-green"> <i data-lucide="arrow-left" className="w-3 h-3"></i> Retour</button>
+                                <h2 className="text-4xl font-black font-oswald uppercase mb-12 tracking-tighter">{view.filter==='all'?'Catalogue':t.categories[view.filter]}</h2>
+                                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                                    {filtered.map(p=>(
+                                        <div key={p.id} onClick={()=>setView({type: 'product', productId: p.id})} className="cursor-pointer group">
+                                            <div className="aspect-square rounded-2xl overflow-hidden mb-4 border border-gray-100 group-hover:shadow-lg transition-all"><img src={p.image} className="w-full h-full object-cover" /></div>
+                                            <h3 className="font-bold text-[#1A1C19]">{lang === 'fr' ? p.name : p.nameEn}</h3>
+                                            <p className="text-ecotone-green font-black font-oswald text-xl mt-1">${p.price.toFixed(2)}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
 
-                            {/* MODERN FOOTER */}
-                            <footer className="bg-ecotone-dark text-white py-24 px-6">
-                                <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-12">
-                                    <div className="col-span-2 lg:col-span-1">
-                                        <img src="assets/ecotone-gatineau-logo-clean.png" className="h-12 mb-8 filter invert" />
-                                        <p className="text-gray-400 max-w-xs text-sm leading-relaxed">79 Boul. de la Gappe #4, Gatineau, QC J8T 0B5<br/>(819) 243-6665</p>
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold uppercase mb-6 text-ecotone-green">Magasiner</h4>
-                                        <ul className="space-y-4 text-sm text-gray-400 font-semibold">
-                                            <li><a href="#" className="footer-link">Pêche</a></li>
-                                            <li><a href="#" className="footer-link">Chasse</a></li>
-                                            <li><a href="#" className="footer-link">Plein Air</a></li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold uppercase mb-6 text-ecotone-green">Support</h4>
-                                        <ul className="space-y-4 text-sm text-gray-400 font-semibold">
-                                            <li><a href="#" className="footer-link">Livraison</a></li>
-                                            <li><a href="#" className="footer-link">Retours</a></li>
-                                            <li><a href="#" className="footer-link">Contact</a></li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold uppercase mb-6 text-ecotone-green">REJOIGNEZ-NOUS</h4>
-                                        <div className="flex gap-4">
-                                            {['facebook', 'instagram', 'twitter'].map(icon => <Icon key={icon} name={icon} className="w-6 h-6 hover:text-ecotone-green cursor-pointer" />)}
+                        {view.type === 'product' && selected && (
+                             <section className="pt-20 pb-20 bg-white min-h-screen">
+                                <div className="max-w-7xl mx-auto px-6">
+                                    <button onClick={() => setView(v => ({...v, type: 'all'}))} className="text-[10px] font-black uppercase text-gray-400 hover:text-ecotone-green flex items-center gap-2 mb-12 transition-colors"><i data-lucide="arrow-left" className="w-3 h-3"></i> {lang === 'fr' ? 'Retour' : 'Back'}</button>
+                                    <div className="grid lg:grid-cols-2 gap-12">
+                                        <div className="aspect-square rounded-3xl overflow-hidden border shadow-sm">
+                                            <img src={selected.image} className="w-full h-full object-cover" />
+                                        </div>
+                                        <div className="space-y-8">
+                                            <div>
+                                                <p className="text-[10px] font-black text-ecotone-green uppercase tracking-widest mb-4">{t.categories[selected.category]}</p>
+                                                <h1 className="text-4xl font-black font-oswald uppercase text-gray-900">{lang === 'fr' ? selected.name : selected.nameEn}</h1>
+                                                <p className="text-2xl font-black font-oswald text-ecotone-green mt-4">${selected.price.toFixed(2)}</p>
+                                            </div>
+                                            <p className="text-gray-500 font-medium leading-relaxed">{selected.desc}</p>
+                                            <button onClick={() => addToCart(selected)} className="w-full bg-[#1A1C19] text-white py-6 rounded-2xl font-black uppercase tracking-widest hover:bg-ecotone-green transition-all shadow-xl">{t.cart.add}</button>
+                                            <div className="grid grid-cols-2 gap-8 border-t pt-8">
+                                                <div><h4 className="text-[10px] font-black uppercase mb-4">{t.product.specs}</h4><ul className="space-y-2 text-sm text-gray-400">{(selected.specs || []).map((s,i)=><li key={i}>• {s}</li>)}</ul></div>
+                                                <div><h4 className="text-[10px] font-black uppercase mb-4">Service</h4><p className="text-sm text-gray-400">{t.product.shipping}</p></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 text-center text-xs text-gray-500 font-bold uppercase tracking-widest">
-                                    © 2026 Ecotone Gatineau // Built By Amara ✨
+                            </section>
+                        )}
+                    </main>
+
+                    <footer className="bg-[#1A1C19] py-24 px-6 border-t border-white/5">
+                        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-left text-gray-400">
+                            <div className="col-span-1">
+                                <img src="assets/ecotone-gatineau-logo-clean.png" className="h-10 mb-8 brightness-0 invert" alt="Ecotone" />
+                                <div className="space-y-2 text-xs font-bold uppercase tracking-widest">
+                                    <p className="flex items-center gap-2"><i data-lucide="map-pin" className="w-4 h-4 text-ecotone-green"></i> 79 Boul. de la Gappe #4, Gatineau</p>
+                                    <p className="flex items-center gap-2"><i data-lucide="phone" className="w-4 h-4 text-ecotone-green"></i> (819) 243-6665</p>
+                                    <p className="flex items-center gap-2 text-ecotone-green"><i data-lucide="clock" className="w-4 h-4"></i> Ouvert : Lun-Ven 9h-18h</p>
                                 </div>
-                            </footer>
-                        </>
-                    )}
+                            </div>
+                            <div>
+                                <h4 className="font-black uppercase mb-8 text-white text-xs tracking-[0.2em]">Magasiner</h4>
+                                <ul className="space-y-4 text-[10px] font-black uppercase tracking-widest leading-relaxed">
+                                    <li><a href="#" onClick={(e)=>{e.preventDefault(); setView({type:'all', filter:'hunting', productId:null})}} className="hover:text-ecotone-green transition-colors">Chasse</a></li>
+                                    <li><a href="#" onClick={(e)=>{e.preventDefault(); setView({type:'all', filter:'fishing', productId:null})}} className="hover:text-ecotone-green transition-colors">Pêche</a></li>
+                                    <li><a href="#" onClick={(e)=>{e.preventDefault(); setView({type:'all', filter:'all', productId:null})}} className="hover:text-ecotone-green transition-colors">Catalogue</a></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 className="font-black uppercase mb-8 text-white text-xs tracking-[0.2em]">Intel</h4>
+                                <ul className="space-y-4 text-[10px] font-black uppercase tracking-widest leading-relaxed">
+                                    <li><a href="#intel" className="hover:text-ecotone-green transition-colors">Trucs & Astuces</a></li>
+                                    <li><a href="#intel" className="hover:text-ecotone-green transition-colors">Zones de Pêche</a></li>
+                                    <li><a href="#intel" className="hover:text-ecotone-green transition-colors">Guides Chasse</a></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 className="font-black uppercase mb-8 text-white text-xs tracking-[0.2em]">Social</h4>
+                                <div className="flex gap-4">
+                                    <div className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-ecotone-green transition-all cursor-pointer"><i data-lucide="facebook" className="w-4 h-4"></i></div>
+                                    <div className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-ecotone-green transition-all cursor-pointer"><i data-lucide="instagram" className="w-4 h-4"></i></div>
+                                    <div className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-ecotone-green transition-all cursor-pointer"><i data-lucide="youtube" className="w-4 h-4"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="max-w-7xl mx-auto mt-24 pt-8 border-t border-white/5 text-center text-[9px] text-gray-600 font-black uppercase tracking-[0.3em]">
+                            © 2026 Ecotone Gatineau // Built By Amara ✨
+                        </div>
+                    </footer>
                 </div>
             );
         }
-
         ReactDOM.createRoot(document.getElementById('root')).render(<App />);
     </script>
 </body>

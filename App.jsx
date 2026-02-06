@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { CategoryShowcase } from './components/CategoryShowcase';
+import { IntelHub } from './components/IntelHub';
 import { CartSidebar } from './components/CartSidebar';
 import { CheckoutView } from './components/CheckoutView';
 
@@ -18,6 +19,7 @@ function App() {
           <>
             <Hero onShopNow={() => setView('checkout')} />
             <CategoryShowcase />
+            <IntelHub />
           </>
         ) : (
           <CheckoutView onBack={() => setView('home')} />

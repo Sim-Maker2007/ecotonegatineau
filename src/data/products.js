@@ -9,7 +9,8 @@ export const products = [
     sku: "EC-FSH-001",
     rating: 4.8, 
     reviews: 124, 
-    featured: true 
+    featured: true,
+    image: "assets/products/rod.avif"
   },
   { 
     id: 2, 
@@ -20,7 +21,8 @@ export const products = [
     sku: "EC-FSH-002",
     rating: 4.9, 
     reviews: 89, 
-    featured: true 
+    featured: true,
+    image: "assets/products/knife.webp" 
   },
   { 
     id: 9, 
@@ -32,7 +34,8 @@ export const products = [
     sku: "EC-HNT-001",
     rating: 4.9, 
     reviews: 156, 
-    featured: true 
+    featured: true,
+    image: "assets/products/hunting-jacket.webp"
   },
   { 
     id: 10, 
@@ -43,7 +46,8 @@ export const products = [
     sku: "EC-HNT-002",
     rating: 4.8, 
     reviews: 78, 
-    featured: true 
+    featured: true,
+    image: "assets/products/hunting-boots.webp"
   }
 ];
 
