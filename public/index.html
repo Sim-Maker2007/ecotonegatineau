@@ -126,7 +126,7 @@
 
             const translations = {
                 fr: {
-                    nav: { home: 'Accueil', shop: 'Boutique', blog: 'Intel' },
+                    nav: { home: 'Accueil', shop: 'Boutique', hunting: 'Chasse', fishing: 'Pêche', blog: 'Intel' },
                     hero: { title: "L'AVENTURE", subtitle: "REVIE ICI", cta: "Explorer" },
                     sections: { sellers: 'Meilleures Ventes', categories: 'Rayons', blog: 'Outdoor Intel' },
                     categories: { winter: 'Hiver', men: 'Hommes', women: 'Femmes', kids: 'Enfants', hunting: 'Chasse', fishing: 'Pêche' },
@@ -134,7 +134,7 @@
                     product: { specs: 'Spécifications', availability: 'Disponibilité', inStock: 'En stock à Gatineau', shipping: 'Livraison gratuite sur 100$+' }
                 },
                 en: {
-                    nav: { home: 'Home', shop: 'Shop', blog: 'Intel' },
+                    nav: { home: 'Home', shop: 'Shop', hunting: 'Hunting', fishing: 'Fishing', blog: 'Intel' },
                     hero: { title: "ADVENTURE", subtitle: "REVIVED", cta: "Explore" },
                     sections: { sellers: 'Best Sellers', categories: 'Categories', blog: 'Outdoor Intel' },
                     categories: { winter: 'Winter', men: 'Men', women: 'Women', kids: 'Kids', hunting: 'Hunting', fishing: 'Fishing' },
@@ -280,8 +280,8 @@
                             <div className="flex items-center gap-8">
                                 <img src="assets/ecotone-gatineau-logo-clean.png" onClick={() => setView({type:'home',filter:'all', productId: null})} className="h-8 cursor-pointer" alt="Logo" />
                                 <div className="hidden md:flex items-center gap-6">
-                                    {['home', 'shop'].map(item => (
-                                        <a key={item} href="#" onClick={(e) => { e.preventDefault(); setView({type: item==='shop'?'all':'home', filter:'all', productId: null}); }} className="text-xs font-black uppercase tracking-widest text-[#1A1C19] hover:text-ecotone-green transition-colors">{t.nav[item]}</a>
+                                    {['home', 'shop', 'hunting', 'fishing'].map(item => (
+                                        <a key={item} href="#" onClick={(e) => { e.preventDefault(); setView({type: item==='home'?'home':'all', filter: item==='home'||item==='shop'?'all':item, productId: null}); }} className="text-xs font-black uppercase tracking-widest text-[#1A1C19] hover:text-ecotone-green transition-colors">{t.nav[item]}</a>
                                     ))}
                                 </div>
                             </div>
