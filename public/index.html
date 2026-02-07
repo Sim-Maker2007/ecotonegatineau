@@ -70,6 +70,24 @@
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .animate-marquee { display: flex; animation: marquee 30s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* Megamenu Styles */
+        .megamenu-item:hover .megamenu-panel { visibility: visible; opacity: 1; transform: translateY(0); }
+        .megamenu-panel { 
+            visibility: hidden; 
+            opacity: 0; 
+            position: absolute; 
+            top: 100%; 
+            left: 0; 
+            width: 100vw; 
+            background: white; 
+            border-top: 1px solid #f1f1f1; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
+            transition: all 0.3s ease; 
+            transform: translateY(10px);
+            padding: 40px 0;
+            z-index: 99999;
+        }
     </style>
     <script type="application/ld+json">
     {
@@ -257,6 +275,28 @@
 
             const BRANDS = ["Shimano", "Browning", "Minn Kota", "Bushnell", "Connec", "Sportchief"];
 
+            const NAV_ITEMS = [
+                { 
+                    id: 'shop', 
+                    label: { fr: 'Boutique', en: 'Shop' },
+                    megamenu: [
+                        { category: 'hunting', sub: ['Arcs & Arbalètes', 'Optiques', 'Vêtements', 'Munitions'] },
+                        { category: 'fishing', sub: ['Cannes & Moulinets', 'Leurres', 'Électronique', 'Pêche Blanche'] },
+                        { category: 'camping', sub: ['Tentes', 'Sacs à Dos', 'Survie', 'Cuisine'] }
+                    ]
+                },
+                { id: 'hunting', label: { fr: 'Chasse', en: 'Hunting' } },
+                { id: 'fishing', label: { fr: 'Pêche', en: 'Fishing' } },
+                { id: 'intel', label: { fr: 'Intel', en: 'Intel' } }
+            ];
+
+            const SERVICES = [
+                { id: 1, icon: 'target', title: 'Ajustement d\'Arc', titleEn: 'Bow Tuning', desc: 'Précision chirurgicale par nos experts certificateurs.', descEn: 'Surgical precision by our certified experts.' },
+                { id: 2, icon: 'anchor', title: 'Remplissage de Moulinet', titleEn: 'Line Spooling', desc: 'Pose professionnelle de tresse et monofilament.', descEn: 'Professional braid and monofilament spooling.' },
+                { id: 3, icon: 'shield-check', title: 'Entretien d\'Armes', titleEn: 'Gun Maintenance', desc: 'Nettoyage et inspection pour une sécurité totale.', descEn: 'Cleaning and inspection for total safety.' },
+                { id: 4, icon: 'map', title: 'Conseil Expédition', titleEn: 'Expedition Advice', desc: 'Cartographie et planification gratuite en magasin.', descEn: 'Free mapping and planning in-store.' }
+            ];
+
             useEffect(() => { Lucide.createIcons(); }, [view, isCartOpen]);
 
             const t = translations[lang];
@@ -280,8 +320,34 @@
                             <div className="flex items-center gap-8">
                                 <img src="assets/ecotone-gatineau-logo-clean.png" onClick={() => setView({type:'home',filter:'all', productId: null})} className="h-8 cursor-pointer" alt="Logo" />
                                 <div className="hidden md:flex items-center gap-6">
-                                    {['home', 'shop', 'hunting', 'fishing'].map(item => (
-                                        <a key={item} href="#" onClick={(e) => { e.preventDefault(); setView({type: item==='home'?'home':'all', filter: item==='home'||item==='shop'?'all':item, productId: null}); }} className="text-xs font-black uppercase tracking-widest text-[#1A1C19] hover:text-ecotone-green transition-colors">{t.nav[item]}</a>
+                                    <a href="#" onClick={(e) => { e.preventDefault(); setView({type: 'home', filter:'all', productId: null}); }} className="text-xs font-black uppercase tracking-widest text-[#1A1C19] hover:text-ecotone-green transition-colors">{t.nav.home}</a>
+                                    
+                                    {/* Megamenu Trigger */}
+                                    <div className="megamenu-item relative py-4">
+                                        <a href="#" onClick={(e) => { e.preventDefault(); setView({type: 'all', filter:'all', productId: null}); }} className="text-xs font-black uppercase tracking-widest text-[#1A1C19] hover:text-ecotone-green transition-colors flex items-center gap-1">
+                                            {t.nav.shop} <i data-lucide="chevron-down" className="w-3 h-3"></i>
+                                        </a>
+                                        
+                                        <div className="megamenu-panel">
+                                            <div className="max-w-7xl mx-auto px-6 grid grid-cols-3 gap-12">
+                                                {NAV_ITEMS[0].megamenu.map(menu => (
+                                                    <div key={menu.category}>
+                                                        <h4 className="text-ecotone-green font-black uppercase text-[10px] tracking-[0.2em] mb-6 border-b border-gray-100 pb-2">{menu.category}</h4>
+                                                        <ul className="space-y-4">
+                                                            {menu.sub.map(sub => (
+                                                                <li key={sub}>
+                                                                    <a href="#" onClick={(e) => { e.preventDefault(); setView({type: 'all', filter: menu.category, productId: null}); }} className="text-sm font-bold text-gray-500 hover:text-[#1A1C19] transition-colors uppercase tracking-tight">{sub}</a>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {['hunting', 'fishing', 'intel'].map(item => (
+                                        <a key={item} href={item === 'intel' ? '#intel' : '#'} onClick={(e) => { if(item !== 'intel') { e.preventDefault(); setView({type: 'all', filter: item, productId: null}); } }} className="text-xs font-black uppercase tracking-widest text-[#1A1C19] hover:text-ecotone-green transition-colors">{t.nav[item]}</a>
                                     ))}
                                 </div>
                             </div>
@@ -368,6 +434,26 @@
                                                         <span className="text-[8px] font-black text-ecotone-green tracking-widest uppercase mb-1">{post.date}</span>
                                                         <h3 className="text-xs font-black font-oswald uppercase text-[#1A1C19] group-hover:text-ecotone-green transition-colors line-clamp-2 leading-tight">{lang === 'fr' ? post.title : post.titleEn}</h3>
                                                     </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section id="services" className="py-24 bg-gray-50 border-y border-gray-100 italic">
+                                    <div className="max-w-7xl mx-auto px-6">
+                                        <div className="text-center mb-16">
+                                            <h2 className="text-4xl font-black font-oswald uppercase tracking-tighter mb-4">Services <span className="text-ecotone-green">PRO-STORE</span></h2>
+                                            <p className="text-gray-400 font-bold uppercase tracking-[0.2em] text-[10px]">Expertise technique. Service de confiance.</p>
+                                        </div>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                                            {SERVICES.map(service => (
+                                                <div key={service.id} className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 group">
+                                                    <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-ecotone-green mb-6 group-hover:bg-ecotone-green group-hover:text-white transition-colors">
+                                                        <i data-lucide={service.icon} className="w-6 h-6"></i>
+                                                    </div>
+                                                    <h3 className="text-xl font-black font-oswald uppercase mb-3">{lang === 'fr' ? service.title : service.titleEn}</h3>
+                                                    <p className="text-gray-500 text-sm font-medium leading-relaxed italic">{lang === 'fr' ? service.desc : service.descEn}</p>
                                                 </div>
                                             ))}
                                         </div>
