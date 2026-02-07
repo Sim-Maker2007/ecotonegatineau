@@ -140,6 +140,7 @@
             const [lang, setLang] = useState('fr');
             const [cart, setCart] = useState([]);
             const [isCartOpen, setIsCartOpen] = useState(false);
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
             const [view, setView] = useState({ type: 'home', filter: 'all', productId: null });
 
             const translations = {
@@ -358,9 +359,27 @@
                                     <i data-lucide="shopping-bag" className="w-5 h-5"></i>
                                     {cart.length > 0 && <span className="absolute -top-2 -right-2 bg-ecotone-green text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">{cart.reduce((a,b)=>a+b.qty,0)}</span>}
                                 </div>
+                                <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden text-[#1A1C19]">
+                                    <i data-lucide={isMenuOpen ? "x" : "menu"} className="w-6 h-6"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
+
+                    <AnimatePresence>
+                        {isMenuOpen && (
+                            <motion.div 
+                                initial={{ opacity: 0, y: -20 }} 
+                                animate={{ opacity: 1, y: 0 }} 
+                                exit={{ opacity: 0, y: -20 }}
+                                className="fixed top-16 left-0 w-full bg-white z-[9999998] shadow-xl border-b border-gray-100 py-8 px-6 md:hidden flex flex-col gap-6"
+                            >
+                                {['home', 'shop', 'hunting', 'fishing', 'intel'].map(item => (
+                                    <a key={item} href="#" onClick={(e) => { e.preventDefault(); setView({type: item==='home'?'home':'all', filter: item==='home'||item==='shop'?'all':item, productId: null}); setIsMenuOpen(false); }} className="text-sm font-black uppercase tracking-widest text-[#1A1C19] border-b border-gray-50 pb-4">{t.nav[item]}</a>
+                                ))}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
                     <AnimatePresence>
                         {isCartOpen && (
