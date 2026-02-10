@@ -31,13 +31,15 @@
     </script>
     <style>
         body { background-color: #F8F9FA; color: #1A1C19; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; margin: 0; padding: 0; }
-        #root { position: relative; z-index: 10; padding-top: 56px; }
+        #root { position: relative; z-index: 10; padding-top: 88px; }
+        .announcement-bar { position: fixed; top: 0; left: 0; right: 0; height: 32px; background: #1A1C19; z-index: 99999999; display: flex; align-items: center; justify-content: center; }
 
         .header-anchor {
             position: fixed !important;
             top: 0 !important;
             left: 0 !important;
             right: 0 !important;
+            top: 32px !important;
             height: 56px !important;
             background-color: white !important;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
@@ -162,6 +164,9 @@
             const [isCartOpen, setIsCartOpen] = useState(false);
             const [isMenuOpen, setIsMenuOpen] = useState(false);
             const [view, setView] = useState({ type: 'home', filter: 'all', productId: null });
+            const [blogFilter, setBlogFilter] = useState('all');
+            const [email, setEmail] = useState('');
+            const [subscribed, setSubscribed] = useState(false);
 
             useEffect(() => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -169,7 +174,7 @@
 
             const translations = {
                 fr: {
-                    nav: { home: 'Accueil', shop: 'Boutique', hunting: 'Chasse', fishing: 'Pêche', blog: 'Intel' },
+                    nav: { home: 'Accueil', shop: 'Boutique', hunting: 'Chasse', fishing: 'Pêche', blog: 'Intel', about: 'À propos', contact: 'Contact' },
                     hero: { title: "L'AVENTURE", subtitle: "REVIE ICI", cta: "Explorer" },
                     sections: { sellers: 'Meilleures Ventes', categories: 'Rayons', blog: 'Outdoor Intel' },
                     categories: { winter: 'Hiver', men: 'Hommes', women: 'Femmes', kids: 'Enfants', hunting: 'Chasse', fishing: 'Pêche' },
@@ -177,7 +182,7 @@
                     product: { specs: 'Spécifications', availability: 'Disponibilité', inStock: 'En stock à Gatineau', shipping: 'Livraison gratuite sur 100$+' }
                 },
                 en: {
-                    nav: { home: 'Home', shop: 'Shop', hunting: 'Hunting', fishing: 'Fishing', blog: 'Intel' },
+                    nav: { home: 'Home', shop: 'Shop', hunting: 'Hunting', fishing: 'Fishing', blog: 'Intel', about: 'About', contact: 'Contact' },
                     hero: { title: "ADVENTURE", subtitle: "REVIVED", cta: "Explore" },
                     sections: { sellers: 'Best Sellers', categories: 'Categories', blog: 'Outdoor Intel' },
                     categories: { winter: 'Winter', men: 'Men', women: 'Women', kids: 'Kids', hunting: 'Hunting', fishing: 'Fishing' },
@@ -206,16 +211,16 @@
             ];
 
             const BLOG_POSTS = [
-                { id: 1, title: 'TOP SECRET : Cet endroit de pêche près de la Marina de Hull est incroyable!', titleEn: 'TOP SECRET: This fishing spot near Hull Marina is insane!', date: '06 FÉB 2026', img: 'assets/blog/post1.jpg', content: 'La Marina de Hull cache un secret bien gardé par les locaux. Juste à l\'embouchure, là où le courant change, les dorés se rassemblent en masse. Utilisez un leurre souple de type "jig" avec une tête plombée chartreuse. C\'est l\'endroit idéal pour capturer votre prochain record personnel sans quitter la ville!', contentEn: 'Hull Marina hides a well-kept secret by locals. Right at the mouth, where the current shifts, walleyes gather in droves. Use a soft "jig" style lure with a chartreuse lead head. It\'s the perfect spot to catch your next personal record without leaving the city!' },
-                { id: 2, title: 'VOUS NE CROIREZ PAS ce que ce chasseur a trouvé dans le Parc de la Gatineau...', titleEn: 'YOU WON\'T BELIEVE what this hunter found in Gatineau Park...', date: '05 FÉB 2026', img: 'assets/blog/post2.jpg', content: 'Alors qu\'il explorait un sentier reculé du Parc de la Gatineau, un chasseur local est tombé sur une structure ancienne datant de l\'époque des premiers colons. Plus surprenant encore, la faune semble avoir repris ses droits de manière spectaculaire dans cette zone protégée.', contentEn: 'While exploring a remote trail in Gatineau Park, a local hunter stumbled upon an ancient structure dating back to the time of the first settlers. Even more surprising, wildlife seems to have reclaimed its rights spectacularly in this protected area.' },
-                { id: 3, title: 'ARRÊTEZ TOUT! Le leurre ultime pour l\'Outaouais est enfin arrivé.', titleEn: 'STOP EVERYTHING! The ultimate lure for Outaouais is finally here.', date: '04 FÉB 2026', img: 'assets/blog/post3.jpg', content: 'Nous avons testé des dizaines de leurres cette saison, mais un seul sort du lot pour les eaux de l\'Outaouais. Sa vibration unique et son fini holographique attirent les prédateurs même dans les eaux les plus troubles.', contentEn: 'We tested dozens of lures this season, but only one stands out for Outaouais waters. Its unique vibration and holographic finish attract predators even in the murkiest waters.' },
-                { id: 4, title: 'Bottes de chasse : 3 erreurs mortelles que vous faites probablement.', titleEn: 'Hunting Boots: 3 deadly mistakes you are probably making.', date: '03 FÉB 2026', img: 'assets/blog/post4.jpg', content: '1. Choisir une botte trop serrée (adieu circulation sanguine). 2. Ignorer le type d\'isolation selon votre activité. 3. Oublier l\'entretien du cuir.', contentEn: '1. Choosing a boot that is too tight (goodbye blood circulation). 2. Ignoring the type of insulation based on your activity. 3. Forgetting leather maintenance.' },
-                { id: 5, title: 'Camping d\'hiver au Lac Philippe : Guide de survie extrême.', titleEn: 'Winter Camping at Lac Philippe: Extreme survival guide.', date: '02 FÉB 2026', img: 'assets/blog/post5.jpg', content: 'Le Lac Philippe est magnifique sous la neige, mais le froid ne pardonne pas. Apprenez à monter votre tente quatre saisons et à gérer votre humidité corporelle.', contentEn: 'Lac Philippe is magnificent under the snow, but the cold is unforgiving. Learn how to set up your four-season tent and manage your body moisture.' },
-                { id: 6, title: 'Comment ce gars a pêché un monstre de 40lbs à 5min du centre-ville?', titleEn: 'How this guy caught a 40lb monster 5min from downtown?', date: '01 FÉB 2026', img: 'assets/blog/post6.jpg', content: 'C\'est l\'histoire de Thomas, qui, après sa journée de travail, a lancé sa ligne près du Pont Alexandra. En moins de 15 minutes, un maskinongé trophée a mordu à l\'hameçon.', contentEn: 'This is the story of Thomas, who, after his workday, cast his line near the Alexandra Bridge. In less than 15 minutes, a trophy muskellunge took the bait.' },
-                { id: 7, title: 'Arc vs Arbalète : Le débat sanglant enfin tranché!', titleEn: 'Bow vs Crossbow: The bloody debate finally settled!', date: '30 JAN 2026', img: 'assets/blog/post7.jpg', content: 'Tradition ou technologie? L\'arc demande plus de discipline, tandis que l\'arbalète offre une précision immédiate.', contentEn: 'Tradition or technology? The bow requires more discipline, while the crossbow offers immediate precision.' },
-                { id: 8, title: 'Vêtements thermiques : Ce que les pros ne vous disent pas.', titleEn: 'Thermal Gear: What the pros dont tell you.', date: '28 JAN 2026', img: 'assets/blog/post8.jpg', content: 'Le secret n\'est pas dans l\'épaisseur, mais dans la gestion des couches. Évitez le coton à tout prix!', contentEn: 'The secret is not in the thickness, but in the layers management. Avoid cotton at all costs!' },
-                { id: 9, title: 'Rivières des Outaouais : La carte cachée des meilleurs spots.', titleEn: 'Outaouais Rivers: The hidden map of best spots.', date: '25 JAN 2026', img: 'assets/blog/post9.jpg', content: 'De la rivière Gatineau à la rivière du Lièvre, découvrez les zones peu profondes où les truites se cachent.', contentEn: 'From the Gatineau River to the Rivière du Lièvre, discover the shallow areas where trout hide.' },
-                { id: 10, title: 'STUPEUR! Ecotone Gatineau brise les prix sur la collection 2026.', titleEn: 'SHOCK! Ecotone Gatineau smashes prices on 2026 collection.', date: '20 JAN 2026', img: 'assets/blog/post10.jpg', content: 'Inédit : Nous liquidons l\'inventaire pour faire place aux nouveautés. C\'est le moment ou jamais de s\'équiper.', contentEn: 'Unprecedented: We are clearing out inventory to make room for new arrivals. Now or never to gear up.' }
+                { id: 1, blogCat: 'fishing', title: 'TOP SECRET : Cet endroit de pêche près de la Marina de Hull est incroyable!', titleEn: 'TOP SECRET: This fishing spot near Hull Marina is insane!', date: '06 FÉB 2026', img: 'assets/blog/post1.jpg', content: 'La Marina de Hull cache un secret bien gardé par les locaux. Juste à l\'embouchure, là où le courant change, les dorés se rassemblent en masse. Utilisez un leurre souple de type "jig" avec une tête plombée chartreuse. C\'est l\'endroit idéal pour capturer votre prochain record personnel sans quitter la ville!', contentEn: 'Hull Marina hides a well-kept secret by locals. Right at the mouth, where the current shifts, walleyes gather in droves. Use a soft "jig" style lure with a chartreuse lead head. It\'s the perfect spot to catch your next personal record without leaving the city!' },
+                { id: 2, blogCat: 'hunting', title: 'VOUS NE CROIREZ PAS ce que ce chasseur a trouvé dans le Parc de la Gatineau...', titleEn: 'YOU WON\'T BELIEVE what this hunter found in Gatineau Park...', date: '05 FÉB 2026', img: 'assets/blog/post2.jpg', content: 'Alors qu\'il explorait un sentier reculé du Parc de la Gatineau, un chasseur local est tombé sur une structure ancienne datant de l\'époque des premiers colons. Plus surprenant encore, la faune semble avoir repris ses droits de manière spectaculaire dans cette zone protégée.', contentEn: 'While exploring a remote trail in Gatineau Park, a local hunter stumbled upon an ancient structure dating back to the time of the first settlers. Even more surprising, wildlife seems to have reclaimed its rights spectacularly in this protected area.' },
+                { id: 3, blogCat: 'fishing', title: 'ARRÊTEZ TOUT! Le leurre ultime pour l\'Outaouais est enfin arrivé.', titleEn: 'STOP EVERYTHING! The ultimate lure for Outaouais is finally here.', date: '04 FÉB 2026', img: 'assets/blog/post3.jpg', content: 'Nous avons testé des dizaines de leurres cette saison, mais un seul sort du lot pour les eaux de l\'Outaouais. Sa vibration unique et son fini holographique attirent les prédateurs même dans les eaux les plus troubles.', contentEn: 'We tested dozens of lures this season, but only one stands out for Outaouais waters. Its unique vibration and holographic finish attract predators even in the murkiest waters.' },
+                { id: 4, blogCat: 'gear', title: 'Bottes de chasse : 3 erreurs mortelles que vous faites probablement.', titleEn: 'Hunting Boots: 3 deadly mistakes you are probably making.', date: '03 FÉB 2026', img: 'assets/blog/post4.jpg', content: '1. Choisir une botte trop serrée (adieu circulation sanguine). 2. Ignorer le type d\'isolation selon votre activité. 3. Oublier l\'entretien du cuir.', contentEn: '1. Choosing a boot that is too tight (goodbye blood circulation). 2. Ignoring the type of insulation based on your activity. 3. Forgetting leather maintenance.' },
+                { id: 5, blogCat: 'gear', title: 'Camping d\'hiver au Lac Philippe : Guide de survie extrême.', titleEn: 'Winter Camping at Lac Philippe: Extreme survival guide.', date: '02 FÉB 2026', img: 'assets/blog/post5.jpg', content: 'Le Lac Philippe est magnifique sous la neige, mais le froid ne pardonne pas. Apprenez à monter votre tente quatre saisons et à gérer votre humidité corporelle.', contentEn: 'Lac Philippe is magnificent under the snow, but the cold is unforgiving. Learn how to set up your four-season tent and manage your body moisture.' },
+                { id: 6, blogCat: 'fishing', title: 'Comment ce gars a pêché un monstre de 40lbs à 5min du centre-ville?', titleEn: 'How this guy caught a 40lb monster 5min from downtown?', date: '01 FÉB 2026', img: 'assets/blog/post6.jpg', content: 'C\'est l\'histoire de Thomas, qui, après sa journée de travail, a lancé sa ligne près du Pont Alexandra. En moins de 15 minutes, un maskinongé trophée a mordu à l\'hameçon.', contentEn: 'This is the story of Thomas, who, after his workday, cast his line near the Alexandra Bridge. In less than 15 minutes, a trophy muskellunge took the bait.' },
+                { id: 7, blogCat: 'hunting', title: 'Arc vs Arbalète : Le débat sanglant enfin tranché!', titleEn: 'Bow vs Crossbow: The bloody debate finally settled!', date: '30 JAN 2026', img: 'assets/blog/post7.jpg', content: 'Tradition ou technologie? L\'arc demande plus de discipline, tandis que l\'arbalète offre une précision immédiate.', contentEn: 'Tradition or technology? The bow requires more discipline, while the crossbow offers immediate precision.' },
+                { id: 8, blogCat: 'gear', title: 'Vêtements thermiques : Ce que les pros ne vous disent pas.', titleEn: 'Thermal Gear: What the pros dont tell you.', date: '28 JAN 2026', img: 'assets/blog/post8.jpg', content: 'Le secret n\'est pas dans l\'épaisseur, mais dans la gestion des couches. Évitez le coton à tout prix!', contentEn: 'The secret is not in the thickness, but in the layers management. Avoid cotton at all costs!' },
+                { id: 9, blogCat: 'fishing', title: 'Rivières des Outaouais : La carte cachée des meilleurs spots.', titleEn: 'Outaouais Rivers: The hidden map of best spots.', date: '25 JAN 2026', img: 'assets/blog/post9.jpg', content: 'De la rivière Gatineau à la rivière du Lièvre, découvrez les zones peu profondes où les truites se cachent.', contentEn: 'From the Gatineau River to the Rivière du Lièvre, discover the shallow areas where trout hide.' },
+                { id: 10, blogCat: 'gear', title: 'STUPEUR! Ecotone Gatineau brise les prix sur la collection 2026.', titleEn: 'SHOCK! Ecotone Gatineau smashes prices on 2026 collection.', date: '20 JAN 2026', img: 'assets/blog/post10.jpg', content: 'Inédit : Nous liquidons l\'inventaire pour faire place aux nouveautés. C\'est le moment ou jamais de s\'équiper.', contentEn: 'Unprecedented: We are clearing out inventory to make room for new arrivals. Now or never to gear up.' }
             ];
 
             const BRANDS = ["Shimano", "Browning", "Minn Kota", "Bushnell", "Connec", "Sportchief"];
@@ -277,6 +282,13 @@
 
             return (
                 <div className="flex flex-col min-h-screen">
+                    {/* ===== ANNOUNCEMENT BAR ===== */}
+                    <div className="announcement-bar px-4">
+                        <p className="text-[10px] text-gray-300 font-medium tracking-wider uppercase">
+                            {lang === 'fr' ? 'Livraison gratuite sur les commandes de 100$+ ' : 'Free shipping on orders $100+ '}
+                            <span className="text-ecotone-green font-semibold ml-1">{lang === 'fr' ? '| Ramassage en magasin disponible' : '| In-store pickup available'}</span>
+                        </p>
+                    </div>
                     {/* ===== HEADER ===== */}
                     <div className="header-anchor px-4 sm:px-6">
                         <div className="max-w-7xl mx-auto flex items-center justify-between w-full">
@@ -311,6 +323,8 @@
                                     {['hunting', 'fishing', 'intel'].map(item => (
                                         <a key={item} href={item === 'intel' ? '#intel' : '#'} onClick={(e) => { if(item !== 'intel') { e.preventDefault(); setView({type: 'all', filter: item, productId: null}); } }} className="text-[11px] font-medium uppercase tracking-[0.1em] text-ecotone-dark hover:text-ecotone-green transition-colors">{t.nav[item]}</a>
                                     ))}
+                                    <a href="#" onClick={(e) => { e.preventDefault(); setView({type: 'about'}); }} className="text-[11px] font-medium uppercase tracking-[0.1em] text-ecotone-dark hover:text-ecotone-green transition-colors">{t.nav.about}</a>
+                                    <a href="#" onClick={(e) => { e.preventDefault(); setView({type: 'contact'}); }} className="text-[11px] font-medium uppercase tracking-[0.1em] text-ecotone-dark hover:text-ecotone-green transition-colors">{t.nav.contact}</a>
                                 </div>
                             </div>
 
@@ -336,8 +350,8 @@
                                 exit={{ opacity: 0, y: -20 }}
                                 className="fixed top-[56px] left-0 w-full bg-white z-[9999998] shadow-xl border-b border-gray-100 py-8 px-8 md:hidden flex flex-col gap-6"
                             >
-                                {['home', 'shop', 'hunting', 'fishing', 'intel'].map(item => (
-                                    <a key={item} href="#" onClick={(e) => { e.preventDefault(); setView({type: item==='home'?'home':'all', filter: item==='home'||item==='shop'?'all':item, productId: null}); setIsMenuOpen(false); }} className="text-sm font-bold uppercase tracking-[0.15em] text-ecotone-dark border-b border-gray-50 pb-5">{t.nav[item]}</a>
+                                {['home', 'shop', 'hunting', 'fishing', 'intel', 'about', 'contact'].map(item => (
+                                    <a key={item} href="#" onClick={(e) => { e.preventDefault(); setView({type: ['home'].includes(item)?'home':['about','contact'].includes(item)?item:'all', filter: item==='home'||item==='shop'?'all':['about','contact','intel'].includes(item)?'all':item, productId: null}); setIsMenuOpen(false); }} className="text-sm font-bold uppercase tracking-[0.15em] text-ecotone-dark border-b border-gray-50 pb-5">{t.nav[item]}</a>
                                 ))}
                             </motion.div>
                         )}
@@ -431,6 +445,23 @@
                                     </div>
                                 </section>
 
+                                {/* TRUST BADGES */}
+                                <section className="py-4 bg-white border-b border-gray-100">
+                                    <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-3">
+                                        {[
+                                            {icon: 'truck', fr: 'Livraison gratuite 100$+', en: 'Free shipping $100+'},
+                                            {icon: 'store', fr: 'Ramassage en magasin', en: 'In-store pickup'},
+                                            {icon: 'shield-check', fr: 'Garantie satisfaction', en: 'Satisfaction guarantee'},
+                                            {icon: 'award', fr: 'Experts depuis 2005', en: 'Experts since 2005'}
+                                        ].map((b, i) => (
+                                            <div key={i} className="flex items-center gap-2 py-1">
+                                                <i data-lucide={b.icon} className="w-4 h-4 text-ecotone-green flex-shrink-0"></i>
+                                                <span className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">{lang === 'fr' ? b.fr : b.en}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+
                                 {/* CATEGORIES */}
                                 <section id="categories" className="py-6 bg-white">
                                     <div className="max-w-7xl mx-auto px-4">
@@ -488,16 +519,31 @@
                                 {/* BLOG / INTEL */}
                                 <section id="intel" className="py-10 bg-white">
                                     <div className="max-w-7xl mx-auto px-4">
-                                        <h2 className="text-lg font-bold font-oswald uppercase tracking-tight mb-5">{t.sections.blog}</h2>
+                                        <div className="flex items-center justify-between mb-4">
+                                            <h2 className="text-lg font-bold font-oswald uppercase tracking-tight">{t.sections.blog}</h2>
+                                            <div className="flex gap-1.5">
+                                                {[
+                                                    {key:'all', fr:'Tout', en:'All'},
+                                                    {key:'fishing', fr:'Pêche', en:'Fishing'},
+                                                    {key:'hunting', fr:'Chasse', en:'Hunting'},
+                                                    {key:'gear', fr:'Équipement', en:'Gear'}
+                                                ].map(f => (
+                                                    <button key={f.key} onClick={()=>setBlogFilter(f.key)} className={`text-[10px] font-medium uppercase tracking-wider px-2.5 py-1 rounded transition-colors ${blogFilter === f.key ? 'bg-ecotone-green text-white' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}>{lang === 'fr' ? f.fr : f.en}</button>
+                                                ))}
+                                            </div>
+                                        </div>
                                         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-                                            {BLOG_POSTS.map(post => (
+                                            {BLOG_POSTS.filter(p => blogFilter === 'all' || p.blogCat === blogFilter).map(post => (
                                                 <div key={post.id} onClick={() => setView({type: 'post', postId: post.id})} className="blog-card flex flex-col gap-2 group cursor-pointer">
                                                     <div className="aspect-[3/2] rounded-lg overflow-hidden bg-gray-100">
                                                         <img src={post.img} className="w-full h-full object-cover" />
                                                     </div>
                                                     <div>
-                                                        <span className="text-[9px] font-medium text-gray-400 tracking-wider uppercase">{post.date}</span>
-                                                        <h3 className="text-[11px] font-semibold text-ecotone-dark group-hover:text-ecotone-green transition-colors line-clamp-2 leading-tight mt-0.5">{lang === 'fr' ? post.title : post.titleEn}</h3>
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-[8px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">{post.blogCat === 'fishing' ? (lang==='fr'?'Pêche':'Fishing') : post.blogCat === 'hunting' ? (lang==='fr'?'Chasse':'Hunting') : (lang==='fr'?'Équipement':'Gear')}</span>
+                                                            <span className="text-[9px] font-medium text-gray-400 tracking-wider uppercase">{post.date}</span>
+                                                        </div>
+                                                        <h3 className="text-[11px] font-semibold text-ecotone-dark group-hover:text-ecotone-green transition-colors line-clamp-2 leading-tight mt-1">{lang === 'fr' ? post.title : post.titleEn}</h3>
                                                     </div>
                                                 </div>
                                             ))}
@@ -571,6 +617,99 @@
                         )}
 
                         {/* PRODUCT DETAIL */}
+                        {/* ABOUT PAGE */}
+                        {view.type === 'about' && (
+                            <section className="py-10 bg-white min-h-screen">
+                                <div className="max-w-4xl mx-auto px-4">
+                                    <button onClick={() => setView({type: 'home', filter: 'all', productId: null})} className="text-[10px] font-medium uppercase text-gray-400 hover:text-ecotone-green flex items-center gap-1.5 mb-6 transition-colors">
+                                        <i data-lucide="arrow-left" className="w-3.5 h-3.5"></i> {lang === 'fr' ? 'Retour' : 'Back'}
+                                    </button>
+                                    <h1 className="text-2xl font-bold font-oswald uppercase tracking-tight mb-6">{lang === 'fr' ? 'À propos d\'Ecotone Gatineau' : 'About Ecotone Gatineau'}</h1>
+
+                                    <div className="grid md:grid-cols-2 gap-6 mb-8">
+                                        <div className="rounded-lg overflow-hidden aspect-[4/3] bg-gray-100">
+                                            <img src="assets/categories/hunting.jpg" className="w-full h-full object-cover" />
+                                        </div>
+                                        <div className="space-y-4">
+                                            <p className="text-sm text-gray-600 leading-relaxed">
+                                                {lang === 'fr'
+                                                    ? 'Ecotone Gatineau est votre destination de plein air dans l\'Outaouais. Située au coeur de Gatineau, notre boutique offre une sélection complète d\'équipement de chasse, pêche, camping et vêtements pour toute la famille.'
+                                                    : 'Ecotone Gatineau is your outdoor destination in the Outaouais region. Located in the heart of Gatineau, our store offers a complete selection of hunting, fishing, camping equipment and clothing for the whole family.'}
+                                            </p>
+                                            <p className="text-sm text-gray-600 leading-relaxed">
+                                                {lang === 'fr'
+                                                    ? 'Notre équipe de passionnés est là pour vous conseiller et vous accompagner dans vos aventures. Que vous soyez débutant ou expert, nous avons l\'expertise et les produits qu\'il vous faut.'
+                                                    : 'Our team of enthusiasts is here to advise and accompany you on your adventures. Whether you are a beginner or an expert, we have the expertise and products you need.'}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                                        {[
+                                            {num: '600+', fr: 'Marques', en: 'Brands'},
+                                            {num: '20+', fr: 'Années d\'expertise', en: 'Years of expertise'},
+                                            {num: '4', fr: 'Services pro en magasin', en: 'Pro in-store services'},
+                                            {num: '1000+', fr: 'Clients satisfaits', en: 'Happy customers'}
+                                        ].map((s, i) => (
+                                            <div key={i} className="bg-gray-50 rounded-lg p-4 text-center">
+                                                <p className="text-2xl font-bold font-oswald text-ecotone-green">{s.num}</p>
+                                                <p className="text-[10px] font-medium text-gray-500 uppercase tracking-wider mt-1">{lang === 'fr' ? s.fr : s.en}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <div className="bg-ecotone-dark rounded-lg p-6 text-center">
+                                        <h3 className="text-white font-bold font-oswald uppercase text-lg mb-2">{lang === 'fr' ? 'Notre mission' : 'Our mission'}</h3>
+                                        <p className="text-gray-400 text-sm leading-relaxed max-w-2xl mx-auto">
+                                            {lang === 'fr'
+                                                ? 'Rendre le plein air accessible à tous en offrant les meilleurs produits, les meilleurs conseils et le meilleur service de la région de l\'Outaouais.'
+                                                : 'Making the outdoors accessible to everyone by offering the best products, the best advice and the best service in the Outaouais region.'}
+                                        </p>
+                                    </div>
+                                </div>
+                            </section>
+                        )}
+
+                        {/* CONTACT PAGE */}
+                        {view.type === 'contact' && (
+                            <section className="py-10 bg-white min-h-screen">
+                                <div className="max-w-4xl mx-auto px-4">
+                                    <button onClick={() => setView({type: 'home', filter: 'all', productId: null})} className="text-[10px] font-medium uppercase text-gray-400 hover:text-ecotone-green flex items-center gap-1.5 mb-6 transition-colors">
+                                        <i data-lucide="arrow-left" className="w-3.5 h-3.5"></i> {lang === 'fr' ? 'Retour' : 'Back'}
+                                    </button>
+                                    <h1 className="text-2xl font-bold font-oswald uppercase tracking-tight mb-6">{lang === 'fr' ? 'Nous Joindre' : 'Contact Us'}</h1>
+
+                                    <div className="grid md:grid-cols-2 gap-6 mb-8">
+                                        <div className="space-y-4">
+                                            <div className="bg-gray-50 rounded-lg p-4">
+                                                <h3 className="text-sm font-bold font-oswald uppercase mb-3">{lang === 'fr' ? 'Coordonnées' : 'Contact Info'}</h3>
+                                                <div className="space-y-2.5 text-sm text-gray-600">
+                                                    <p className="flex items-center gap-2"><i data-lucide="map-pin" className="w-4 h-4 text-ecotone-green flex-shrink-0"></i> 79 Boul. de la Gappe #4, Gatineau, QC J8T 0B5</p>
+                                                    <p className="flex items-center gap-2"><i data-lucide="phone" className="w-4 h-4 text-ecotone-green flex-shrink-0"></i> (819) 243-6665</p>
+                                                    <p className="flex items-center gap-2"><i data-lucide="mail" className="w-4 h-4 text-ecotone-green flex-shrink-0"></i> info@ecotonegatineau.com</p>
+                                                </div>
+                                            </div>
+                                            <div className="bg-gray-50 rounded-lg p-4">
+                                                <h3 className="text-sm font-bold font-oswald uppercase mb-3">{lang === 'fr' ? 'Heures d\'ouverture' : 'Store Hours'}</h3>
+                                                <div className="space-y-1.5 text-sm text-gray-600">
+                                                    <div className="flex justify-between"><span>{lang === 'fr' ? 'Lundi - Vendredi' : 'Monday - Friday'}</span><span className="font-semibold">9h - 18h</span></div>
+                                                    <div className="flex justify-between"><span>{lang === 'fr' ? 'Samedi' : 'Saturday'}</span><span className="font-semibold">9h - 17h</span></div>
+                                                    <div className="flex justify-between"><span>{lang === 'fr' ? 'Dimanche' : 'Sunday'}</span><span className="font-semibold text-red-400">{lang === 'fr' ? 'Fermé' : 'Closed'}</span></div>
+                                                </div>
+                                            </div>
+                                            <div className="flex gap-2">
+                                                <a href="https://facebook.com" target="_blank" className="flex-1 bg-ecotone-dark text-white py-2.5 rounded-lg text-center text-xs font-semibold uppercase tracking-wider hover:bg-ecotone-green transition-colors">Facebook</a>
+                                                <a href="https://instagram.com" target="_blank" className="flex-1 bg-ecotone-dark text-white py-2.5 rounded-lg text-center text-xs font-semibold uppercase tracking-wider hover:bg-ecotone-green transition-colors">Instagram</a>
+                                            </div>
+                                        </div>
+                                        <div className="rounded-lg overflow-hidden bg-gray-100 min-h-[300px]">
+                                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2798.5!2d-75.6924!3d45.4851!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cce04e5c8f7c3f1%3A0x5b5e5f5c5c5c5c5c!2s79%20Boulevard%20de%20la%20Gappe%2C%20Gatineau%2C%20QC%20J8T%200B5!5e0!3m2!1sfr!2sca!4v1707000000000!5m2!1sfr!2sca" width="100%" height="100%" style={{border:0, minHeight:'300px'}} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        )}
+
                         {view.type === 'product' && selected && (
                              <section className="py-8 bg-white min-h-screen">
                                 <div className="max-w-5xl mx-auto px-4">
@@ -612,6 +751,23 @@
 
                     {/* ===== FOOTER ===== */}
                     <footer className="bg-ecotone-dark py-10 px-4">
+                        {/* NEWSLETTER */}
+                        <div className="max-w-7xl mx-auto mb-8 pb-8 border-b border-white/5">
+                            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                                <div>
+                                    <h3 className="text-white font-bold font-oswald uppercase text-sm">{lang === 'fr' ? 'Restez connecté' : 'Stay connected'}</h3>
+                                    <p className="text-gray-500 text-xs mt-1">{lang === 'fr' ? 'Promotions exclusives, conseils et nouveautés directement dans votre boîte.' : 'Exclusive deals, tips and new arrivals straight to your inbox.'}</p>
+                                </div>
+                                {subscribed ? (
+                                    <p className="text-ecotone-green text-xs font-semibold flex items-center gap-1.5"><i data-lucide="check-circle" className="w-4 h-4"></i> {lang === 'fr' ? 'Merci! Vous êtes inscrit.' : 'Thanks! You\'re subscribed.'}</p>
+                                ) : (
+                                    <div className="flex gap-2 w-full md:w-auto">
+                                        <input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder={lang === 'fr' ? 'Votre courriel' : 'Your email'} className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-gray-500 flex-1 md:w-64 focus:outline-none focus:border-ecotone-green" />
+                                        <button onClick={()=>{if(email.includes('@')){setSubscribed(true);setEmail('');}}} className="bg-ecotone-green text-white px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider hover:bg-ecotone-green-light transition-colors flex-shrink-0">{lang === 'fr' ? 'S\'inscrire' : 'Subscribe'}</button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-left text-gray-400">
                             <div>
                                 <img src="assets/ecotone-gatineau-logo-clean.png" className="h-7 mb-5 brightness-0 invert" alt="Ecotone" />
@@ -635,6 +791,8 @@
                                     <li><a href="#intel" className="hover:text-ecotone-green transition-colors">{lang === 'fr' ? 'Trucs & Astuces' : 'Tips & Tricks'}</a></li>
                                     <li><a href="#intel" className="hover:text-ecotone-green transition-colors">{lang === 'fr' ? 'Zones de Pêche' : 'Fishing Zones'}</a></li>
                                     <li><a href="#intel" className="hover:text-ecotone-green transition-colors">{lang === 'fr' ? 'Guides Chasse' : 'Hunting Guides'}</a></li>
+                                    <li><a href="#" onClick={(e)=>{e.preventDefault(); setView({type:'about'})}} className="hover:text-ecotone-green transition-colors">{lang === 'fr' ? 'À propos' : 'About'}</a></li>
+                                    <li><a href="#" onClick={(e)=>{e.preventDefault(); setView({type:'contact'})}} className="hover:text-ecotone-green transition-colors">Contact</a></li>
                                 </ul>
                             </div>
                             <div>
