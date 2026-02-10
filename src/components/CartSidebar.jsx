@@ -1,114 +1,81 @@
-import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ShoppingBag, Plus, Minus, Trash2 } from 'lucide-react';
-import { useCartStore } from '../data/cartStore';
+import { X, ShoppingBag, Trash2 } from 'lucide-react';
+import { useLang } from '../context/LanguageContext';
+import { useCart } from '../context/CartContext';
+import { getStripe } from '../lib/stripe';
 
-export const CartSidebar = () => {
-  const { items, isCartOpen, toggleCart, updateQuantity, removeItem, getTotal } = useCartStore();
-  const { subtotal, shipping, tax, total } = getTotal();
+export default function CartSidebar() {
+  const { lang, t } = useLang();
+  const { cart, isCartOpen, setIsCartOpen, removeFromCart, updateQty, cartSubtotal, cartShipping, cartTax, cartTotal } = useCart();
+
+  const handleCheckout = async () => {
+    const stripe = await getStripe();
+    if (!stripe) {
+      alert(lang === 'fr' ? 'Paiement en ligne bientôt disponible!' : 'Online checkout coming soon!');
+      return;
+    }
+    // TODO: Call your backend to create a Stripe Checkout Session
+    // const response = await fetch('/api/checkout', { method: 'POST', body: JSON.stringify({ items: cart }) });
+    // const { sessionId } = await response.json();
+    // await stripe.redirectToCheckout({ sessionId });
+  };
 
   return (
     <AnimatePresence>
       {isCartOpen && (
         <>
-          {/* Overlay */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={toggleCart}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60]"
-          />
-          
-          {/* Drawer */}
-          <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white border-l border-gray-100 z-[70] flex flex-col shadow-2xl"
-          >
-            {/* Header */}
-            <div className="p-6 border-b border-gray-100 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <ShoppingBag className="text-ecotone-green w-6 h-6" />
-                <h2 className="text-xl font-black uppercase tracking-tighter text-[#1A1C19] font-oswald">VOTRE PANIER</h2>
-                <span className="bg-ecotone-green text-white text-[10px] font-black px-2 py-0.5 rounded shadow-lg shadow-ecotone-green/20">
-                  {items.length} ARTICLES
-                </span>
-              </div>
-              <button onClick={toggleCart} className="text-gray-400 hover:text-[#1A1C19] transition-colors">
-                <X className="w-6 h-6" />
+          <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={() => setIsCartOpen(false)} className="fixed inset-0 bg-black/50 z-[10000000] backdrop-blur-sm" />
+          <motion.div initial={{x:'100%'}} animate={{x:0}} exit={{x:'100%'}} transition={{type:'spring', damping:30, stiffness:300}} className="fixed top-0 right-0 h-full w-full max-w-md bg-white z-[10000001] shadow-2xl flex flex-col">
+            <div className="flex justify-between items-center p-6 border-b border-gray-100">
+              <h2 className="text-lg font-bold font-oswald tracking-tight uppercase">{t.cart.title}</h2>
+              <button onClick={() => setIsCartOpen(false)} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Items List */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-6 hide-scrollbar">
-              {items.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-center space-y-4 opacity-20">
-                  <ShoppingBag className="w-20 h-20" />
-                  <p className="text-sm font-bold uppercase tracking-widest">Le panier est vide</p>
+            <div className="flex-1 overflow-y-auto p-6">
+              {cart.length === 0 ? (
+                <div className="flex flex-col items-center justify-center h-full text-center">
+                  <ShoppingBag className="w-12 h-12 text-gray-200 mb-4" />
+                  <p className="text-gray-400 text-sm font-medium">{t.cart.empty}</p>
                 </div>
               ) : (
-                items.map((item) => (
-                  <div key={item.id} className="flex gap-4 group">
-                    <div className="w-24 h-24 bg-gray-50 border border-gray-100 rounded-xl flex items-center justify-center overflow-hidden">
-                      {item.image && item.image.includes('assets') ? (
-                        <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                      ) : (
-                        <span className="text-5xl">{item.category === 'fishing' ? '🎣' : '🏹'}</span>
-                      )}
-                    </div>
-                    <div className="flex-1 space-y-2">
-                       <div className="flex justify-between">
-                          <h4 className="text-xs font-black uppercase text-[#1A1C19] truncate max-w-[150px] font-oswald">{item.name}</h4>
-                          <span className="text-ecotone-green font-black font-oswald">${item.price.toFixed(2)}</span>
-                       </div>
-                       <p className="text-[10px] text-gray-400 font-bold tracking-widest uppercase">{item.subcategory}</p>
-                       
-                       <div className="flex items-center justify-between pt-2">
-                          <div className="flex items-center bg-gray-50 border border-gray-100 rounded-lg overflow-hidden">
-                             <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="p-1.5 hover:bg-gray-100 text-gray-600"><Minus className="w-3 h-3" /></button>
-                             <span className="px-3 text-xs font-black text-[#1A1C19] font-oswald">{item.quantity}</span>
-                             <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="p-1.5 hover:bg-gray-100 text-gray-600"><Plus className="w-3 h-3" /></button>
+                <div className="space-y-6">
+                  {cart.map(i => (
+                    <div key={i.id} className="flex gap-4 items-start">
+                      <img src={i.image} className="w-20 h-20 rounded-xl object-cover border border-gray-100 flex-shrink-0" alt="" />
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm text-ecotone-dark truncate">{lang === 'fr' ? i.name : i.nameEn}</h4>
+                        <p className="text-ecotone-green font-bold text-sm mt-1">${i.price.toFixed(2)}</p>
+                        <div className="flex items-center gap-3 mt-3">
+                          <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+                            <button onClick={() => updateQty(i.id, -1)} className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-ecotone-dark hover:bg-gray-50 transition-colors text-sm font-bold">-</button>
+                            <span className="w-8 h-8 flex items-center justify-center text-sm font-bold">{i.qty}</span>
+                            <button onClick={() => updateQty(i.id, 1)} className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-ecotone-dark hover:bg-gray-50 transition-colors text-sm font-bold">+</button>
                           </div>
-                          <button onClick={() => removeItem(item.id)} className="text-gray-300 hover:text-red-500 transition-colors">
-                             <Trash2 className="w-4 h-4" />
+                          <button onClick={() => removeFromCart(i.id)} className="text-gray-300 hover:text-red-500 transition-colors ml-auto">
+                            <Trash2 className="w-4 h-4" />
                           </button>
-                       </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))
+                  ))}
+                </div>
               )}
             </div>
 
-            {/* Footer Summary */}
-            {items.length > 0 && (
-              <div className="p-6 bg-gray-50 border-t border-gray-100 space-y-4">
-                <div className="space-y-2">
-                  <div className="flex justify-between text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                    <span>Sous-total</span>
-                    <span className="text-[#1A1C19] font-oswald">${subtotal.toFixed(2)}</span>
-                  </div>
-                  <div className="flex justify-between text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                    <span>Livraison</span>
-                    <span className={shipping === 0 ? 'text-ecotone-green' : 'text-[#1A1C19] font-oswald'}>
-                      {shipping === 0 ? 'GRATUIT' : `$${shipping.toFixed(2)}`}
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                    <span>Taxes (QC 14.975%)</span>
-                    <span className="text-[#1A1C19] font-oswald">${tax.toFixed(2)}</span>
-                  </div>
-                  <div className="flex justify-between pt-4 text-xl font-black uppercase text-[#1A1C19] font-oswald">
-                    <span>Total</span>
-                    <span className="text-ecotone-green">${total.toFixed(2)}</span>
-                  </div>
+            {cart.length > 0 && (
+              <div className="border-t border-gray-100 p-6 space-y-4">
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between text-gray-500"><span>{t.cart.subtotal}</span><span className="font-semibold text-ecotone-dark">${cartSubtotal.toFixed(2)}</span></div>
+                  <div className="flex justify-between text-gray-500"><span>{t.cart.shipping}</span><span className="font-semibold text-ecotone-dark">{cartShipping === 0 ? t.cart.free : `$${cartShipping.toFixed(2)}`}</span></div>
+                  <div className="flex justify-between text-gray-500"><span>{t.cart.tax}</span><span className="font-semibold text-ecotone-dark">${cartTax.toFixed(2)}</span></div>
                 </div>
-                
-                <button className="w-full bg-ecotone-green text-white font-black uppercase tracking-[0.2em] py-5 hover:scale-[1.02] transition-transform shadow-xl shadow-ecotone-green/20 rounded-xl">
-                  PASSER À LA CAISSE →
-                </button>
+                <div className="flex justify-between pt-3 border-t border-gray-100">
+                  <span className="font-bold text-ecotone-dark">Total</span>
+                  <span className="font-bold text-lg text-ecotone-dark font-oswald">${cartTotal.toFixed(2)}</span>
+                </div>
+                <button onClick={handleCheckout} className="w-full bg-ecotone-dark text-white py-4 font-bold uppercase tracking-[0.15em] text-sm rounded-xl hover:bg-ecotone-green transition-colors duration-300">{t.cart.checkout}</button>
               </div>
             )}
           </motion.div>
@@ -116,4 +83,4 @@ export const CartSidebar = () => {
       )}
     </AnimatePresence>
   );
-};
+}

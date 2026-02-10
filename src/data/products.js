@@ -1,57 +1,9 @@
-export const products = [
-  { 
-    id: 1, 
-    name: "Canne à lancer Pro Series", 
-    category: "fishing", 
-    subcategory: "Cannes", 
-    price: 149.99, 
-    originalPrice: 189.99, 
-    sku: "EC-FSH-001",
-    rating: 4.8, 
-    reviews: 124, 
-    featured: true,
-    image: "assets/products/rod.avif"
-  },
-  { 
-    id: 2, 
-    name: "Moulinet Titanium Elite", 
-    category: "fishing", 
-    subcategory: "Moulinets", 
-    price: 229.99, 
-    sku: "EC-FSH-002",
-    rating: 4.9, 
-    reviews: 89, 
-    featured: true,
-    image: "assets/products/knife.webp" 
-  },
-  { 
-    id: 9, 
-    name: "Arc Compound Predator", 
-    category: "hunting", 
-    subcategory: "Arcs", 
-    price: 599.99, 
-    originalPrice: 749.99, 
-    sku: "EC-HNT-001",
-    rating: 4.9, 
-    reviews: 156, 
-    featured: true,
-    image: "assets/products/hunting-jacket.webp"
-  },
-  { 
-    id: 10, 
-    name: "Arbalète Phantom X", 
-    category: "hunting", 
-    subcategory: "Arbalètes", 
-    price: 849.99, 
-    sku: "EC-HNT-002",
-    rating: 4.8, 
-    reviews: 78, 
-    featured: true,
-    image: "assets/products/hunting-boots.webp"
-  }
-];
-
-export const categories = [
-  { id: 'fishing', name: 'PÊCHE', icon: 'Fish', description: 'Cannes, moulinets, leurres & plus', color: '#0891b2' },
-  { id: 'hunting', name: 'CHASSE', icon: 'Crosshair', description: 'Arcs, optiques, vêtements & équipement', color: '#8BC34A' }
+export const ALL_PRODUCTS = [
+  { id: 1, name: "Télémètre Laser Bushnell", nameEn: "Bushnell Laser Rangefinder", category: "hunting", price: 299.99, originalPrice: 349.99, image: "/assets/products/rangefinder.jpg", desc: "Précision chirurgicale pour vos sessions de chasse. Portée étendue.", descEn: "Surgical precision for your hunting sessions. Extended range.", specs: ["Grossissement 6x", "Portée 800m"] },
+  { id: 2, name: "Canne à Pêche Performance", nameEn: "Performance Fishing Rod", category: "fishing", price: 189.99, originalPrice: 229.99, image: "/assets/products/rod.avif", desc: "Sensibilité extrême pour détecter la moindre touche.", descEn: "Extreme sensitivity to detect the slightest bite.", specs: ["Longueur 7'", "Action Fast"] },
+  { id: 5, name: "Manteau Chasse JTM Pro", nameEn: "JTM Hunting Jacket Pro", category: "men", price: 279.99, originalPrice: 329.99, image: "/assets/products/hunting-jacket.webp", desc: "Tissu silencieux et isolation thermique avancée.", descEn: "Silent fabric and advanced thermal insulation.", specs: ["Camo Mirage", "Respirant"] },
+  { id: 7, name: "Chandail Ecotone Team", nameEn: "Ecotone Team Sweater", category: "men", price: 64.99, image: "/assets/products/sweater.webp", desc: "Le confort officiel de l'équipe Ecotone.", descEn: "The official comfort of the Ecotone team.", specs: ["Coton 100%", "Logo Brodé"] },
+  { id: 11, name: "Bottes de Chasse Pro", nameEn: "Pro Hunting Boots", category: "women", price: 249.99, originalPrice: 289.99, image: "/assets/products/hunting-boots.webp", desc: "Protection totale en terrain difficile.", descEn: "Total protection in rough terrain.", specs: ["Gore-Tex", "Isolation 400g"] },
+  { id: 12, name: "Pantalon de Chasse", nameEn: "Hunting Pants", category: "kids", price: 159.99, image: "/assets/products/hunting-pants.webp", desc: "Liberté de mouvement maximale.", descEn: "Maximum freedom of movement.", specs: ["Tissu Ripstop", "Poches Cargo"] },
+  { id: 15, name: "Ensemble Hiver Expedition", nameEn: "Winter Expedition Set", category: "winter", price: 449.99, originalPrice: 549.99, image: "/assets/categories/winter.jpg", desc: "Le summum de la protection contre le froid.", descEn: "The ultimate cold protection.", specs: ["-40°C Rating", "Imperméable"] }
 ];
