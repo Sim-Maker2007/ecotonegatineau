@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ShoppingBag, ChevronDown, Menu, X } from 'lucide-react';
 import { useLang } from '../context/LanguageContext';
 import { useCart } from '../context/CartContext';
