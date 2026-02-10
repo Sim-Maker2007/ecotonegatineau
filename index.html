@@ -143,6 +143,11 @@
             const [isMenuOpen, setIsMenuOpen] = useState(false);
             const [view, setView] = useState({ type: 'home', filter: 'all', productId: null });
 
+            // Scroll to top when view changes
+            useEffect(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, [view.type, view.productId, view.postId]);
+
             const translations = {
                 fr: {
                     nav: { home: 'Accueil', shop: 'Boutique', hunting: 'Chasse', fishing: 'Pêche', blog: 'Intel' },

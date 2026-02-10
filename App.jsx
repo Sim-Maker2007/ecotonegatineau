@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { CategoryShowcase } from './components/CategoryShowcase';
@@ -8,6 +8,11 @@ import { CheckoutView } from './components/CheckoutView';
 
 function App() {
   const [view, setView] = useState('home');
+
+  // Scroll to top when view changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [view]);
 
   return (
     <div className="min-h-screen bg-[#F8F9FA] text-[#1A1C19] selection:bg-ecotone-green selection:text-white font-sans">
