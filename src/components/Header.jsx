@@ -9,7 +9,6 @@ export default function Header() {
   const { lang, toggleLang, t } = useLang();
   const { cart, setIsCartOpen } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate();
 
   const totalItems = cart.reduce((a, b) => a + b.qty, 0);
 
