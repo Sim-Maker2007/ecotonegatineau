@@ -11,7 +11,8 @@ export default function BlogSection() {
     { key: 'all', label: t.blog.all },
     { key: 'fishing', label: t.blog.fishing },
     { key: 'hunting', label: t.blog.hunting },
-    { key: 'gear', label: t.blog.gear }
+    { key: 'hiking', label: t.blog.hiking },
+    { key: 'camping', label: t.blog.camping }
   ];
 
   const filtered = BLOG_POSTS.filter(p => blogFilter === 'all' || p.blogCat === blogFilter);
@@ -42,7 +43,7 @@ export default function BlogSection() {
               <div>
                 <div className="flex items-center gap-2">
                   <span className="text-[8px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">
-                    {post.blogCat === 'fishing' ? t.blog.fishing : post.blogCat === 'hunting' ? t.blog.hunting : t.blog.gear}
+                    {t.blog[post.blogCat] || post.blogCat}
                   </span>
                   <span className="text-[9px] font-medium text-gray-400 tracking-wider uppercase">{post.date}</span>
                 </div>

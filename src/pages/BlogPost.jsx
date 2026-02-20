@@ -28,11 +28,13 @@ export default function BlogPost() {
           <img src={post.img} className="w-full aspect-video object-cover rounded-lg mb-6" alt="" />
           <span className="text-[10px] font-medium text-ecotone-green tracking-wider uppercase mb-2 block">{post.date}</span>
           <h1 className="text-xl md:text-2xl font-bold font-oswald uppercase text-ecotone-dark leading-tight mb-5">{lang === 'fr' ? post.title : post.titleEn}</h1>
-          <div className="text-gray-500 leading-relaxed text-sm">
-            <p className="border-l-[3px] border-ecotone-green pl-4 py-2 bg-gray-50 rounded-r-lg">
-              {lang === 'fr' ? post.content : post.contentEn}
-            </p>
-            <p className="text-xs text-gray-400 mt-4">— Équipe Ecotone Gatineau</p>
+          <div className="text-gray-600 leading-relaxed text-sm space-y-4">
+            {(lang === 'fr' ? post.content : post.contentEn).split('\n\n').map((paragraph, i) => (
+              <p key={i} className={i === 0 ? "border-l-[3px] border-ecotone-green pl-4 py-2 bg-gray-50 rounded-r-lg text-gray-700 font-medium" : ""}>
+                {paragraph}
+              </p>
+            ))}
+            <p className="text-xs text-gray-400 mt-6 pt-4 border-t border-gray-100">— Équipe Ecotone Gatineau</p>
           </div>
         </div>
       </section>

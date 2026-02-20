@@ -32,7 +32,7 @@ export const translations = {
       subscribe: 'S\'inscrire',
       thanks: 'Merci! Vous êtes inscrit.'
     },
-    blog: { all: 'Tout', fishing: 'Pêche', hunting: 'Chasse', gear: 'Équipement' },
+    blog: { all: 'Tout', fishing: 'Pêche', hunting: 'Chasse', hiking: 'Rando', camping: 'Camping' },
     common: { back: 'Retour', viewAll: 'Voir tout', shop: 'Magasiner' }
   },
   en: {
@@ -68,7 +68,7 @@ export const translations = {
       subscribe: 'Subscribe',
       thanks: 'Thanks! You\'re subscribed.'
     },
-    blog: { all: 'All', fishing: 'Fishing', hunting: 'Hunting', gear: 'Gear' },
+    blog: { all: 'All', fishing: 'Fishing', hunting: 'Hunting', hiking: 'Hiking', camping: 'Camping' },
     common: { back: 'Back', viewAll: 'View all', shop: 'Shop' }
   }
 };
