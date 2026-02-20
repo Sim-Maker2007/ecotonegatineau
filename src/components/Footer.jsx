@@ -48,7 +48,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto mt-8 pt-5 border-t border-white/5 text-center text-[9px] text-gray-600 uppercase tracking-wider">
-        &copy; 2026 Ecotone Gatineau — Amara By Simon's Lab
+        &copy; 2026 Ecotone Gatineau — Built By Simon's Lab
       </div>
     </footer>
   );
