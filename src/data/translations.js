@@ -1,7 +1,7 @@
 export const translations = {
   fr: {
     nav: { home: 'Accueil', shop: 'Boutique', hunting: 'Chasse', fishing: 'Pêche', blog: 'Intel', about: 'À propos', contact: 'Contact' },
-    hero: { title: "L'AVENTURE", subtitle: "REVIE ICI", cta: "Explorer" },
+    hero: { title: "AU-DELÀ", subtitle: "DES SENTIERS", cta: "Explorer" },
     sections: { sellers: 'Meilleures Ventes', categories: 'Rayons', blog: 'Outdoor Intel' },
     categories: { winter: 'Hiver', men: 'Hommes', women: 'Femmes', kids: 'Enfants', hunting: 'Chasse', fishing: 'Pêche' },
     cart: { title: 'PANIER', empty: 'Votre panier est vide', checkout: 'COMMANDER', add: 'Ajouter au panier', subtotal: 'Sous-total', shipping: 'Livraison', free: 'Gratuite', tax: 'Taxes (QC)' },
@@ -37,7 +37,7 @@ export const translations = {
   },
   en: {
     nav: { home: 'Home', shop: 'Shop', hunting: 'Hunting', fishing: 'Fishing', blog: 'Intel', about: 'About', contact: 'Contact' },
-    hero: { title: "ADVENTURE", subtitle: "REVIVED", cta: "Explore" },
+    hero: { title: "BEYOND", subtitle: "THE TRAILS", cta: "Explore" },
     sections: { sellers: 'Best Sellers', categories: 'Categories', blog: 'Outdoor Intel' },
     categories: { winter: 'Winter', men: 'Men', women: 'Women', kids: 'Kids', hunting: 'Hunting', fishing: 'Fishing' },
     cart: { title: 'CART', empty: 'Your cart is empty', checkout: 'CHECKOUT', add: 'Add to cart', subtotal: 'Subtotal', shipping: 'Shipping', free: 'Free', tax: 'Tax (QC)' },
