@@ -5,7 +5,11 @@
   "outputDirectory": "dist",
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/((?!google8593491c2f81d3a4\\.html|sitemap\\.xml|robots\\.txt|manifest\\.json|favicon\\.ico|assets/).*)", "destination": "/index.html" }
+    { "source": "/google8593491c2f81d3a4.html", "destination": "/google8593491c2f81d3a4.html" },
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/robots.txt", "destination": "/robots.txt" },
+    { "source": "/manifest.json", "destination": "/manifest.json" },
+    { "source": "/:path((?!assets/).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
