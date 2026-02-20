@@ -19,9 +19,8 @@ body {
 
 @media (max-width: 768px) {
   body {
-    background-image: url('/assets/topo-bg.jpg');
-    background-size: 1200px;
-    background-blend-mode: soft-light;
+    background-image: url('/assets/topo-bg-light.jpg');
+    background-size: 800px;
   }
 }
 
