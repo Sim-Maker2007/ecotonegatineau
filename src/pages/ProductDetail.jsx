@@ -1,11 +1,14 @@
 import { useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { Truck, MapPin } from 'lucide-react';
 import Breadcrumbs from '../components/Breadcrumbs';
 import SEOHead from '../components/SEOHead';
 import { useLang } from '../context/LanguageContext';
 import { useCart } from '../context/CartContext';
 import { ALL_PRODUCTS } from '../data/products';
+
+const BASE = 'https://ecotone-gatineau.vercel.app';
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -20,9 +23,23 @@ export default function ProductDetail() {
     </div>
   );
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Ecotone Gatineau', item: BASE },
+      { '@type': 'ListItem', position: 2, name: lang === 'fr' ? 'Boutique' : 'Shop', item: `${BASE}/boutique` },
+      { '@type': 'ListItem', position: 3, name: t.categories[product.category], item: `${BASE}/boutique/${product.category}` },
+      { '@type': 'ListItem', position: 4, name: lang === 'fr' ? product.name : product.nameEn }
+    ]
+  };
+
   return (
     <>
       <SEOHead page="product" product={product} />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+      </Helmet>
       <section className="py-8 bg-white min-h-screen">
         <div className="max-w-5xl mx-auto px-4">
           <Breadcrumbs items={[

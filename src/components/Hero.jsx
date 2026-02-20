@@ -5,7 +5,7 @@ export default function Hero() {
   const { t } = useLang();
   return (
     <section className="hero-video-container">
-      <video autoPlay loop muted playsInline><source src="/assets/ecotone-hero-upscaled.mp4" type="video/mp4" /></video>
+      <video autoPlay loop muted playsInline preload="metadata"><source src="/assets/ecotone-hero.mp4" type="video/mp4" /></video>
       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/15 to-transparent" />
       <div className="relative h-full flex flex-col items-center justify-center text-center px-6">
         <motion.h1

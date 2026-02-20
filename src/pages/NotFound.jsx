@@ -1,10 +1,16 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { Home, ShoppingBag, BookOpen } from 'lucide-react';
 import { useLang } from '../context/LanguageContext';
 
 export default function NotFound() {
   const { lang } = useLang();
   return (
+    <>
+    <Helmet>
+      <title>{lang === 'fr' ? '404 — Page Introuvable | Ecotone Gatineau' : '404 — Page Not Found | Ecotone Gatineau'}</title>
+      <meta name="robots" content="noindex, follow" />
+    </Helmet>
     <section className="min-h-screen flex items-center justify-center bg-white px-4">
       <div className="text-center max-w-md">
         <p className="text-8xl font-extrabold font-oswald text-ecotone-green leading-none mb-2">404</p>
@@ -32,5 +38,6 @@ export default function NotFound() {
         </div>
       </div>
     </section>
+    </>
   );
 }

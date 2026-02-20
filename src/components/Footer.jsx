@@ -41,9 +41,9 @@ export default function Footer() {
         <div>
           <h4 className="font-semibold uppercase mb-4 text-white text-[11px] tracking-wider">Social</h4>
           <div className="flex gap-2">
-            <div className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-ecotone-green transition-colors cursor-pointer"><Facebook className="w-3.5 h-3.5" /></div>
-            <div className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-ecotone-green transition-colors cursor-pointer"><Instagram className="w-3.5 h-3.5" /></div>
-            <div className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-ecotone-green transition-colors cursor-pointer"><Youtube className="w-3.5 h-3.5" /></div>
+            <a href="https://facebook.com/ecotonegatineau" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-ecotone-green transition-colors"><Facebook className="w-3.5 h-3.5" /></a>
+            <a href="https://instagram.com/ecotonegatineau" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-ecotone-green transition-colors"><Instagram className="w-3.5 h-3.5" /></a>
+            <a href="https://youtube.com/@ecotonegatineau" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center hover:bg-ecotone-green transition-colors"><Youtube className="w-3.5 h-3.5" /></a>
           </div>
         </div>
       </div>

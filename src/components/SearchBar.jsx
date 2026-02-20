@@ -68,7 +68,7 @@ export default function SearchBar() {
             <div className="max-h-80 overflow-y-auto">
               {results.map(r => (
                 <button key={`${r.type}-${r.id}`} onClick={() => handleSelect(r.href)} className="flex items-center gap-3 w-full p-3 hover:bg-gray-50 transition-colors text-left border-b border-gray-50 last:border-0">
-                  <img src={r.img} className="w-10 h-10 rounded object-cover flex-shrink-0 bg-gray-100" alt="" />
+                  <img src={r.img} className="w-10 h-10 rounded object-cover flex-shrink-0 bg-gray-100" alt={r.title} />
                   <div className="min-w-0">
                     <p className="text-xs font-medium text-ecotone-dark line-clamp-1">{r.title}</p>
                     <p className="text-[9px] text-gray-400 uppercase tracking-wider">{r.type === 'product' ? (lang === 'fr' ? 'Produit' : 'Product') : 'Intel'} · {r.sub}</p>

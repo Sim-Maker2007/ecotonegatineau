@@ -15,7 +15,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="header-anchor px-4 sm:px-6">
+      <nav className="header-anchor px-4 sm:px-6" aria-label="Main navigation">
         <div className="max-w-7xl mx-auto flex items-center justify-between w-full">
           <div className="flex items-center gap-8">
             <Link to="/">
@@ -57,17 +57,17 @@ export default function Header() {
 
           <div className="flex items-center gap-5">
             <div className="hidden md:block"><SearchBar /></div>
-            <button onClick={toggleLang} className="text-[10px] font-medium px-2 py-0.5 border border-gray-200 rounded bg-gray-50 hover:bg-gray-100 transition-colors">{lang.toUpperCase()}</button>
-            <div onClick={() => setIsCartOpen(true)} className="relative cursor-pointer text-ecotone-dark hover:text-ecotone-green transition-colors">
+            <button onClick={toggleLang} aria-label={lang === 'fr' ? 'Switch to English' : 'Passer au français'} className="text-[10px] font-medium px-2 py-0.5 border border-gray-200 rounded bg-gray-50 hover:bg-gray-100 transition-colors">{lang.toUpperCase()}</button>
+            <button onClick={() => setIsCartOpen(true)} aria-label={lang === 'fr' ? 'Ouvrir le panier' : 'Open cart'} className="relative cursor-pointer text-ecotone-dark hover:text-ecotone-green transition-colors">
               <ShoppingBag className="w-5 h-5" />
               {totalItems > 0 && <span className="absolute -top-2 -right-2 bg-ecotone-green text-white text-[10px] w-[18px] h-[18px] rounded-full flex items-center justify-center font-bold">{totalItems}</span>}
-            </div>
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden text-ecotone-dark">
+            </button>
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} aria-expanded={isMenuOpen} aria-label="Menu" className="md:hidden text-ecotone-dark">
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
-      </div>
+      </nav>
 
       {/* Mobile Menu */}
       {isMenuOpen && (

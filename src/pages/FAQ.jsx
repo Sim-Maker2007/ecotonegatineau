@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SEOHead from '../components/SEOHead';
@@ -20,9 +21,26 @@ export default function FAQ() {
 
   const filtered = activeCat === 'all' ? FAQ_DATA : FAQ_DATA.filter(f => f.cat === activeCat);
 
+  // FAQPage schema — Google can show these directly in search results
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQ_DATA.map(faq => ({
+      '@type': 'Question',
+      name: lang === 'fr' ? faq.questionFr : faq.questionEn,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: lang === 'fr' ? faq.answerFr : faq.answerEn
+      }
+    }))
+  };
+
   return (
     <>
       <SEOHead page="faq" />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+      </Helmet>
       <section className="py-8 bg-white min-h-screen">
         <div className="max-w-3xl mx-auto px-4">
           <Breadcrumbs items={[

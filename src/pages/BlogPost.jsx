@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { Facebook, Mail, Share2 } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import Breadcrumbs from '../components/Breadcrumbs';
@@ -7,6 +8,8 @@ import ProductCard from '../components/ProductCard';
 import { useLang } from '../context/LanguageContext';
 import { BLOG_POSTS } from '../data/blog';
 import { ALL_PRODUCTS } from '../data/products';
+
+const BASE = 'https://ecotone-gatineau.vercel.app';
 
 const BLOG_TO_PRODUCT = { hunting: 'hunting', fishing: 'fishing', hiking: 'winter', camping: 'winter' };
 
@@ -27,10 +30,23 @@ export default function BlogPost() {
   const relatedPosts = BLOG_POSTS.filter(p => p.blogCat === post.blogCat && p.id !== post.id).slice(0, 3);
   const relatedProducts = ALL_PRODUCTS.filter(p => p.category === BLOG_TO_PRODUCT[post.blogCat]).slice(0, 4);
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Ecotone Gatineau', item: BASE },
+      { '@type': 'ListItem', position: 2, name: 'Outdoor Intel', item: `${BASE}/intel` },
+      { '@type': 'ListItem', position: 3, name: title }
+    ]
+  };
+
   return (
     <>
       <SEOHead page="intel" post={post} />
-      <section className="py-8 bg-white min-h-screen">
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+      </Helmet>
+      <article className="py-8 bg-white min-h-screen">
         <div className="max-w-2xl mx-auto px-4">
           <Breadcrumbs items={[
             { label: lang === 'fr' ? 'Accueil' : 'Home', href: '/' },
@@ -96,7 +112,7 @@ export default function BlogPost() {
             </div>
           </div>
         )}
-      </section>
+      </article>
     </>
   );
 }
