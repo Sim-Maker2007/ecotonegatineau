@@ -39,8 +39,13 @@ export default function Contact() {
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex-1 bg-ecotone-dark text-white py-2.5 rounded-lg text-center text-xs font-semibold uppercase tracking-wider hover:bg-ecotone-green transition-colors">Instagram</a>
               </div>
             </div>
-            <div className="rounded-lg overflow-hidden bg-gray-100 min-h-[300px]">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2798.5!2d-75.6924!3d45.4851!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cce04e5c8f7c3f1%3A0x5b5e5f5c5c5c5c5c!2s79%20Boulevard%20de%20la%20Gappe%2C%20Gatineau%2C%20QC%20J8T%200B5!5e0!3m2!1sfr!2sca!4v1707000000000!5m2!1sfr!2sca" width="100%" height="100%" style={{ border: 0, minHeight: '300px' }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Ecotone Gatineau Map"></iframe>
+            <div className="space-y-4">
+              <div className="rounded-lg overflow-hidden bg-gray-100">
+                <img src="/assets/store-front.jpg" className="w-full h-auto object-cover rounded-lg" alt="Ecotone Gatineau Storefront" loading="lazy" />
+              </div>
+              <div className="rounded-lg overflow-hidden bg-gray-100 min-h-[250px]">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2798.5!2d-75.6924!3d45.4851!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cce04e5c8f7c3f1%3A0x5b5e5f5c5c5c5c5c!2s79%20Boulevard%20de%20la%20Gappe%2C%20Gatineau%2C%20QC%20J8T%200B5!5e0!3m2!1sfr!2sca!4v1707000000000!5m2!1sfr!2sca" width="100%" height="100%" style={{ border: 0, minHeight: '250px' }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Ecotone Gatineau Map"></iframe>
+              </div>
             </div>
           </div>
         </div>

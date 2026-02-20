@@ -11,7 +11,7 @@ export default function Footer() {
       <Newsletter />
       <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-left text-gray-400">
         <div>
-          <img src="/assets/ecotone-gatineau-logo-clean.png" className="h-7 mb-5 brightness-0 invert" alt="Ecotone" />
+          <img src="/assets/ecotone-logo.png" className="h-10 mb-5 rounded" alt="Ecotone" />
           <div className="space-y-2 text-xs">
             <p className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 text-ecotone-green flex-shrink-0" /> 79 Boul. de la Gappe #4, Gatineau</p>
             <p className="flex items-center gap-2"><Phone className="w-3.5 h-3.5 text-ecotone-green flex-shrink-0" /> (819) 243-6665</p>

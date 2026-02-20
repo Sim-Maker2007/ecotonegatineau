@@ -17,7 +17,7 @@ export default function About() {
 
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             <div className="rounded-lg overflow-hidden aspect-[4/3] bg-gray-100">
-              <img src="/assets/categories/hunting.jpg" className="w-full h-full object-cover" alt="Ecotone Gatineau" />
+              <img src="/assets/store-front.jpg" className="w-full h-full object-cover" alt="Ecotone Gatineau Storefront" />
             </div>
             <div className="space-y-4">
               <p className="text-sm text-gray-600 leading-relaxed">{t.about.p1}</p>

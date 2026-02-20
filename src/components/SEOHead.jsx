@@ -51,7 +51,7 @@ export default function SEOHead({ page = 'home', product = null, post = null }) 
     title = meta.title;
     description = meta.desc;
     url = `${BASE_URL}${page === 'home' ? '/' : `/${page === 'shop' ? 'boutique' : page === 'intel' ? 'intel' : page === 'about' ? 'a-propos' : page}`}`;
-    image = `${BASE_URL}/assets/ecotone-gatineau-logo-clean.png`;
+    image = `${BASE_URL}/assets/ecotone-logo.png`;
   }
 
   // Build JSON-LD structured data
@@ -86,7 +86,7 @@ export default function SEOHead({ page = 'home', product = null, post = null }) 
       publisher: {
         '@type': 'Organization',
         name: 'Ecotone Gatineau',
-        logo: { '@type': 'ImageObject', url: `${BASE_URL}/assets/ecotone-gatineau-logo-clean.png` }
+        logo: { '@type': 'ImageObject', url: `${BASE_URL}/assets/ecotone-logo.png` }
       }
     };
   }

@@ -19,7 +19,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto flex items-center justify-between w-full">
           <div className="flex items-center gap-8">
             <Link to="/">
-              <img src="/assets/ecotone-gatineau-logo-clean.png" className="h-7 cursor-pointer" alt="Ecotone Gatineau" />
+              <img src="/assets/ecotone-logo.png" className="h-10 cursor-pointer rounded" alt="Ecotone Gatineau" />
             </Link>
             <div className="hidden md:flex items-center gap-6">
               <Link to="/" className="text-[11px] font-medium uppercase tracking-[0.1em] text-ecotone-dark hover:text-ecotone-green transition-colors">{t.nav.home}</Link>
