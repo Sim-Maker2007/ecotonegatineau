@@ -7,7 +7,7 @@ export const BLOG_POSTS = [
     title: "Comprendre le Rut du Chevreuil : Quand et Comment Chasser en Outaouais",
     titleEn: "Understanding the Deer Rut: When and How to Hunt in Outaouais",
     date: "15 FÉV 2026",
-    img: "/assets/blog/post1.jpg",
+    img: "/assets/blog/post2.jpg",
     content: `Le rut du cerf de Virginie est la période la plus excitante — et la plus stratégique — de la saison de chasse en Outaouais. Comprendre ses phases vous permettra de tripler vos chances de récolter un mâle mature.
 
 Le pré-rut débute vers la mi-octobre dans les zones 10 et 11. Les mâles commencent à frotter leurs bois contre les arbres et à créer des grattages au sol. C'est le moment idéal pour installer vos caméras de surveillance et repérer les corridors de déplacement. Cherchez les frottoirs sur les jeunes érables et les sapins le long des lisières de champs.
@@ -38,7 +38,7 @@ Remember that regulations in zones 10 and 11 differ slightly — always check yo
     title: "L'Art de l'Appel à l'Orignal : Techniques de Nos Guides de l'Outaouais",
     titleEn: "The Art of Moose Calling: Techniques from Our Outaouais Guides",
     date: "10 FÉV 2026",
-    img: "/assets/blog/post2.jpg",
+    img: "/assets/blog/post10.jpg",
     content: `L'appel à l'orignal est un savoir-faire qui se perfectionne au fil des saisons. Dans les vastes forêts de l'Outaouais, où la densité d'orignaux est parmi les plus élevées du Québec, maîtriser cette technique fait toute la différence entre une saison mémorable et un retour bredouille.
 
 L'appel de la femelle, ou « cow call », est la base de tout. Il s'agit d'un son nasal prolongé qui monte puis redescend, d'une durée de 5 à 8 secondes. Utilisez un cornet d'écorce de bouleau traditionnel ou un appel commercial en entonnoir. Le secret est dans la modulation : commencez doux, montez en intensité au milieu, puis laissez le son mourir naturellement. Pratiquez chez vous avant de l'utiliser en forêt — un mauvais appel fera fuir un mâle plutôt que de l'attirer.
@@ -69,7 +69,7 @@ The ZEC Bras-Coupé-Désert and La Vérendrye Wildlife Reserve areas are particu
     title: "Chasse au Dindon Sauvage au Printemps : L'Outaouais, Territoire de Choix",
     titleEn: "Spring Wild Turkey Hunting: Outaouais, a Prime Territory",
     date: "05 FÉV 2026",
-    img: "/assets/blog/post3.jpg",
+    img: "/assets/blog/post7.jpg",
     content: `La chasse printanière au dindon sauvage est l'une des expériences les plus palpitantes que l'Outaouais a à offrir. Depuis la réintroduction réussie du dindon dans la région, les populations ne cessent de croître, particulièrement dans les zones agricoles du sud de l'Outaouais entre Gatineau, Thurso et Papineauville.
 
 Le dindon sauvage possède une vision exceptionnelle — il voit les couleurs avec une précision supérieure à celle de l'humain et détecte les mouvements les plus subtils. Son champ de vision périphérique couvre presque 270 degrés. C'est pourquoi le camouflage intégral est non négociable : visage, mains et arme doivent être dissimulés. Optez pour un motif adapté au printemps de l'Outaouais, avec des teintes de brun et de vert bourgeon.
@@ -100,7 +100,7 @@ Ecotone Gatineau stocks everything you need: calls, turkey decoys, specialized c
     title: "Sécurité en Chasse : Le Guide Essentiel pour les Forêts de l'Outaouais",
     titleEn: "Hunting Safety: The Essential Guide for Outaouais Forests",
     date: "01 FÉV 2026",
-    img: "/assets/blog/post4.jpg",
+    img: "/assets/categories/hunting.jpg",
     content: `Chaque saison, des incidents évitables surviennent en forêt. En Outaouais, où les territoires de chasse sont vastes et parfois isolés, la préparation et le respect des règles de sécurité peuvent littéralement sauver des vies.
 
 La règle numéro un, universelle et incontournable : ne jamais pointer une arme vers quoi que ce soit que vous n'avez pas formellement identifié comme votre cible. En Outaouais, les forêts mixtes créent des zones de visibilité réduite — un mouvement dans les broussailles n'est pas un orignal tant que vous n'avez pas clairement identifié l'animal au complet.
@@ -137,7 +137,7 @@ Ecotone Gatineau offers a complete selection of safety products: vests, harnesse
     title: "Pêche au Doré au Réservoir Baskatong : Saisons, Spots et Stratégies",
     titleEn: "Walleye Fishing at Baskatong Reservoir: Seasons, Spots and Strategies",
     date: "28 JAN 2026",
-    img: "/assets/blog/post5.jpg",
+    img: "/assets/blog/post1.jpg",
     content: `Le Réservoir Baskatong, avec ses 41 300 hectares de surface, est le joyau de la pêche au doré en Outaouais et l'un des plans d'eau les plus productifs du Québec tout entier. Voici ce que vous devez savoir pour planifier une sortie réussie.
 
 Au printemps (mi-mai à fin juin), les dorés se rassemblent dans les eaux peu profondes de 2 à 4 mètres près des berges rocheuses et des embouchures de ruisseaux. C'est la période post-fraie où ils s'alimentent activement. Les jigs de 1/4 once avec queue souple en chartreuse ou blanc sont redoutables. Traînez-les lentement le long du fond, avec de petits bonds réguliers.
@@ -172,7 +172,7 @@ Ecotone Gatineau is your stop before Baskatong. Our team knows the reservoir ins
     title: "L'Achigan à Petite Bouche de la Rivière Gatineau : Un Combattant Sous-Estimé",
     titleEn: "Smallmouth Bass of the Gatineau River: An Underrated Fighter",
     date: "22 JAN 2026",
-    img: "/assets/blog/post6.jpg",
+    img: "/assets/categories/fishing.jpg",
     content: `Pendant que tout le monde parle du doré, la Rivière Gatineau abrite discrètement l'une des meilleures populations d'achigans à petite bouche du Québec. Livre pour livre, c'est le poisson d'eau douce le plus combatif que vous attraperez en Outaouais.
 
 L'achigan à petite bouche préfère les eaux fraîches, claires et bien oxygénées avec des fonds rocheux — exactement ce que la Rivière Gatineau offre sur des dizaines de kilomètres. Les secteurs entre Wakefield et Low sont particulièrement productifs, avec leurs successions de rapides, de fosses et de berges rocheuses.
@@ -207,7 +207,7 @@ Ecotone Gatineau stocks the full arsenal: medium-light action rods, soft plastic
     title: "Le Brochet des Lacs de l'Outaouais : Où Trouver les Géants",
     titleEn: "Pike in Outaouais Lakes: Where to Find the Giants",
     date: "18 JAN 2026",
-    img: "/assets/blog/post1.jpg",
+    img: "/assets/blog/post3.jpg",
     content: `Le grand brochet du Nord est le prédateur apex des lacs de l'Outaouais. Agressif, puissant et atteignant des tailles impressionnantes, il offre une pêche d'adrénaline pure. Voici comment cibler les spécimens de taille trophée dans notre région.
 
 Les lacs les plus productifs pour le brochet en Outaouais incluent le Lac des Trente et Un Milles (près de Bouchette), le Lac Pemichangan, le Lac Blue Sea et évidemment le Réservoir Baskatong. Ces plans d'eau partagent des caractéristiques communes : vastes herbiers aquatiques, baies peu profondes et populations abondantes de proies.
@@ -242,7 +242,7 @@ Stop by Ecotone Gatineau for our selection of pike lures, steel leaders and hand
     title: "Pêche à la Truite Mouchetée : Les Ruisseaux Secrets de l'Outaouais",
     titleEn: "Brook Trout Fishing: The Secret Streams of Outaouais",
     date: "12 JAN 2026",
-    img: "/assets/blog/post2.jpg",
+    img: "/assets/blog/post9.jpg",
     content: `La truite mouchetée — ou omble de fontaine — est l'espèce emblématique du Québec et l'Outaouais regorge de petits ruisseaux et lacs de tête où elle prospère à l'abri de la pression de pêche. C'est une pêche intime, technique et profondément gratifiante.
 
 Les meilleurs habitats en Outaouais se trouvent dans les ruisseaux d'eau froide alimentés par des sources souterraines, surtout dans les territoires en altitude des Laurentides méridionales. Les ZEC de la région (Chapeau, Pontiac, Bras-Coupé-Désert) abritent des dizaines de petits cours d'eau où les mouchetées vivent naturellement, sans ensemencement. La clé est de chercher l'eau froide : si la température dépasse 18°C, les truites se concentrent autour des sources froides et des confluences de petits affluents.
@@ -279,7 +279,7 @@ Ecotone Gatineau carries everything you need: ultralight rods, spinners, hand-ti
     title: "Randonnée dans le Parc de la Gatineau : Un Guide 4 Saisons",
     titleEn: "Hiking in Gatineau Park: A 4-Season Guide",
     date: "08 JAN 2026",
-    img: "/assets/blog/post3.jpg",
+    img: "/assets/blog/post4.jpg",
     content: `Le Parc de la Gatineau, avec ses 361 km² de collines, de lacs et de forêts à seulement 15 minutes du centre-ville de Gatineau, est un terrain de jeu quatre saisons pour les amateurs de plein air. Voici notre guide saisonnier pour en profiter au maximum.
 
 Au printemps (avril-mai), le parc se réveille avec l'explosion des fleurs sauvages. Le sentier du Lac Pink (2,5 km, facile) offre un spectacle unique : ce lac méromictique est l'un des rares au monde dont les eaux profondes et superficielles ne se mélangent jamais. Les trilles, hépatiques et érythrones tapissent les sous-bois. Plus ambitieux, le sentier des Loups (10 km, intermédiaire) traverse des érablières spectaculaires et offre des vues sur la vallée de l'Outaouais. Attention aux sentiers boueux — des guêtres et des chaussures imperméables sont essentielles en avril.
@@ -316,7 +316,7 @@ Ecotone Gatineau is your natural starting point before a Gatineau Park outing. S
     title: "Camping Sauvage en Outaouais : Le Guide du Débutant Bien Préparé",
     titleEn: "Backcountry Camping in Outaouais: The Well-Prepared Beginner's Guide",
     date: "05 JAN 2026",
-    img: "/assets/blog/post4.jpg",
+    img: "/assets/blog/post5.jpg",
     content: `L'Outaouais offre certains des meilleurs territoires de camping sauvage au Québec, avec ses vastes forêts, ses lacs cristallins et ses rivières sauvages. Mais une expérience réussie en nature demande une préparation sérieuse. Voici tout ce que vous devez savoir pour votre première aventure.
 
 Le choix du site est la première décision importante. En Outaouais, le camping sauvage est permis dans les ZEC et les terres publiques, mais interdit dans le Parc de la Gatineau (sauf les sites de camping désignés). Les ZEC Pontiac, Bras-Coupé-Désert et Chapeau offrent des emplacements magnifiques en bordure de lac avec un minimum de services. Pour une première expérience, les campings rustiques de la Réserve faunique La Vérendrye sont un excellent compromis entre nature sauvage et sécurité.
