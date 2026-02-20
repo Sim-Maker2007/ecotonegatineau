@@ -22,7 +22,7 @@ export default function Home() {
       <Promos />
 
       {/* Best Sellers */}
-      <section className="py-8 bg-gray-50/60 border-y border-gray-100">
+      <section className="py-8">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-between items-center mb-5">
             <h2 className="text-lg font-bold font-oswald uppercase tracking-tight">{t.sections.sellers}</h2>
