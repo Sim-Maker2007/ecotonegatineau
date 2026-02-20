@@ -22,7 +22,7 @@ export default function Contact() {
                 <div className="space-y-2.5 text-sm text-gray-600">
                   <p className="flex items-center gap-2"><MapPin className="w-4 h-4 text-ecotone-green flex-shrink-0" /> 79 Boul. de la Gappe #4, Gatineau, QC J8T 0B5</p>
                   <p className="flex items-center gap-2"><Phone className="w-4 h-4 text-ecotone-green flex-shrink-0" /> (819) 243-6665</p>
-                  <p className="flex items-center gap-2"><Mail className="w-4 h-4 text-ecotone-green flex-shrink-0" /> info@ecotonegatineau.com</p>
+                  <p className="flex items-center gap-2"><Mail className="w-4 h-4 text-ecotone-green flex-shrink-0" /> info@ecotonegatineau.ca</p>
                 </div>
               </div>
               <div className="bg-gray-50 rounded-lg p-4">
