@@ -10,6 +10,9 @@ import ProductDetail from './pages/ProductDetail';
 import BlogPost from './pages/BlogPost';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import FAQ from './pages/FAQ';
+import NotFound from './pages/NotFound';
+import BackToTop from './components/BackToTop';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -34,12 +37,13 @@ export default function App() {
           <Route path="/intel/:slug" element={<BlogPost />} />
           <Route path="/a-propos" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          {/* Fallback to home */}
-          <Route path="*" element={<Home />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
 
       <Footer />
+      <BackToTop />
     </div>
   );
 }

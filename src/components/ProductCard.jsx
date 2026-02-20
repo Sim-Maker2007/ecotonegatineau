@@ -6,7 +6,7 @@ export default function ProductCard({ product }) {
   return (
     <Link to={`/produit/${product.id}`} className="product-card bg-white p-2.5 rounded-lg border border-gray-100 cursor-pointer group block">
       <div className="relative aspect-square rounded-md overflow-hidden mb-2.5 bg-gray-50">
-        <img src={product.image} className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" alt={lang === 'fr' ? product.name : product.nameEn} />
+        <img src={product.image} loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" alt={lang === 'fr' ? product.name : product.nameEn} />
         {product.originalPrice && (
           <div className="absolute top-1.5 left-1.5 bg-ecotone-green text-white text-[9px] font-semibold px-2 py-0.5 rounded">
             {lang === 'fr' ? 'Promo' : 'Sale'}

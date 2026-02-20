@@ -2,9 +2,11 @@ import SEOHead from '../components/SEOHead';
 import Hero from '../components/Hero';
 import TrustBadges from '../components/TrustBadges';
 import Categories from '../components/Categories';
+import Promos from '../components/Promos';
 import ProductCard from '../components/ProductCard';
 import BlogSection from '../components/BlogSection';
 import Services from '../components/Services';
+import Testimonials from '../components/Testimonials';
 import { useLang } from '../context/LanguageContext';
 import { ALL_PRODUCTS } from '../data/products';
 import { Link } from 'react-router-dom';
@@ -17,6 +19,7 @@ export default function Home() {
       <Hero />
       <TrustBadges />
       <Categories />
+      <Promos />
 
       {/* Best Sellers */}
       <section className="py-8 bg-gray-50/60 border-y border-gray-100">
@@ -35,6 +38,7 @@ export default function Home() {
 
       <BlogSection />
       <Services />
+      <Testimonials />
     </>
   );
 }

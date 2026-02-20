@@ -4,6 +4,7 @@ import { ShoppingBag, ChevronDown, Menu, X } from 'lucide-react';
 import { useLang } from '../context/LanguageContext';
 import { useCart } from '../context/CartContext';
 import { NAV_ITEMS } from '../data/categories';
+import SearchBar from './SearchBar';
 
 export default function Header() {
   const { lang, toggleLang, t } = useLang();
@@ -50,10 +51,12 @@ export default function Header() {
               <Link to="/intel" className="text-[11px] font-medium uppercase tracking-[0.1em] text-ecotone-dark hover:text-ecotone-green transition-colors">{t.nav.blog}</Link>
               <Link to="/a-propos" className="text-[11px] font-medium uppercase tracking-[0.1em] text-ecotone-dark hover:text-ecotone-green transition-colors">{t.nav.about}</Link>
               <Link to="/contact" className="text-[11px] font-medium uppercase tracking-[0.1em] text-ecotone-dark hover:text-ecotone-green transition-colors">{t.nav.contact}</Link>
+              <Link to="/faq" className="text-[11px] font-medium uppercase tracking-[0.1em] text-ecotone-dark hover:text-ecotone-green transition-colors">FAQ</Link>
             </div>
           </div>
 
           <div className="flex items-center gap-5">
+            <div className="hidden md:block"><SearchBar /></div>
             <button onClick={toggleLang} className="text-[10px] font-medium px-2 py-0.5 border border-gray-200 rounded bg-gray-50 hover:bg-gray-100 transition-colors">{lang.toUpperCase()}</button>
             <div onClick={() => setIsCartOpen(true)} className="relative cursor-pointer text-ecotone-dark hover:text-ecotone-green transition-colors">
               <ShoppingBag className="w-5 h-5" />
@@ -77,6 +80,7 @@ export default function Header() {
             { to: '/intel', label: t.nav.blog },
             { to: '/a-propos', label: t.nav.about },
             { to: '/contact', label: t.nav.contact },
+            { to: '/faq', label: 'FAQ' },
           ].map(item => (
             <Link
               key={item.to}

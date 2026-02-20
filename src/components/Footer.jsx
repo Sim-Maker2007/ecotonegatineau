@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { MapPin, Phone, Clock, Facebook, Instagram, Youtube } from 'lucide-react';
 import { useLang } from '../context/LanguageContext';
 import Newsletter from './Newsletter';
+import StoreStatus from './StoreStatus';
 
 export default function Footer() {
   const { lang, t } = useLang();
@@ -15,6 +16,7 @@ export default function Footer() {
             <p className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 text-ecotone-green flex-shrink-0" /> 79 Boul. de la Gappe #4, Gatineau</p>
             <p className="flex items-center gap-2"><Phone className="w-3.5 h-3.5 text-ecotone-green flex-shrink-0" /> (819) 243-6665</p>
             <p className="flex items-center gap-2 text-ecotone-green"><Clock className="w-3.5 h-3.5 flex-shrink-0" /> Lun-Ven 9h-18h | Sam 9h-17h</p>
+            <div className="mt-2"><StoreStatus /></div>
           </div>
         </div>
         <div>
@@ -33,6 +35,7 @@ export default function Footer() {
             <li><Link to="/intel" className="hover:text-ecotone-green transition-colors">{lang === 'fr' ? 'Guides Chasse' : 'Hunting Guides'}</Link></li>
             <li><Link to="/a-propos" className="hover:text-ecotone-green transition-colors">{t.nav.about}</Link></li>
             <li><Link to="/contact" className="hover:text-ecotone-green transition-colors">Contact</Link></li>
+            <li><Link to="/faq" className="hover:text-ecotone-green transition-colors">FAQ</Link></li>
           </ul>
         </div>
         <div>

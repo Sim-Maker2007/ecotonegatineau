@@ -7,6 +7,7 @@ export const BLOG_POSTS = [
     title: "Comprendre le Rut du Chevreuil : Quand et Comment Chasser en Outaouais",
     titleEn: "Understanding the Deer Rut: When and How to Hunt in Outaouais",
     date: "15 FÉV 2026",
+    dateISO: "2026-02-15",
     img: "/assets/blog/post2.jpg",
     content: `Le rut du cerf de Virginie est la période la plus excitante — et la plus stratégique — de la saison de chasse en Outaouais. Comprendre ses phases vous permettra de tripler vos chances de récolter un mâle mature.
 
@@ -38,6 +39,7 @@ Remember that regulations in zones 10 and 11 differ slightly — always check yo
     title: "L'Art de l'Appel à l'Orignal : Techniques de Nos Guides de l'Outaouais",
     titleEn: "The Art of Moose Calling: Techniques from Our Outaouais Guides",
     date: "10 FÉV 2026",
+    dateISO: "2026-02-10",
     img: "/assets/blog/post10.jpg",
     content: `L'appel à l'orignal est un savoir-faire qui se perfectionne au fil des saisons. Dans les vastes forêts de l'Outaouais, où la densité d'orignaux est parmi les plus élevées du Québec, maîtriser cette technique fait toute la différence entre une saison mémorable et un retour bredouille.
 
@@ -69,6 +71,7 @@ The ZEC Bras-Coupé-Désert and La Vérendrye Wildlife Reserve areas are particu
     title: "Chasse au Dindon Sauvage au Printemps : L'Outaouais, Territoire de Choix",
     titleEn: "Spring Wild Turkey Hunting: Outaouais, a Prime Territory",
     date: "05 FÉV 2026",
+    dateISO: "2026-02-05",
     img: "/assets/blog/post7.jpg",
     content: `La chasse printanière au dindon sauvage est l'une des expériences les plus palpitantes que l'Outaouais a à offrir. Depuis la réintroduction réussie du dindon dans la région, les populations ne cessent de croître, particulièrement dans les zones agricoles du sud de l'Outaouais entre Gatineau, Thurso et Papineauville.
 
@@ -100,6 +103,7 @@ Ecotone Gatineau stocks everything you need: calls, turkey decoys, specialized c
     title: "Sécurité en Chasse : Le Guide Essentiel pour les Forêts de l'Outaouais",
     titleEn: "Hunting Safety: The Essential Guide for Outaouais Forests",
     date: "01 FÉV 2026",
+    dateISO: "2026-02-01",
     img: "/assets/categories/hunting.jpg",
     content: `Chaque saison, des incidents évitables surviennent en forêt. En Outaouais, où les territoires de chasse sont vastes et parfois isolés, la préparation et le respect des règles de sécurité peuvent littéralement sauver des vies.
 
@@ -137,6 +141,7 @@ Ecotone Gatineau offers a complete selection of safety products: vests, harnesse
     title: "Pêche au Doré au Réservoir Baskatong : Saisons, Spots et Stratégies",
     titleEn: "Walleye Fishing at Baskatong Reservoir: Seasons, Spots and Strategies",
     date: "28 JAN 2026",
+    dateISO: "2026-01-28",
     img: "/assets/blog/post1.jpg",
     content: `Le Réservoir Baskatong, avec ses 41 300 hectares de surface, est le joyau de la pêche au doré en Outaouais et l'un des plans d'eau les plus productifs du Québec tout entier. Voici ce que vous devez savoir pour planifier une sortie réussie.
 
@@ -172,6 +177,7 @@ Ecotone Gatineau is your stop before Baskatong. Our team knows the reservoir ins
     title: "L'Achigan à Petite Bouche de la Rivière Gatineau : Un Combattant Sous-Estimé",
     titleEn: "Smallmouth Bass of the Gatineau River: An Underrated Fighter",
     date: "22 JAN 2026",
+    dateISO: "2026-01-22",
     img: "/assets/categories/fishing.jpg",
     content: `Pendant que tout le monde parle du doré, la Rivière Gatineau abrite discrètement l'une des meilleures populations d'achigans à petite bouche du Québec. Livre pour livre, c'est le poisson d'eau douce le plus combatif que vous attraperez en Outaouais.
 
@@ -207,6 +213,7 @@ Ecotone Gatineau stocks the full arsenal: medium-light action rods, soft plastic
     title: "Le Brochet des Lacs de l'Outaouais : Où Trouver les Géants",
     titleEn: "Pike in Outaouais Lakes: Where to Find the Giants",
     date: "18 JAN 2026",
+    dateISO: "2026-01-18",
     img: "/assets/blog/post3.jpg",
     content: `Le grand brochet du Nord est le prédateur apex des lacs de l'Outaouais. Agressif, puissant et atteignant des tailles impressionnantes, il offre une pêche d'adrénaline pure. Voici comment cibler les spécimens de taille trophée dans notre région.
 
@@ -242,6 +249,7 @@ Stop by Ecotone Gatineau for our selection of pike lures, steel leaders and hand
     title: "Pêche à la Truite Mouchetée : Les Ruisseaux Secrets de l'Outaouais",
     titleEn: "Brook Trout Fishing: The Secret Streams of Outaouais",
     date: "12 JAN 2026",
+    dateISO: "2026-01-12",
     img: "/assets/blog/post9.jpg",
     content: `La truite mouchetée — ou omble de fontaine — est l'espèce emblématique du Québec et l'Outaouais regorge de petits ruisseaux et lacs de tête où elle prospère à l'abri de la pression de pêche. C'est une pêche intime, technique et profondément gratifiante.
 
@@ -279,6 +287,7 @@ Ecotone Gatineau carries everything you need: ultralight rods, spinners, hand-ti
     title: "Randonnée dans le Parc de la Gatineau : Un Guide 4 Saisons",
     titleEn: "Hiking in Gatineau Park: A 4-Season Guide",
     date: "08 JAN 2026",
+    dateISO: "2026-01-08",
     img: "/assets/blog/post4.jpg",
     content: `Le Parc de la Gatineau, avec ses 361 km² de collines, de lacs et de forêts à seulement 15 minutes du centre-ville de Gatineau, est un terrain de jeu quatre saisons pour les amateurs de plein air. Voici notre guide saisonnier pour en profiter au maximum.
 
@@ -316,6 +325,7 @@ Ecotone Gatineau is your natural starting point before a Gatineau Park outing. S
     title: "Camping Sauvage en Outaouais : Le Guide du Débutant Bien Préparé",
     titleEn: "Backcountry Camping in Outaouais: The Well-Prepared Beginner's Guide",
     date: "05 JAN 2026",
+    dateISO: "2026-01-05",
     img: "/assets/blog/post5.jpg",
     content: `L'Outaouais offre certains des meilleurs territoires de camping sauvage au Québec, avec ses vastes forêts, ses lacs cristallins et ses rivières sauvages. Mais une expérience réussie en nature demande une préparation sérieuse. Voici tout ce que vous devez savoir pour votre première aventure.
 

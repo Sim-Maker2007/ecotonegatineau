@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Truck, MapPin } from 'lucide-react';
+import { Truck, MapPin } from 'lucide-react';
+import Breadcrumbs from '../components/Breadcrumbs';
 import SEOHead from '../components/SEOHead';
 import { useLang } from '../context/LanguageContext';
 import { useCart } from '../context/CartContext';
@@ -24,9 +25,12 @@ export default function ProductDetail() {
       <SEOHead page="product" product={product} />
       <section className="py-8 bg-white min-h-screen">
         <div className="max-w-5xl mx-auto px-4">
-          <Link to="/boutique" className="text-[10px] font-medium uppercase text-gray-400 hover:text-ecotone-green flex items-center gap-1.5 mb-5 transition-colors">
-            <ArrowLeft className="w-3.5 h-3.5" /> {t.common.back}
-          </Link>
+          <Breadcrumbs items={[
+            { label: lang === 'fr' ? 'Accueil' : 'Home', href: '/' },
+            { label: lang === 'fr' ? 'Boutique' : 'Shop', href: '/boutique' },
+            { label: t.categories[product.category], href: `/boutique/${product.category}` },
+            { label: lang === 'fr' ? product.name : product.nameEn, active: true }
+          ]} />
           <div className="grid lg:grid-cols-2 gap-8">
             <div className="aspect-square rounded-lg overflow-hidden bg-gray-50 border border-gray-100 max-w-md">
               <img src={product.image} className="w-full h-full object-cover" alt={lang === 'fr' ? product.name : product.nameEn} />

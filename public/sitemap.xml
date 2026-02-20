@@ -54,17 +54,57 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://ecotone-gatineau.vercel.app/intel/marina-hull-peche</loc>
+    <loc>https://ecotone-gatineau.vercel.app/faq</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ecotone-gatineau.vercel.app/intel/comprendre-rut-chevreuil-outaouais</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://ecotone-gatineau.vercel.app/intel/chasseur-parc-gatineau</loc>
+    <loc>https://ecotone-gatineau.vercel.app/intel/chasse-orignal-appel-outaouais</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://ecotone-gatineau.vercel.app/intel/leurre-ultime-outaouais</loc>
+    <loc>https://ecotone-gatineau.vercel.app/intel/chasse-dindon-sauvage-printemps-outaouais</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://ecotone-gatineau.vercel.app/intel/securite-chasse-outaouais-guide-essentiel</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://ecotone-gatineau.vercel.app/intel/peche-dore-reservoir-baskatong</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://ecotone-gatineau.vercel.app/intel/achigan-petite-bouche-riviere-gatineau</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://ecotone-gatineau.vercel.app/intel/peche-brochet-lacs-outaouais</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://ecotone-gatineau.vercel.app/intel/peche-truite-ruisseaux-outaouais</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://ecotone-gatineau.vercel.app/intel/randonnee-parc-gatineau-4-saisons</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://ecotone-gatineau.vercel.app/intel/camping-sauvage-outaouais-guide-debutant</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
