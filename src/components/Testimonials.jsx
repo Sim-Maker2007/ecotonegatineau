@@ -5,7 +5,7 @@ import { TESTIMONIALS } from '../data/testimonials';
 export default function Testimonials() {
   const { lang } = useLang();
   return (
-    <section className="py-10 bg-gray-50/40">
+    <section className="py-10 bg-gray-100/50">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-lg font-bold font-oswald uppercase tracking-tight mb-5">{lang === 'fr' ? 'Ce que nos clients disent' : 'What Our Customers Say'}</h2>
         <div className="grid md:grid-cols-3 gap-3">

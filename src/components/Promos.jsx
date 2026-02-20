@@ -26,7 +26,7 @@ const PROMOS = [
 export default function Promos() {
   const { lang } = useLang();
   return (
-    <section className="py-6 bg-gray-50/40">
+    <section className="py-6 bg-gray-100/50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-3">
           {PROMOS.map(p => (

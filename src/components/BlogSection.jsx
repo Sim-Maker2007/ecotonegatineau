@@ -37,7 +37,7 @@ export default function BlogSection() {
   const rest = filtered.slice(1);
 
   return (
-    <section id="intel" className="py-10 bg-gray-50/40">
+    <section id="intel" className="py-10 bg-gray-100/50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold font-oswald uppercase tracking-tight">{t.sections.blog}</h2>
