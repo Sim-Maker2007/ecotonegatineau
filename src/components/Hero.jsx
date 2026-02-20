@@ -4,9 +4,15 @@ import { useLang } from '../context/LanguageContext';
 export default function Hero() {
   const { t } = useLang();
   return (
-    <section className="hero-video-container">
-      <video autoPlay loop muted playsInline preload="metadata"><source src="/assets/ecotone-hero.mp4" type="video/mp4" /></video>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/15 to-transparent" />
+    <section className="relative w-full h-[70vh] md:h-[85vh] overflow-hidden">
+      <img
+        src="/assets/hero-hunting.jpg"
+        alt="Hunter overlooking mountain landscape at sunset"
+        className="absolute inset-0 w-full h-full object-cover"
+        loading="eager"
+        fetchPriority="high"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
       <div className="relative h-full flex flex-col items-center justify-center text-center px-6">
         <motion.h1
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
