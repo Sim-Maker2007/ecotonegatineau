@@ -5,7 +5,7 @@ import { CATEGORIES } from '../data/categories';
 export default function Categories() {
   const { t } = useLang();
   return (
-    <section id="categories" className="py-6 bg-white">
+    <section id="categories" className="py-6">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
           {CATEGORIES.map(c => (

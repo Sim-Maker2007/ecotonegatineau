@@ -46,7 +46,7 @@ export default function BlogPost() {
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
       </Helmet>
-      <article className="py-8 bg-white min-h-screen">
+      <article className="py-8 min-h-screen">
         <div className="max-w-2xl mx-auto px-4">
           <Breadcrumbs items={[
             { label: lang === 'fr' ? 'Accueil' : 'Home', href: '/' },

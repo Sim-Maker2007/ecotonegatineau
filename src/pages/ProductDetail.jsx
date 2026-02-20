@@ -40,7 +40,7 @@ export default function ProductDetail() {
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
       </Helmet>
-      <section className="py-8 bg-white min-h-screen">
+      <section className="py-8 min-h-screen">
         <div className="max-w-5xl mx-auto px-4">
           <Breadcrumbs items={[
             { label: lang === 'fr' ? 'Accueil' : 'Home', href: '/' },

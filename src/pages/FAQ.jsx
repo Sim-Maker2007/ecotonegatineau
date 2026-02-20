@@ -41,7 +41,7 @@ export default function FAQ() {
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       </Helmet>
-      <section className="py-8 bg-white min-h-screen">
+      <section className="py-8 min-h-screen">
         <div className="max-w-3xl mx-auto px-4">
           <Breadcrumbs items={[
             { label: lang === 'fr' ? 'Accueil' : 'Home', href: '/' },

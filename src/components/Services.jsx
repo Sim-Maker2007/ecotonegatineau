@@ -7,7 +7,7 @@ const iconMap = { Target, Anchor, ShieldCheck, Map };
 export default function Services() {
   const { lang } = useLang();
   return (
-    <section id="services" className="py-8 bg-gray-50/60 border-y border-gray-100">
+    <section id="services" className="py-8 border-y border-gray-100">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-lg font-bold font-oswald uppercase tracking-tight mb-5">Services <span className="text-ecotone-green">Pro</span></h2>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">

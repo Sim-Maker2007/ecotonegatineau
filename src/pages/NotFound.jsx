@@ -11,7 +11,7 @@ export default function NotFound() {
       <title>{lang === 'fr' ? '404 — Page Introuvable | Ecotone Gatineau' : '404 — Page Not Found | Ecotone Gatineau'}</title>
       <meta name="robots" content="noindex, follow" />
     </Helmet>
-    <section className="min-h-screen flex items-center justify-center bg-white px-4">
+    <section className="min-h-screen flex items-center justify-center px-4">
       <div className="text-center max-w-md">
         <p className="text-8xl font-extrabold font-oswald text-ecotone-green leading-none mb-2">404</p>
         <h1 className="text-xl font-bold font-oswald uppercase text-ecotone-dark mb-3">

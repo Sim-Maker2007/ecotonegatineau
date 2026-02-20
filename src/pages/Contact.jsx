@@ -8,7 +8,7 @@ export default function Contact() {
   return (
     <>
       <SEOHead page="contact" />
-      <section className="py-10 bg-white min-h-screen">
+      <section className="py-10 min-h-screen">
         <div className="max-w-4xl mx-auto px-4">
           <Link to="/" className="text-[10px] font-medium uppercase text-gray-400 hover:text-ecotone-green flex items-center gap-1.5 mb-6 transition-colors">
             <ArrowLeft className="w-3.5 h-3.5" /> {t.common.back}
