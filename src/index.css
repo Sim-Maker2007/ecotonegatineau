@@ -28,9 +28,10 @@ body {
   background-image: url('/assets/topo-bg.jpg');
   background-size: 600px;
   background-repeat: repeat;
-  opacity: 0.04;
+  opacity: 0.06;
   pointer-events: none;
   z-index: 2147483647;
+  mix-blend-mode: multiply;
 }
 
 .announcement-bar {
