@@ -4,8 +4,8 @@ export const FAQ_DATA = [
     cat: 'store',
     questionFr: "Quelles sont vos heures d'ouverture ?",
     questionEn: "What are your store hours?",
-    answerFr: "Nous sommes ouverts du lundi au vendredi de 9h à 18h, et le samedi de 9h à 17h. Nous sommes fermés le dimanche. Durant la saison de chasse (septembre-novembre), nos heures peuvent être prolongées — consultez nos réseaux sociaux pour les mises à jour.",
-    answerEn: "We're open Monday to Friday from 9 AM to 6 PM, and Saturday from 9 AM to 5 PM. We are closed on Sundays. During hunting season (September-November), hours may be extended — check our social media for updates."
+    answerFr: "Nous sommes ouverts du lundi au mercredi de 10h à 18h, jeudi et vendredi de 10h à 20h, samedi de 9h à 17h, et dimanche de 10h à 17h. Durant la saison de chasse (septembre-novembre), nos heures peuvent être prolongées — consultez nos réseaux sociaux pour les mises à jour.",
+    answerEn: "We're open Monday to Wednesday from 10 AM to 6 PM, Thursday and Friday from 10 AM to 8 PM, Saturday from 9 AM to 5 PM, and Sunday from 10 AM to 5 PM. During hunting season (September-November), hours may be extended — check our social media for updates."
   },
   {
     id: 2,

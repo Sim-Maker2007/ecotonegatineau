@@ -7,12 +7,12 @@ export const translations = {
     cart: { title: 'PANIER', empty: 'Votre panier est vide', checkout: 'COMMANDER', add: 'Ajouter au panier', subtotal: 'Sous-total', shipping: 'Livraison', free: 'Gratuite', tax: 'Taxes (QC)' },
     product: { specs: 'Spécifications', availability: 'Disponibilité', inStock: 'En stock à Gatineau', shipping: 'Livraison gratuite sur 100$+' },
     announcement: { shipping: 'Livraison gratuite sur les commandes de 100$+ ', pickup: '| Ramassage en magasin disponible' },
-    trust: { shipping: 'Livraison gratuite 100$+', pickup: 'Ramassage en magasin', guarantee: 'Garantie satisfaction', experts: 'Experts depuis 2005' },
+    trust: { shipping: 'Livraison gratuite 100$+', pickup: 'Ramassage en magasin', guarantee: 'Garantie satisfaction', experts: 'Passionnés de plein air' },
     about: {
       title: 'À propos d\'Ecotone Gatineau',
-      p1: 'Ecotone Gatineau est votre destination de plein air dans l\'Outaouais. Située au coeur de Gatineau, notre boutique offre une sélection complète d\'équipement de chasse, pêche, camping et vêtements pour toute la famille.',
-      p2: 'Notre équipe de passionnés est là pour vous conseiller et vous accompagner dans vos aventures. Que vous soyez débutant ou expert, nous avons l\'expertise et les produits qu\'il vous faut.',
-      stats: { brands: 'Marques', years: 'Années d\'expertise', services: 'Services pro en magasin', customers: 'Clients satisfaits' },
+      p1: 'Ecotone Gatineau est votre nouvelle destination de plein air dans l\'Outaouais. Située au coeur de Gatineau, notre boutique offre une sélection complète d\'équipement de chasse, pêche, camping et vêtements pour toute la famille.',
+      p2: 'Notre équipe de passionnés est là pour vous conseiller et vous accompagner dans vos aventures. Que vous soyez débutant ou expert, nous avons les produits qu\'il vous faut.',
+      stats: { brands: 'Marques', services: 'Services pro en magasin' },
       mission: 'Notre mission',
       missionText: 'Rendre le plein air accessible à tous en offrant les meilleurs produits, les meilleurs conseils et le meilleur service de la région de l\'Outaouais.'
     },
@@ -20,10 +20,10 @@ export const translations = {
       title: 'Nous Joindre',
       info: 'Coordonnées',
       hours: 'Heures d\'ouverture',
-      weekdays: 'Lundi - Vendredi',
+      monWed: 'Lundi - Mercredi',
+      thuFri: 'Jeudi - Vendredi',
       saturday: 'Samedi',
-      sunday: 'Dimanche',
-      closed: 'Fermé'
+      sunday: 'Dimanche'
     },
     newsletter: {
       title: 'Restez connecté',
@@ -43,12 +43,12 @@ export const translations = {
     cart: { title: 'CART', empty: 'Your cart is empty', checkout: 'CHECKOUT', add: 'Add to cart', subtotal: 'Subtotal', shipping: 'Shipping', free: 'Free', tax: 'Tax (QC)' },
     product: { specs: 'Specifications', availability: 'Availability', inStock: 'In stock at Gatineau', shipping: 'Free shipping on $100+' },
     announcement: { shipping: 'Free shipping on orders $100+ ', pickup: '| In-store pickup available' },
-    trust: { shipping: 'Free shipping $100+', pickup: 'In-store pickup', guarantee: 'Satisfaction guarantee', experts: 'Experts since 2005' },
+    trust: { shipping: 'Free shipping $100+', pickup: 'In-store pickup', guarantee: 'Satisfaction guarantee', experts: 'Outdoor enthusiasts' },
     about: {
       title: 'About Ecotone Gatineau',
-      p1: 'Ecotone Gatineau is your outdoor destination in the Outaouais region. Located in the heart of Gatineau, our store offers a complete selection of hunting, fishing, camping equipment and clothing for the whole family.',
-      p2: 'Our team of enthusiasts is here to advise and accompany you on your adventures. Whether you are a beginner or an expert, we have the expertise and products you need.',
-      stats: { brands: 'Brands', years: 'Years of expertise', services: 'Pro in-store services', customers: 'Happy customers' },
+      p1: 'Ecotone Gatineau is your new outdoor destination in the Outaouais region. Located in the heart of Gatineau, our store offers a complete selection of hunting, fishing, camping equipment and clothing for the whole family.',
+      p2: 'Our team of enthusiasts is here to advise and accompany you on your adventures. Whether you are a beginner or an expert, we have the products you need.',
+      stats: { brands: 'Brands', services: 'Pro in-store services' },
       mission: 'Our mission',
       missionText: 'Making the outdoors accessible to everyone by offering the best products, the best advice and the best service in the Outaouais region.'
     },
@@ -56,10 +56,10 @@ export const translations = {
       title: 'Contact Us',
       info: 'Contact Info',
       hours: 'Store Hours',
-      weekdays: 'Monday - Friday',
+      monWed: 'Monday - Wednesday',
+      thuFri: 'Thursday - Friday',
       saturday: 'Saturday',
-      sunday: 'Sunday',
-      closed: 'Closed'
+      sunday: 'Sunday'
     },
     newsletter: {
       title: 'Stay connected',

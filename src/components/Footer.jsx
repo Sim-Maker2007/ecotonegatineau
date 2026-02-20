@@ -15,7 +15,7 @@ export default function Footer() {
           <div className="space-y-2 text-xs">
             <p className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 text-ecotone-green flex-shrink-0" /> 79 Boul. de la Gappe #4, Gatineau</p>
             <p className="flex items-center gap-2"><Phone className="w-3.5 h-3.5 text-ecotone-green flex-shrink-0" /> (819) 243-6665</p>
-            <p className="flex items-center gap-2 text-ecotone-green"><Clock className="w-3.5 h-3.5 flex-shrink-0" /> Lun-Ven 9h-18h | Sam 9h-17h</p>
+            <p className="flex items-center gap-2 text-ecotone-green"><Clock className="w-3.5 h-3.5 flex-shrink-0" /> Lun-Mer 10h-18h | Jeu-Ven 10h-20h | Sam 9h-17h | Dim 10h-17h</p>
             <div className="mt-2"><StoreStatus /></div>
           </div>
         </div>

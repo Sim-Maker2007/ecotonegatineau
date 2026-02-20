@@ -17,8 +17,8 @@ const pageMeta = {
     en: { title: 'Outdoor Intel | Ecotone Gatineau', desc: 'Tips, tricks and guides for hunting, fishing and outdoors in the Outaouais region.' }
   },
   about: {
-    fr: { title: 'À propos | Ecotone Gatineau', desc: 'Découvrez l\'histoire d\'Ecotone Gatineau, votre magasin de plein air depuis 2005.' },
-    en: { title: 'About | Ecotone Gatineau', desc: 'Discover the story of Ecotone Gatineau, your outdoor store since 2005.' }
+    fr: { title: 'À propos | Ecotone Gatineau', desc: 'Découvrez Ecotone Gatineau, votre nouvelle destination plein air dans l\'Outaouais.' },
+    en: { title: 'About | Ecotone Gatineau', desc: 'Discover Ecotone Gatineau, your new outdoor destination in the Outaouais region.' }
   },
   contact: {
     fr: { title: 'Contact | Ecotone Gatineau', desc: 'Contactez Ecotone Gatineau. 79 Boul. de la Gappe #4, Gatineau QC. (819) 243-6665.' },

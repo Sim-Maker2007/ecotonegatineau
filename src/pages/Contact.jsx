@@ -28,9 +28,10 @@ export default function Contact() {
               <div className="bg-gray-50 rounded-lg p-4">
                 <h3 className="text-sm font-bold font-oswald uppercase mb-3">{t.contact.hours}</h3>
                 <div className="space-y-1.5 text-sm text-gray-600">
-                  <div className="flex justify-between"><span>{t.contact.weekdays}</span><span className="font-semibold">9h - 18h</span></div>
+                  <div className="flex justify-between"><span>{t.contact.monWed}</span><span className="font-semibold">10h - 18h</span></div>
+                  <div className="flex justify-between"><span>{t.contact.thuFri}</span><span className="font-semibold">10h - 20h</span></div>
                   <div className="flex justify-between"><span>{t.contact.saturday}</span><span className="font-semibold">9h - 17h</span></div>
-                  <div className="flex justify-between"><span>{t.contact.sunday}</span><span className="font-semibold text-red-400">{t.contact.closed}</span></div>
+                  <div className="flex justify-between"><span>{t.contact.sunday}</span><span className="font-semibold">10h - 17h</span></div>
                 </div>
               </div>
               <div className="flex gap-2">

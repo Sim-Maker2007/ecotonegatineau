@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import { useLang } from '../context/LanguageContext';
 
 const HOURS = {
-  1: { open: 9, close: 18 },  // Monday
-  2: { open: 9, close: 18 },  // Tuesday
-  3: { open: 9, close: 18 },  // Wednesday
-  4: { open: 9, close: 18 },  // Thursday
-  5: { open: 9, close: 18 },  // Friday
-  6: { open: 9, close: 17 },  // Saturday
-  0: null                      // Sunday — closed
+  1: { open: 10, close: 18 },  // Monday
+  2: { open: 10, close: 18 },  // Tuesday
+  3: { open: 10, close: 18 },  // Wednesday
+  4: { open: 10, close: 20 },  // Thursday
+  5: { open: 10, close: 20 },  // Friday
+  6: { open: 9, close: 17 },   // Saturday
+  0: { open: 10, close: 17 }   // Sunday
 };
 
 function getStatus(lang) {

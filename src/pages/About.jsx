@@ -28,9 +28,7 @@ export default function About() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {[
               { num: '600+', label: t.about.stats.brands },
-              { num: '20+', label: t.about.stats.years },
-              { num: '4', label: t.about.stats.services },
-              { num: '1000+', label: t.about.stats.customers }
+              { num: '4', label: t.about.stats.services }
             ].map((s, i) => (
               <div key={i} className="bg-gray-50 rounded-lg p-4 text-center">
                 <p className="text-2xl font-bold font-oswald text-ecotone-green">{s.num}</p>
