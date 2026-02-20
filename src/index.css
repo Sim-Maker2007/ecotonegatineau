@@ -19,8 +19,7 @@ body {
   padding-top: 88px;
 }
 
-#root::after {
-  content: '';
+.topo-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -31,7 +30,7 @@ body {
   background-repeat: repeat;
   opacity: 0.04;
   pointer-events: none;
-  z-index: 99999;
+  z-index: 2147483647;
 }
 
 .announcement-bar {

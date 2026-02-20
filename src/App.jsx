@@ -23,6 +23,7 @@ function ScrollToTop() {
 export default function App() {
   return (
     <div className="flex flex-col min-h-screen">
+      <div className="topo-overlay" aria-hidden="true" />
       <ScrollToTop />
       <AnnouncementBar />
       <Header />
